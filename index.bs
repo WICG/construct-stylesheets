@@ -1,16 +1,115 @@
-<pre class='metadata'>
+<pre class=metadata>
 Title: Constructable Stylesheet Objects
 Shortname: construct-stylesheets
 Level: 1
-Status: CG-DRAFT
-Group: WICG
-Repository: WICG/construct-stylesheets
-URL: http://example.com/url-this-spec-will-live-at
-Editor: Tab Atkins, Google https://google.com, jackalmage@gmail.com
-Abstract: A short description of your spec, one or two sentences.
+Status: DREAM
+ED: http://tabatkins.github.io/specs/construct-stylesheets/
+Editor: Tab Atkins Jr., Google, http://xanthir.com/contact/
+Abstract: This draft defines additions to CSSOM to make StyleSheet objects directly constructable, along with methods and APIs to make it easier to deal with stylesheets in the context of custom elements and similar.  It also defines constructors for CSSRule objects.
+Ignored Terms: ShadowRoot, create a medialist object, add a css style sheet, document css style sheets
 </pre>
 
-Introduction {#intro}
-=====================
+<pre class='link-defaults'>
+spec:dom; type:interface; text:Document
+</pre>
 
-See https://github.com/tabatkins/bikeshed to get started.
+Adding Stylesheets In Script {#adding-stylesheets}
+=================================
+
+<pre class='idl'>
+[Constructor(DOMString text, optional CSSStyleSheetInit options)]
+partial interface CSSStyleSheet {
+};
+
+dictionary CSSStyleSheetInit {
+	(MediaList or DOMString) media = "";
+	DOMString title = "";
+	boolean alternate = false;
+	boolean disabled = false;
+};
+
+interface TreeScope {
+	attribute StyleSheetList moreStyleSheets;
+};
+Document implements TreeScope;
+ShadowRoot implements TreeScope;
+</pre>
+
+<dl>
+	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)">CSSStyleSheet(text, options)</dfn>
+	<dd>
+		When called, execute these steps:
+
+		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
+			with location set to <code>null</code>,
+			no parent CSS style sheet,
+			no owner node,
+			no owner CSS rule,
+			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
+			Set <var>sheet’s</var> origin-clean flag.
+		2. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
+			<a>create a MediaList object</a> from the string
+			and assign it as <var>sheet’s</var> media.
+			Otherwise, assign the value of the attribute as <var>sheet’s</var> media.
+		3. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
+			set <var>sheet’s</var> alternate flag.
+		4. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
+			set <var>sheet’s</var> disabled flag.
+		5. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
+			If it returned a list of rules,
+			assign the list as <var>sheet’s</var> CSS rules;
+			otherwise,
+			set <var>sheet’s</var> CSS rules to an empty list.
+		6. Return <var>sheet</var>.
+
+	<dt><dfn attribute for=TreeScope>moreStyleSheets</dfn>
+	<dd>
+		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
+		They are ordered after the stylesheets in {{Document/styleSheets}}.
+
+		Issue: Better name.
+
+		Issue: Or do we want to include manually-added sheets in <code>document.styleSheets</code>,
+		similar to how <code>document.fonts</code> mixes OM-created and manually-created fonts?
+		Big difference is that ordering matters here,
+		which makes dealing with the invariants much more annoying.
+		(What happens if you manually add a sheet between two &lt;link> sheets,
+		then insert another &lt;link> in the document between them?
+		Does it go before or after your manually-added one?
+		Or do we just make it illegal to manually add a sheet before an automatic sheet?)
+</dl>
+
+Applying Styles In All Contexts {#styles-in-all-contexts}
+===================
+
+<div class='issue'>
+	One of the major "misuses" of the ''>>>'' combinator
+	is to apply "default styles" to a component wherever it lives in the tree,
+	no matter how deeply nested it is inside of components.
+	The use-case for this is to provide the equivalent of the user-agent stylesheet,
+	but for custom elements
+	(thus, the styles by necessity must come from the author).
+
+	Unfortunately, this is extremely slow,
+	and there's not a whole lot that can be done about that--
+	''>>>'' combinators are slow by their nature.
+	Note, though, that the UA and user stylesheets automatically apply in all shadows;
+	it's only the author stylesheet that is limited to the context it's created in.
+
+	(At this point, one might point out that this is already handled by just setting up styles during element construction.
+	This doesn't help for cases where a component is purposely authored to be styled by the end-user;
+	forcing <em>users</em> of components to go muck around in their components' source code is a non-starter.)
+
+	One possible solution here is to add another origin,
+	the "author default" origin,
+	which sits between "user" and "author",
+	and applies in all shadow roots automatically.
+	We can add a list for these stylesheets,
+	akin to <code class='lang-javascript'>document.styleSheets</code>,
+	and allow you to insert constructed stylesheets into it.
+	Or maybe add an <code>.origin</code> attribute to CSSStyleSheet, defaulting to "author"?
+
+	Maybe it only applies to the context you're in and descendant contexts?
+	Need to investigate;
+	probably bad to let a component apply automatic styles to the outer page via this mechanism.
+</div>
