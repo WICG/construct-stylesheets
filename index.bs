@@ -1,0 +1,16 @@
+<pre class='metadata'>
+Title: Constructable Stylesheet Objects
+Shortname: construct-stylesheets
+Level: 1
+Status: CG-DRAFT
+Group: WICG
+Repository: WICG/construct-stylesheets
+URL: http://example.com/url-this-spec-will-live-at
+Editor: Tab Atkins, Google https://google.com, jackalmage@gmail.com
+Abstract: A short description of your spec, one or two sentences.
+</pre>
+
+Introduction {#intro}
+=====================
+
+See https://github.com/tabatkins/bikeshed to get started.
