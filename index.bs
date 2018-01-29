@@ -36,7 +36,7 @@ ShadowRoot implements TreeScope;
 </pre>
 
 <dl>
-	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)">CSSStyleSheet(text, options)</dfn>
+	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)">CSSStyleSheet(text, options)</dfn></dt>
 	<dd>
 		When called, execute these steps:
 
@@ -62,7 +62,9 @@ ShadowRoot implements TreeScope;
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Return <var>sheet</var>.
 
-	<dt><dfn attribute for=TreeScope>moreStyleSheets</dfn>
+		Issue: We should allow for asynchronous style sheet parsing. Authors should be able to receive a Promise&lt;CSSStyleSheet&gt;.
+	</dd>
+	<dt><dfn attribute for=TreeScope>moreStyleSheets</dfn></dt>
 	<dd>
 		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
 		They are ordered after the stylesheets in {{Document/styleSheets}}.
@@ -77,6 +79,13 @@ ShadowRoot implements TreeScope;
 		then insert another &lt;link> in the document between them?
 		Does it go before or after your manually-added one?
 		Or do we just make it illegal to manually add a sheet before an automatic sheet?)
+
+		Issue: StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet&gt;.
+
+		Issue: Is the new interface TreeScope needed, or should we instead add moreStyleSheets to the
+		<a href="https://dom.spec.whatwg.org/#mixin-documentorshadowroot">DocumentOrShadowRoot</a> interface used by
+		<a href="http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-the-documentorshadowroot-mixin">Shadow DOM</a>?
+	</dd>
 </dl>
 
 Applying Styles In All Contexts {#styles-in-all-contexts}
