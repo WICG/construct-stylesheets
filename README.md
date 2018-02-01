@@ -1,4 +1,5 @@
 # Constructable Stylesheet Objects
 
-This is the repository for Constructable Stylesheet Objects. You're welcome to
-[[contribute]](CONTRIBUTING.md)!
+This specification defines additions to CSSOM to make StyleSheet objects directly constructable, along with methods and APIs to make it easier to deal with stylesheets in the context of custom elements and similar.
+
+For more context, please read the [Explainer](explainer.md).
