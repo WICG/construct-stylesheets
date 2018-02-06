@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version b43bcf8d18510de03d8b56c5e878eea93e955427" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/index.html" rel="canonical">
-  <meta content="7b131360280c7a334c4b4779355f35e22184aa7f" name="document-revision">
+  <meta content="eb0719ed2c0f6dd8b01373ec745db29545d4178b" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1486,11 +1486,9 @@ Parts of this work may be from another specification document.  If so, those par
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a> <dfn class="nv dfn-paneled idl-code" data-default="false" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cssstylesheetinit-disabled"><code>disabled</code></dfn> = <span class="kt">false</span>;
 };
 
-<span class="kt">interface</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="interface" data-export="" id="treescope"><code>TreeScope</code></dfn> {
-  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-treescope-morestylesheets" id="ref-for-dom-treescope-morestylesheets">moreStyleSheets</a>;
+<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a> {
+  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-documentorshadowroot-morestylesheets" id="ref-for-dom-documentorshadowroot-morestylesheets">moreStyleSheets</a>;
 };
-<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="#treescope" id="ref-for-treescope">TreeScope</a>;
-<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="#treescope" id="ref-for-treescope①">TreeScope</a>;
 </pre>
    <dl>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export="" data-lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)" id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(text, options)</code></dfn>
@@ -1525,7 +1523,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
        <p>Return <var>sheet</var>.</p>
      </ol>
      <p class="issue" id="issue-629a6099"><a class="self-link" href="#issue-629a6099"></a> We should allow for asynchronous style sheet parsing. Authors should be able to receive a Promise&lt;CSSStyleSheet>.</p>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="TreeScope" data-dfn-type="attribute" data-export="" id="dom-treescope-morestylesheets"><code>moreStyleSheets</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist①">StyleSheetList</a></span>
+    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export="" id="dom-documentorshadowroot-morestylesheets"><code>moreStyleSheets</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist①">StyleSheetList</a></span>
     <dd>
       Style sheets assigned to this attribute are part of the <a data-link-type="dfn">document CSS style sheets</a>.
 		They are ordered after the stylesheets in <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets" id="ref-for-dom-document-stylesheets">styleSheets</a></code>. 
@@ -1539,7 +1537,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
 		Does it go before or after your manually-added one?
 		Or do we just make it illegal to manually add a sheet before an automatic sheet?)</p>
      <p class="issue" id="issue-d3799f2f"><a class="self-link" href="#issue-d3799f2f"></a> StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet>.</p>
-     <p class="issue" id="issue-bd890dfc"><a class="self-link" href="#issue-bd890dfc"></a> Is the new interface TreeScope needed, or should we instead add moreStyleSheets to the <a href="https://dom.spec.whatwg.org/#mixin-documentorshadowroot">DocumentOrShadowRoot</a> interface used by <a href="http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-the-documentorshadowroot-mixin">Shadow DOM</a>?</p>
    </dl>
    <h2 class="heading settled" data-level="2" id="styles-in-all-contexts"><span class="secno">2. </span><span class="content">Applying Styles In All Contexts</span><a class="self-link" href="#styles-in-all-contexts"></a></h2>
    <div class="issue" id="issue-2d9baa67">
@@ -1724,9 +1721,8 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet(text, options)</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-disabled">disabled</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-media">media</a><span>, in §1</span>
-   <li><a href="#dom-treescope-morestylesheets">moreStyleSheets</a><span>, in §1</span>
+   <li><a href="#dom-documentorshadowroot-morestylesheets">moreStyleSheets</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §1</span>
-   <li><a href="#treescope">TreeScope</a><span>, in §1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
@@ -1752,8 +1748,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
-     <li><a href="https://dom.spec.whatwg.org/#document">Document</a>
-     <li><a href="https://dom.spec.whatwg.org/#shadowroot">ShadowRoot</a>
+     <li><a href="https://dom.spec.whatwg.org/#documentorshadowroot">DocumentOrShadowRoot</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -1790,11 +1785,9 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><span class="kt">boolean</span></a> <a class="nv" data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-disabled"><code>disabled</code></a> = <span class="kt">false</span>;
 };
 
-<span class="kt">interface</span> <a class="nv" href="#treescope"><code>TreeScope</code></a> {
-  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist②">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-treescope-morestylesheets" id="ref-for-dom-treescope-morestylesheets①">moreStyleSheets</a>;
+<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①">DocumentOrShadowRoot</a> {
+  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist②">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-documentorshadowroot-morestylesheets" id="ref-for-dom-documentorshadowroot-morestylesheets①">moreStyleSheets</a>;
 };
-<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="#treescope" id="ref-for-treescope②">TreeScope</a>;
-<a class="n" data-link-type="idl-name" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot①">ShadowRoot</a> <span class="kt">implements</span> <a class="n" data-link-type="idl-name" href="#treescope" id="ref-for-treescope①①">TreeScope</a>;
 
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
@@ -1810,7 +1803,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
 		Does it go before or after your manually-added one?
 		Or do we just make it illegal to manually add a sheet before an automatic sheet?)<a href="#issue-2b780a58"> ↵ </a></div>
    <div class="issue"> StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet>.<a href="#issue-d3799f2f"> ↵ </a></div>
-   <div class="issue"> Is the new interface TreeScope needed, or should we instead add moreStyleSheets to the <a href="https://dom.spec.whatwg.org/#mixin-documentorshadowroot">DocumentOrShadowRoot</a> interface used by <a href="http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-the-documentorshadowroot-mixin">Shadow DOM</a>?<a href="#issue-bd890dfc"> ↵ </a></div>
    <div class="issue">
      One of the major "misuses" of the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator">>>></a> combinator
 	is to apply "default styles" to a component wherever it lives in the tree,
@@ -1875,22 +1867,16 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
     <li><a href="#ref-for-dom-cssstylesheetinit-disabled">1. Adding Stylesheets In Script</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="treescope">
-   <b><a href="#treescope">#treescope</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-treescope">1. Adding Stylesheets In Script</a> <a href="#ref-for-treescope①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheet-cssstylesheet">
    <b><a href="#dom-cssstylesheet-cssstylesheet">#dom-cssstylesheet-cssstylesheet</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cssstylesheet-cssstylesheet">1. Adding Stylesheets In Script</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-treescope-morestylesheets">
-   <b><a href="#dom-treescope-morestylesheets">#dom-treescope-morestylesheets</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-documentorshadowroot-morestylesheets">
+   <b><a href="#dom-documentorshadowroot-morestylesheets">#dom-documentorshadowroot-morestylesheets</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-treescope-morestylesheets">1. Adding Stylesheets In Script</a>
+    <li><a href="#ref-for-dom-documentorshadowroot-morestylesheets">1. Adding Stylesheets In Script</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
