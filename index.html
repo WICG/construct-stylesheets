@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version b43bcf8d18510de03d8b56c5e878eea93e955427" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/index.html" rel="canonical">
-  <meta content="eb0719ed2c0f6dd8b01373ec745db29545d4178b" name="document-revision">
+  <meta content="76f56cd40a8d96058dcc65fd475347e044835558" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1432,7 +1432,6 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
      <dd><a class="u-url" href="https://wicg.github.io/construct-stylesheets/index.html">https://wicg.github.io/construct-stylesheets/index.html</a>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/WICG/construct-stylesheets/issues/">GitHub</a>
-     <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://xanthir.com/contact/">Tab Atkins Jr.</a> (<span class="p-org org">Google</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:ericwilligers@google.com">Eric Willigers</a> (<span class="p-org org">Google</span>)
@@ -1470,7 +1469,6 @@ Parts of this work may be from another specification document.  If so, those par
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
@@ -1522,49 +1520,11 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md="">
        <p>Return <var>sheet</var>.</p>
      </ol>
-     <p class="issue" id="issue-629a6099"><a class="self-link" href="#issue-629a6099"></a> We should allow for asynchronous style sheet parsing. Authors should be able to receive a Promise&lt;CSSStyleSheet>.</p>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export="" id="dom-documentorshadowroot-morestylesheets"><code>moreStyleSheets</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist①">StyleSheetList</a></span>
-    <dd>
-      Style sheets assigned to this attribute are part of the <a data-link-type="dfn">document CSS style sheets</a>.
+    <dd> Style sheets assigned to this attribute are part of the <a data-link-type="dfn">document CSS style sheets</a>.
 		They are ordered after the stylesheets in <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets" id="ref-for-dom-document-stylesheets">styleSheets</a></code>. 
-     <p class="issue" id="issue-bc8d9825"><a class="self-link" href="#issue-bc8d9825"></a> Better name.</p>
-     <p class="issue" id="issue-2b780a58"><a class="self-link" href="#issue-2b780a58"></a> Or do we want to include manually-added sheets in <code>document.styleSheets</code>,
-		similar to how <code>document.fonts</code> mixes OM-created and manually-created fonts?
-		Big difference is that ordering matters here,
-		which makes dealing with the invariants much more annoying.
-		(What happens if you manually add a sheet between two &lt;link> sheets,
-		then insert another &lt;link> in the document between them?
-		Does it go before or after your manually-added one?
-		Or do we just make it illegal to manually add a sheet before an automatic sheet?)</p>
-     <p class="issue" id="issue-d3799f2f"><a class="self-link" href="#issue-d3799f2f"></a> StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet>.</p>
    </dl>
    <h2 class="heading settled" data-level="2" id="styles-in-all-contexts"><span class="secno">2. </span><span class="content">Applying Styles In All Contexts</span><a class="self-link" href="#styles-in-all-contexts"></a></h2>
-   <div class="issue" id="issue-2d9baa67">
-    <a class="self-link" href="#issue-2d9baa67"></a> One of the major "misuses" of the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator" id="ref-for-selectordef-shadow-piercing-descendant-combinator">>>></a> combinator
-	is to apply "default styles" to a component wherever it lives in the tree,
-	no matter how deeply nested it is inside of components.
-	The use-case for this is to provide the equivalent of the user-agent stylesheet,
-	but for custom elements
-	(thus, the styles by necessity must come from the author). 
-    <p>Unfortunately, this is extremely slow,
-	and there’s not a whole lot that can be done about that—<wbr><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator" id="ref-for-selectordef-shadow-piercing-descendant-combinator①">>>></a> combinators are slow by their nature.
-	Note, though, that the UA and user stylesheets automatically apply in all shadows;
-	it’s only the author stylesheet that is limited to the context it’s created in.</p>
-    <p>(At this point, one might point out that this is already handled by just setting up styles during element construction.
-	This doesn’t help for cases where a component is purposely authored to be styled by the end-user;
-	forcing <em>users</em> of components to go muck around in their components' source code is a non-starter.)</p>
-    <p>One possible solution here is to add another origin,
-	the "author default" origin,
-	which sits between "user" and "author",
-	and applies in all shadow roots automatically.
-	We can add a list for these stylesheets,
-	akin to <code class="lang-javascript highlight">document<span class="p">.</span>styleSheets</code>,
-	and allow you to insert constructed stylesheets into it.
-	Or maybe add an <code>.origin</code> attribute to CSSStyleSheet, defaulting to "author"?</p>
-    <p>Maybe it only applies to the context you’re in and descendant contexts?
-	Need to investigate;
-	probably bad to let a component apply automatic styles to the outer page via this mechanism.</p>
-   </div>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1727,11 +1687,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[css-scoping-1]</a> defines the following terms:
-    <ul>
-     <li><a href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator">>>></a>
-    </ul>
-   <li>
     <a data-link-type="biblio">[css-syntax-3]</a> defines the following terms:
     <ul>
      <li><a href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet">parse a stylesheet</a>
@@ -1760,8 +1715,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-css-scoping-1">[CSS-SCOPING-1]
-   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-scoping-1/">CSS Scoping Module Level 1</a>. 3 April 2014. WD. URL: <a href="https://www.w3.org/TR/css-scoping-1/">https://www.w3.org/TR/css-scoping-1/</a>
    <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
    <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 20 February 2014. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
    <dt id="biblio-cssom-1">[CSSOM-1]
@@ -1790,47 +1743,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
 };
 
 </pre>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue"> We should allow for asynchronous style sheet parsing. Authors should be able to receive a Promise&lt;CSSStyleSheet>.<a href="#issue-629a6099"> ↵ </a></div>
-   <div class="issue"> Better name.<a href="#issue-bc8d9825"> ↵ </a></div>
-   <div class="issue"> Or do we want to include manually-added sheets in <code>document.styleSheets</code>,
-		similar to how <code>document.fonts</code> mixes OM-created and manually-created fonts?
-		Big difference is that ordering matters here,
-		which makes dealing with the invariants much more annoying.
-		(What happens if you manually add a sheet between two &lt;link> sheets,
-		then insert another &lt;link> in the document between them?
-		Does it go before or after your manually-added one?
-		Or do we just make it illegal to manually add a sheet before an automatic sheet?)<a href="#issue-2b780a58"> ↵ </a></div>
-   <div class="issue"> StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet>.<a href="#issue-d3799f2f"> ↵ </a></div>
-   <div class="issue">
-     One of the major "misuses" of the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator">>>></a> combinator
-	is to apply "default styles" to a component wherever it lives in the tree,
-	no matter how deeply nested it is inside of components.
-	The use-case for this is to provide the equivalent of the user-agent stylesheet,
-	but for custom elements
-	(thus, the styles by necessity must come from the author). 
-    <p>Unfortunately, this is extremely slow,
-	and there’s not a whole lot that can be done about that—<wbr><a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-scoping-1/#selectordef-shadow-piercing-descendant-combinator">>>></a> combinators are slow by their nature.
-	Note, though, that the UA and user stylesheets automatically apply in all shadows;
-	it’s only the author stylesheet that is limited to the context it’s created in.</p>
-    <p>(At this point, one might point out that this is already handled by just setting up styles during element construction.
-	This doesn’t help for cases where a component is purposely authored to be styled by the end-user;
-	forcing <em>users</em> of components to go muck around in their components' source code is a non-starter.)</p>
-    <p>One possible solution here is to add another origin,
-	the "author default" origin,
-	which sits between "user" and "author",
-	and applies in all shadow roots automatically.
-	We can add a list for these stylesheets,
-	akin to <code class="lang-javascript highlight">document<span class="p">.</span>styleSheets</code>,
-	and allow you to insert constructed stylesheets into it.
-	Or maybe add an <code>.origin</code> attribute to CSSStyleSheet, defaulting to "author"?</p>
-    <p>Maybe it only applies to the context you’re in and descendant contexts?
-	Need to investigate;
-	probably bad to let a component apply automatic styles to the outer page via this mechanism.</p>
-     <a href="#issue-2d9baa67"> ↵ </a>
-   </div>
-  </div>
   <aside class="dfn-panel" data-for="dom-cssstylesheet-cssstylesheet-text-options-text">
    <b><a href="#dom-cssstylesheet-cssstylesheet-text-options-text">#dom-cssstylesheet-cssstylesheet-text-options-text</a></b><b>Referenced in:</b>
    <ul>
