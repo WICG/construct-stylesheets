@@ -29,11 +29,9 @@ dictionary CSSStyleSheetInit {
 	boolean disabled = false;
 };
 
-interface TreeScope {
+partial interface DocumentOrShadowRoot {
 	attribute StyleSheetList moreStyleSheets;
 };
-Document implements TreeScope;
-ShadowRoot implements TreeScope;
 </pre>
 
 <dl>
@@ -65,7 +63,7 @@ ShadowRoot implements TreeScope;
 
 		Issue: We should allow for asynchronous style sheet parsing. Authors should be able to receive a Promise&lt;CSSStyleSheet&gt;.
 	</dd>
-	<dt><dfn attribute for=TreeScope>moreStyleSheets</dfn></dt>
+	<dt><dfn attribute for=DocumentOrShadowRoot>moreStyleSheets</dfn></dt>
 	<dd>
 		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
 		They are ordered after the stylesheets in {{Document/styleSheets}}.
@@ -82,10 +80,6 @@ ShadowRoot implements TreeScope;
 		Or do we just make it illegal to manually add a sheet before an automatic sheet?)
 
 		Issue: StyleSheetList will need to define a constructor, accepting a sequence&lt;StyleSheet&gt;.
-
-		Issue: Is the new interface TreeScope needed, or should we instead add moreStyleSheets to the
-		<a href="https://dom.spec.whatwg.org/#mixin-documentorshadowroot">DocumentOrShadowRoot</a> interface used by
-		<a href="http://w3c.github.io/webcomponents/spec/shadow/#extensions-to-the-documentorshadowroot-mixin">Shadow DOM</a>?
 	</dd>
 </dl>
 
