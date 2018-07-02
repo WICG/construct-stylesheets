@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version b43bcf8d18510de03d8b56c5e878eea93e955427" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/index.html" rel="canonical">
-  <meta content="76f56cd40a8d96058dcc65fd475347e044835558" name="document-revision">
+  <meta content="efd988cd484ae52624c0d64c5542805128e7c5f3" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1425,7 +1425,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-02-06">6 February 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-07-02">2 July 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1440,7 +1440,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 6 February 2018,
+In addition, as of 2 July 2018,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1483,10 +1483,6 @@ Parts of this work may be from another specification document.  If so, those par
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><span class="kt">boolean</span></a> <dfn class="nv dfn-paneled idl-code" data-default="false" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cssstylesheetinit-alternate"><code>alternate</code></dfn> = <span class="kt">false</span>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><span class="kt">boolean</span></a> <dfn class="nv dfn-paneled idl-code" data-default="false" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-cssstylesheetinit-disabled"><code>disabled</code></dfn> = <span class="kt">false</span>;
 };
-
-<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a> {
-  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-documentorshadowroot-morestylesheets" id="ref-for-dom-documentorshadowroot-morestylesheets">moreStyleSheets</a>;
-};
 </pre>
    <dl>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export="" data-lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)" id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(text, options)</code></dfn>
@@ -1520,9 +1516,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md="">
        <p>Return <var>sheet</var>.</p>
      </ol>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export="" id="dom-documentorshadowroot-morestylesheets"><code>moreStyleSheets</code></dfn>, <span> of type <a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist①">StyleSheetList</a></span>
-    <dd> Style sheets assigned to this attribute are part of the <a data-link-type="dfn">document CSS style sheets</a>.
-		They are ordered after the stylesheets in <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets" id="ref-for-dom-document-stylesheets">styleSheets</a></code>. 
    </dl>
    <h2 class="heading settled" data-level="2" id="styles-in-all-contexts"><span class="secno">2. </span><span class="content">Applying Styles In All Contexts</span><a class="self-link" href="#styles-in-all-contexts"></a></h2>
   </main>
@@ -1681,7 +1674,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet(text, options)</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-disabled">disabled</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-media">media</a><span>, in §1</span>
-   <li><a href="#dom-documentorshadowroot-morestylesheets">moreStyleSheets</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1696,14 +1688,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
     <ul>
      <li><a href="https://drafts.csswg.org/cssom-1/#cssstylesheet">CSSStyleSheet</a>
      <li><a href="https://drafts.csswg.org/cssom-1/#medialist">MediaList</a>
-     <li><a href="https://drafts.csswg.org/cssom-1/#stylesheetlist">StyleSheetList</a>
      <li><a href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object">create a medialist object</a>
-     <li><a href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets">styleSheets</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[DOM]</a> defines the following terms:
-    <ul>
-     <li><a href="https://dom.spec.whatwg.org/#documentorshadowroot">DocumentOrShadowRoot</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -1719,8 +1704,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 20 February 2014. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
    <dt id="biblio-cssom-1">[CSSOM-1]
    <dd>Simon Pieters; Glenn Adams. <a href="https://www.w3.org/TR/cssom-1/">CSS Object Model (CSSOM)</a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-1/">https://www.w3.org/TR/cssom-1/</a>
-   <dt id="biblio-dom">[DOM]
-   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-webidl">[WebIDL]
@@ -1736,10 +1719,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②①"><span class="kt">DOMString</span></a> <a class="nv" data-default="&quot;&quot;" data-type="DOMString " href="#dom-cssstylesheetinit-title"><code>title</code></a> = "";
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②"><span class="kt">boolean</span></a> <a class="nv" data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-alternate"><code>alternate</code></a> = <span class="kt">false</span>;
   <a class="n idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><span class="kt">boolean</span></a> <a class="nv" data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-disabled"><code>disabled</code></a> = <span class="kt">false</span>;
-};
-
-<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①">DocumentOrShadowRoot</a> {
-  <span class="kt">attribute</span> <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#stylesheetlist" id="ref-for-stylesheetlist②">StyleSheetList</a> <a class="nv idl-code" data-link-type="attribute" data-type="StyleSheetList" href="#dom-documentorshadowroot-morestylesheets" id="ref-for-dom-documentorshadowroot-morestylesheets①">moreStyleSheets</a>;
 };
 
 </pre>
@@ -1783,12 +1762,6 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <b><a href="#dom-cssstylesheet-cssstylesheet">#dom-cssstylesheet-cssstylesheet</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cssstylesheet-cssstylesheet">1. Adding Stylesheets In Script</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-documentorshadowroot-morestylesheets">
-   <b><a href="#dom-documentorshadowroot-morestylesheets">#dom-documentorshadowroot-morestylesheets</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-documentorshadowroot-morestylesheets">1. Adding Stylesheets In Script</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
