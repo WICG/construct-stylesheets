@@ -28,10 +28,6 @@ dictionary CSSStyleSheetInit {
 	boolean alternate = false;
 	boolean disabled = false;
 };
-
-partial interface DocumentOrShadowRoot {
-	attribute StyleSheetList moreStyleSheets;
-};
 </pre>
 
 <dl>
@@ -60,11 +56,6 @@ partial interface DocumentOrShadowRoot {
 			otherwise,
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Return <var>sheet</var>.
-	</dd>
-	<dt><dfn attribute for=DocumentOrShadowRoot>moreStyleSheets</dfn></dt>
-	<dd>
-		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
-		They are ordered after the stylesheets in {{Document/styleSheets}}.
 	</dd>
 </dl>
 
