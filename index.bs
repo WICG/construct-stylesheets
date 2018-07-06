@@ -37,9 +37,9 @@ partial interface Document {
 <dl>
 	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet()">CSSStyleSheet()</dfn></dt>
 	<dd>
-		Synchronously creates an empty CSSStyleSheet object and returns
-		it.
+		Synchronously creates an empty CSSStyleSheet object and returns it.
 		When called, execute these steps:
+
 		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
 			with location set to <code>null</code>,
 			no parent CSS style sheet,
@@ -51,14 +51,13 @@ partial interface Document {
 	</dd>
 	<dt><dfn method for=Document lt="createCSSStyleSheet(text)|createCSSStyleSheet(text, options)">createCSSStyleSheet(text, options)</dfn></dt>
 	<dd>
-		Returns a promise that resolves to a new CSSStyleSheet object, when parsing given
-		text as a style sheet and loading dependent resources (such as @import rules) is
-		done.
+		Returns a promise that resolves to a CSSStyleSheet object, when parsing given text
+		as a style sheet and loading dependent resources (such as @import rules) is done.
 		When called, execute these steps:
 
 		1. Let <var>promise</var> be a new promise.
 		2. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
-			with location set to <code>null</code>,
+			with location set to the value of context object's <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url">base URL</a>.
 			no parent CSS style sheet,
 			no owner node,
 			no owner CSS rule,
@@ -67,7 +66,7 @@ partial interface Document {
 		3. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
 			<a>create a MediaList object</a> from the string
 			and assign it as <var>sheet’s</var> media.
-			Otherwise, assign the value of the attribute as <var>sheet’s</var> media.
+			Otherwise, copy and assign the value of the attribute as <var>sheet’s</var> media.
 		4. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
 			set <var>sheet’s</var> alternate flag.
 		5. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
