@@ -6,7 +6,6 @@ Status: DREAM
 ED: https://wicg.github.io/construct-stylesheets/index.html
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact/
 Editor: Eric Willigers, Google, ericwilligers@google.com
-Editor: Rakina Zata Amni, Google, rakina@google.com
 Abstract: This draft defines additions to CSSOM to make StyleSheet objects directly constructable, along with methods and APIs to make it easier to deal with stylesheets in the context of custom elements and similar.
 Ignored Terms: ShadowRoot, create a medialist object, add a css style sheet, document css style sheets
 </pre>
@@ -19,9 +18,8 @@ Adding Stylesheets In Script {#adding-stylesheets}
 =================================
 
 <pre class='idl'>
-partial interface Document {
-	[NewObject] Promise&lt;CSSStyleSheet> createCSSStyleSheet(DOMString text, optional CSSStyleSheetInit options);
-	[NewObject] CSSStyleSheet createEmptyCSSStyleSheet(optional CSSStyleSheetInit options);
+[Constructor(DOMString text, optional CSSStyleSheetInit options)]
+partial interface CSSStyleSheet {
 };
 
 dictionary CSSStyleSheetInit {
@@ -30,17 +28,10 @@ dictionary CSSStyleSheetInit {
 	boolean alternate = false;
 	boolean disabled = false;
 };
-
-partial interface DocumentOrShadowRoot {
-	attribute StyleSheetList moreStyleSheets;
-};
-
-partial interface CSSStyleSheet {
-};
 </pre>
 
 <dl>
-	<dt><dfn method for=Document lt="createCSSStyleSheet(text)|createCSSStyleSheet(text, options)">createCSSStyleSheet(text, options)</dfn></dt>
+	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)">CSSStyleSheet(text, options)</dfn></dt>
 	<dd>
 		When called, execute these steps:
 
@@ -54,7 +45,7 @@ partial interface CSSStyleSheet {
 		2. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
 			<a>create a MediaList object</a> from the string
 			and assign it as <var>sheet’s</var> media.
-			Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.
+			Otherwise, assign the value of the attribute as <var>sheet’s</var> media.
 		3. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
 			set <var>sheet’s</var> alternate flag.
 		4. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
@@ -64,39 +55,7 @@ partial interface CSSStyleSheet {
 			assign the list as <var>sheet’s</var> CSS rules;
 			otherwise,
 			set <var>sheet’s</var> CSS rules to an empty list.
-		6. Let <var>promise</var> be a promise.
-		7. Resolve <var>promise</var> with <var>sheet</var>.
-		8. Return <var>promise</var>.
-	</dd>
-
-	<dt><dfn method for=Document lt="createEmptyCSSStyleSheet()|createEmptyCSSStyleSheet(options)">createEmptyCSSStyleSheet(options)</dfn></dt>
-	<dd>
-		Synchronously creates an empty CSSStyleSheet object and returns it.
-
-		When called, execute these steps:
-
-		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
-			with location set to <code>null</code>,
-			no parent CSS style sheet,
-			no owner node,
-			no owner CSS rule,
-			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
-			Set <var>sheet’s</var> origin-clean flag.
-		2. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
-			<a>create a MediaList object</a> from the string
-			and assign it as <var>sheet’s</var> media.
-			Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.
-		3. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
-			set <var>sheet’s</var> alternate flag.
-		4. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
-			set <var>sheet’s</var> disabled flag.
-		5. Return <var>sheet</var>.
-	</dd>
-
-	<dt><dfn attribute for=DocumentOrShadowRoot>moreStyleSheets</dfn></dt>
-	<dd>
-		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
-		They are ordered after the stylesheets in {{Document/styleSheets}}.
+		6. Return <var>sheet</var>.
 	</dd>
 </dl>
 
