@@ -65,7 +65,7 @@ partial interface CSSStyleSheet {
 			otherwise,
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Let <var>promise</var> be a promise.
-		7. Resolve <var>promise</var> with <var>sheet</var>.
+		7. Resolve <var>promise</var> with <var>sheet</var> once all <a spec=css-cascade-4>@import</a> rules in <var>sheet</var> have finished loading.
 		8. Return <var>promise</var>.
 	</dd>
 

@@ -1558,7 +1558,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md>
        <p>Let <var>promise</var> be a promise.</p>
       <li data-md>
-       <p>Resolve <var>promise</var> with <var>sheet</var>.</p>
+       <p>Resolve <var>promise</var> with <var>sheet</var> once all <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rules in <var>sheet</var> have finished loading.</p>
       <li data-md>
        <p>Return <var>promise</var>.</p>
      </ol>
@@ -1754,6 +1754,12 @@ set <var>sheet’s</var> disabled flag.</p>
    <li><a href="#dom-documentorshadowroot-morestylesheets">moreStyleSheets</a><span>, in §1</span>
    <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §1</span>
   </ul>
+  <aside class="dfn-panel" data-for="term-for-at-ruledef-import">
+   <a href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import">https://drafts.csswg.org/css-cascade-4/#at-ruledef-import</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-at-ruledef-import">1. Adding Stylesheets In Script</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-parse-a-stylesheet">
    <a href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet">https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet</a><b>Referenced in:</b>
    <ul>
@@ -1829,6 +1835,11 @@ set <var>sheet’s</var> disabled flag.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[css-cascade-4]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-at-ruledef-import" style="color:initial">@import</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[css-syntax-3]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-parse-a-stylesheet" style="color:initial">parse a stylesheet</span>
@@ -1860,6 +1871,8 @@ set <var>sheet’s</var> disabled flag.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-css-cascade-4">[CSS-CASCADE-4]
+   <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/css-cascade-4/">CSS Cascading and Inheritance Level 4</a>. 14 January 2016. CR. URL: <a href="https://www.w3.org/TR/css-cascade-4/">https://www.w3.org/TR/css-cascade-4/</a>
    <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
    <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 20 February 2014. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
    <dt id="biblio-cssom-1">[CSSOM-1]
