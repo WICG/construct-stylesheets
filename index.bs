@@ -6,6 +6,7 @@ Status: DREAM
 ED: https://wicg.github.io/construct-stylesheets/index.html
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact/
 Editor: Eric Willigers, Google, ericwilligers@google.com
+Editor: Takayoshi Kochi, Google, kochi@google.com
 Abstract: This draft defines additions to CSSOM to make StyleSheet objects directly constructable, along with methods and APIs to make it easier to deal with stylesheets in the context of custom elements and similar.
 Ignored Terms: ShadowRoot, create a medialist object, add a css style sheet, document css style sheets
 </pre>
@@ -14,25 +15,29 @@ Ignored Terms: ShadowRoot, create a medialist object, add a css style sheet, doc
 spec:dom; type:interface; text:Document
 </pre>
 
-Adding Stylesheets In Script {#adding-stylesheets}
+Creating Stylesheets In Script {#creating-stylesheets}
 =================================
 
 <pre class='idl'>
-[Constructor(DOMString text, optional CSSStyleSheetInit options)]
-partial interface CSSStyleSheet {
-};
-
 dictionary CSSStyleSheetInit {
 	(MediaList or DOMString) media = "";
 	DOMString title = "";
 	boolean alternate = false;
 	boolean disabled = false;
 };
-</pre>
 
+[Constructor(optional CSSStyleSheetInit options)]
+partial interface CSSStyleSheet {
+};
+
+partial interface Document {
+  [NewObject] Promise&lt;CSSStyleSheet> createCSSStyleSheet(DOMString text, optional CSSStyleSheetInit options);
+};
+</pre>
 <dl>
-	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet(text)|CSSStyleSheet(text, options)">CSSStyleSheet(text, options)</dfn></dt>
+	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet()">CSSStyleSheet()</dfn></dt>
 	<dd>
+		Synchronously creates an empty CSSStyleSheet object and returns it.
 		When called, execute these steps:
 
 		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
@@ -42,20 +47,37 @@ dictionary CSSStyleSheetInit {
 			no owner CSS rule,
 			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
 			Set <var>sheet’s</var> origin-clean flag.
-		2. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
+		2. Return <var>sheet</var>.
+	</dd>
+	<dt><dfn method for=Document lt="createCSSStyleSheet(text)|createCSSStyleSheet(text, options)">createCSSStyleSheet(text, options)</dfn></dt>
+	<dd>
+		Returns a promise that resolves to a CSSStyleSheet object, when parsing given text
+		as a style sheet and loading dependent resources (such as @import rules) is done.
+		When called, execute these steps:
+
+		1. Let <var>promise</var> be a new promise.
+		2. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
+			with location set to the value of context object's <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url">base URL</a>.
+			no parent CSS style sheet,
+			no owner node,
+			no owner CSS rule,
+			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
+			Set <var>sheet’s</var> origin-clean flag.
+		3. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
 			<a>create a MediaList object</a> from the string
 			and assign it as <var>sheet’s</var> media.
-			Otherwise, assign the value of the attribute as <var>sheet’s</var> media.
-		3. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
+			Otherwise, copy and assign the value of the attribute as <var>sheet’s</var> media.
+		4. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
 			set <var>sheet’s</var> alternate flag.
-		4. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
+		5. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
 			set <var>sheet’s</var> disabled flag.
-		5. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
+		6. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
 			If it returned a list of rules,
 			assign the list as <var>sheet’s</var> CSS rules;
 			otherwise,
-			set <var>sheet’s</var> CSS rules to an empty list.
-		6. Return <var>sheet</var>.
+			set <var>sheet’s</var> CSS rules to an empty list
+		7. Resolve <var>promise</var> with <var>sheet</var>.
+		8. Return <var>promise</var>.
 	</dd>
 </dl>
 
