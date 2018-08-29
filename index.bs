@@ -32,10 +32,7 @@ dictionary CSSStyleSheetInit {
 };
 
 partial interface DocumentOrShadowRoot {
-	attribute StyleSheetList moreStyleSheets;
-};
-
-partial interface CSSStyleSheet {
+	attribute StyleSheetList adoptedStyleSheets;
 };
 </pre>
 
@@ -93,9 +90,9 @@ partial interface CSSStyleSheet {
 		5. Return <var>sheet</var>.
 	</dd>
 
-	<dt><dfn attribute for=DocumentOrShadowRoot>moreStyleSheets</dfn></dt>
+	<dt><dfn attribute for=DocumentOrShadowRoot>adoptedStyleSheets</dfn></dt>
 	<dd>
-		Style sheets assigned to this attribute are part of the <a>document CSS style sheets</a>.
+		Style sheets assigned to this attribute are part of the <a spec=cssom-1>document CSS style sheets</a>.
 		They are ordered after the stylesheets in {{Document/styleSheets}}.
 	</dd>
 </dl>
