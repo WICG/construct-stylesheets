@@ -15,7 +15,7 @@ Ignored Terms: ShadowRoot, create a medialist object, add a css style sheet, doc
 spec:dom; type:interface; text:Document
 </pre>
 
-Adding Stylesheets In Script {#adding-stylesheets}
+Constructing Stylesheets {#constructing-stylesheets}
 =================================
 
 <pre class='idl'>
@@ -30,10 +30,6 @@ dictionary CSSStyleSheetInit {
 	boolean alternate = false;
 	boolean disabled = false;
 };
-
-partial interface DocumentOrShadowRoot {
-	attribute StyleSheetList adoptedStyleSheets;
-};
 </pre>
 
 <dl>
@@ -42,7 +38,7 @@ partial interface DocumentOrShadowRoot {
 		When called, execute these steps:
 
 		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
-			with location set to <code>null</code>,
+			with location set to the {{Document}}'s <a spec=html>base URL</a>,
 			no parent CSS style sheet,
 			no owner node,
 			no owner CSS rule,
@@ -63,7 +59,8 @@ partial interface DocumentOrShadowRoot {
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Let <var>promise</var> be a promise.
 		7. Wait for loading of <a spec=css-cascade-4>@import</a> rules in <var>sheet</var>.
-			* If any of them failed to load, reject <var>promise</var>.
+			* If any of them resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than `text/css`, reject <var>promise</var> with a {{TypeError}}.
+			* If any of them failed to load, reject <var>promise</var> with reason set to {{DOMException}} with the message "Loading import rules failed".
 		    * Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading.
 		8. Return <var>promise</var>.
 	</dd>
@@ -75,7 +72,7 @@ partial interface DocumentOrShadowRoot {
 		When called, execute these steps:
 
 		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
-			with location set to <code>null</code>,
+			with location set to the {{Document}}'s <a spec=html>base URL</a>,
 			no parent CSS style sheet,
 			no owner node,
 			no owner CSS rule,
@@ -91,11 +88,35 @@ partial interface DocumentOrShadowRoot {
 			set <var>sheet’s</var> disabled flag.
 		5. Return <var>sheet</var>.
 	</dd>
+</dl>
 
-	<dt><dfn attribute for=DocumentOrShadowRoot>adoptedStyleSheets</dfn></dt>
+Using Constructed Stylesheets {#using-constructed-stylesheets}
+=============================
+
+A {{CSSStyleSheet}} can be applied to the {{Document}} it is constructed on, or any {{ShadowRoot}} in the {{Document}} it is constructed on,
+by adding a {{StyleSheetList}} containing the sheet to their {{adoptedStyleSheets}}. A stylesheet can be used in multiple {{DocumentOrShadowRoot}}s.
+
+
+<pre class='idl'>
+partial interface DocumentOrShadowRoot {
+	attribute StyleSheetList adoptedStyleSheets;
+};
+
+[Constructor(sequence&lt;StyleSheet> sheets)]
+partial interface StyleSheetList {
+};
+</pre>
+
+<dl>
+	<dt><dfn attribute for=DocumentOrShadowRoot lt="adoptedStyleSheets">adoptedStyleSheets</dfn></dt>
 	<dd>
 		Style sheets assigned to this attribute are part of the <a spec=cssom-1>document CSS style sheets</a>.
 		They are ordered after the stylesheets in {{Document/styleSheets}}.
+	</dd>
+
+	<dt><dfn constructor for=StyleSheetList lt="StyleSheetList(sheets))">StyleSheetList(sheets)</dfn></dt>
+	<dd>
+		Creates a {{StyleSheetList}} containing the contents of sheets.
 	</dd>
 </dl>
 
