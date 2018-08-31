@@ -96,6 +96,7 @@ Using Constructed Stylesheets {#using-constructed-stylesheets}
 A {{CSSStyleSheet}} can be applied to the {{Document}} it is constructed on, or any {{ShadowRoot}} in the {{Document}} it is constructed on,
 by adding a {{StyleSheetList}} containing the sheet to their {{adoptedStyleSheets}}. A stylesheet can be used in multiple {{DocumentOrShadowRoot}}s.
 
+Style sheets not made by {{createCSSStyleSheet(text)}} or {{createEmptyCSSStyleSheet}} cannot be added to {{adoptedStyleSheets}}.
 
 <pre class='idl'>
 partial interface DocumentOrShadowRoot {
