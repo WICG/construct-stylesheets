@@ -59,7 +59,7 @@ dictionary CSSStyleSheetInit {
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Let <var>promise</var> be a promise.
 		7. Wait for loading of <a spec=css-cascade-4>@import</a> rules in <var>sheet</var>.
-			* If any of them resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than `text/css`, reject <var>promise</var> with a {{TypeError}}.
+			* If any of them resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with a {{TypeError}}.
 			* If any of them failed to load, reject <var>promise</var> with reason set to {{DOMException}} with the message "Loading import rules failed".
 		    * Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading.
 		8. Return <var>promise</var>.
