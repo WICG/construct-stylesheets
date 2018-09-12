@@ -36,13 +36,13 @@ We can provide an API for creating stylesheet objects from script, without needi
 ```
 // Create style sheet when registering components.
 let styleSheetList = new StyleSheetList([
-    new CSSStyleSheet("hr { color: green; }")
+    await document.createCSSStyleSheet("hr { color: green; }")
 ]);
 
 // ...
 
 // Apply style sheet in custom element constructor.
-shadowRoot.moreStyleSheets = styleSheetList;
+shadowRoot.adoptedStyleSheets = styleSheetList;
 ```
 
 
