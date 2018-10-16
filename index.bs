@@ -21,6 +21,7 @@ Constructing Stylesheets {#constructing-stylesheets}
 <pre class='idl'>
 partial interface Document {
 	[NewObject] Promise&lt;CSSStyleSheet> createCSSStyleSheet(DOMString text, optional CSSStyleSheetInit options);
+	[NewObject] CSSStyleSheet createCSSStyleSheetSync(DOMString text, optional CSSStyleSheetInit options);
 	[NewObject] CSSStyleSheet createEmptyCSSStyleSheet(optional CSSStyleSheetInit options);
 };
 
@@ -65,6 +66,34 @@ dictionary CSSStyleSheetInit {
 		8. Return <var>promise</var>.
 	</dd>
 
+    <dt><dfn method for=Document lt="createCSSStyleSheetSync(text)|createCSSStyleSheetSync(text, options)">createCSSStyleSheetSync(text, options)</dfn></dt>
+	<dd>
+		When called, execute these steps:
+
+		1. Construct a new {{CSSStyleSheet}} object <var>sheet</var>,
+			with location set to the {{Document}}'s <a spec=html>base URL</a>,
+			no parent CSS style sheet,
+			no owner node,
+			no owner CSS rule,
+			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
+			Set <var>sheet’s</var> origin-clean flag.
+		2. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
+			<a>create a MediaList object</a> from the string
+			and assign it as <var>sheet’s</var> media.
+			Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.
+		3. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
+			set <var>sheet’s</var> alternate flag.
+		4. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
+			set <var>sheet’s</var> disabled flag.
+		5. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
+			If it returned a list of rules,
+			assign the list as <var>sheet’s</var> CSS rules;
+			otherwise,
+			set <var>sheet’s</var> CSS rules to an empty list.
+		6. If <var>sheet</var> contains one or more <a spec=css-cascade-4>@import</a> rules, throw a {{SyntaxError}}.
+		7. Return <var>sheet</var>.
+	</dd>
+
 	<dt><dfn method for=Document lt="createEmptyCSSStyleSheet()|createEmptyCSSStyleSheet(options)">createEmptyCSSStyleSheet(options)</dfn></dt>
 	<dd>
 		Synchronously creates an empty CSSStyleSheet object and returns it.
@@ -93,8 +122,9 @@ dictionary CSSStyleSheetInit {
 Using Constructed Stylesheets {#using-constructed-stylesheets}
 =============================
 
-A {{CSSStyleSheet}} can only be applied to the {{Document}} it is constructed on, or any {{ShadowRoot}} in the {{Document}} it is constructed on,
-by adding a {{StyleSheetList}} containing the sheet to their {{adoptedStyleSheets}}. A stylesheet can be used in multiple {{DocumentOrShadowRoot}}s.
+A {{CSSStyleSheet}} can only be applied to the {{Document}} it is constructed on (e.g. the document on which the factory function is called on),
+and any {{ShadowRoot}} in the {{Document}} it is constructed on, by adding a {{StyleSheetList}} containing the sheet to their {{adoptedStyleSheets}}.
+So, a stylesheet can be used in multiple {{DocumentOrShadowRoot}}s within the document it is constructed on.
 
 Non-explicitly constructed stylesheets cannot be added to {{adoptedStyleSheets}}.
 If {{adoptedStyleSheets}} got assigned a {{StyleSheetList}} that contains style sheets not made by {{createCSSStyleSheet(text)}} or {{createEmptyCSSStyleSheet}},
