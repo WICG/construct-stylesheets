@@ -40,10 +40,10 @@ let someStyleSheet = document.createCSSStyleSheetSync("hr { color: green}");
 let anotherStyleSheet = await document.createCSSStyleSheet("@import fancystyle.css")
 
 // Apply style sheet in custom element constructor.
-shadowRoot.adoptedStyleSheets = new StyleSheetList([someStyleSheet, anotherStyleSheet]);
+shadowRoot.adoptedStyleSheets = [someStyleSheet, anotherStyleSheet];
 
 // Apply style sheet in top level document.
-document.adoptedStyleSheets = new StyleSheetList([someStyleSheet]);
+document.adoptedStyleSheets = [someStyleSheet];
 ```
 
 ### Behavior
@@ -55,21 +55,19 @@ document.adoptedStyleSheets = new StyleSheetList([someStyleSheet]);
 	<div id="someDiv">some div</div>
 	</body>
 	<script>
-		let sheetList = new StyleSheetList([
-			document.createCSSStyleSheetSync("* { color: red; })")
-		]);
+		let sheet = document.createCSSStyleSheetSync("* { color: red; })");
 		// this will fail
-		someFrame.contentDocument.adoptedStyleSheets = sheetList;
+		someFrame.contentDocument.adoptedStyleSheets = [sheet];
 		// this will work
 		let shadowRoot = someDiv.attachShadow({mode: "open"});
-		shadowRoot.adoptedStyleSheets = sheetList;
+		shadowRoot.adoptedStyleSheets = [sheet];
 	</script>
 	```
 * After a stylesheet is added to `DocumentOrShadowRoot`s, changes made to the stylesheet will also reflect in those `DocumentOrShadowRoot`s.
 	* Example:
 	```js
 	let sheet = document.createCSSStyleSheetSync("* { color: red; })");
-	document.adoptedStyleSheets = new StyleSheetList([sheet]);
+	document.adoptedStyleSheets = [sheet];
 	sheet.insertRule("* { background-color: blue; }");
 	// Now document will have blue background color as well.
 	```
