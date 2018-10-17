@@ -123,20 +123,16 @@ Using Constructed Stylesheets {#using-constructed-stylesheets}
 =============================
 
 A {{CSSStyleSheet}} can only be applied to the {{Document}} it is constructed on (e.g. the document on which the factory function is called on),
-and any {{ShadowRoot}} in the {{Document}} it is constructed on, by adding a {{StyleSheetList}} containing the sheet to their {{adoptedStyleSheets}}.
+and any {{ShadowRoot}} in the {{Document}} it is constructed on, by adding an array containing the sheet to their {{adoptedStyleSheets}}.
 So, a stylesheet can be used in multiple {{DocumentOrShadowRoot}}s within the document it is constructed on.
 
 Non-explicitly constructed stylesheets cannot be added to {{adoptedStyleSheets}}.
-If {{adoptedStyleSheets}} got assigned a {{StyleSheetList}} that contains style sheets not made by {{createCSSStyleSheet(text)}} or {{createEmptyCSSStyleSheet}},
+If {{adoptedStyleSheets}} got assigned an array that contains style sheets not made by {{createCSSStyleSheet(text)}}, {{createCSSStyleSheetSync(text)}} or {{createEmptyCSSStyleSheet}},
 a {{TypeError}} will be thrown.
 
 <pre class='idl'>
 partial interface DocumentOrShadowRoot {
-	attribute StyleSheetList adoptedStyleSheets;
-};
-
-[Constructor(sequence&lt;StyleSheet> sheets)]
-partial interface StyleSheetList {
+	attribute FrozenArray&lt;CSSStyleSheet> adoptedStyleSheets;
 };
 </pre>
 
@@ -145,11 +141,6 @@ partial interface StyleSheetList {
 	<dd>
 		Style sheets assigned to this attribute are part of the <a spec=cssom-1>document CSS style sheets</a>.
 		They are ordered after the stylesheets in {{Document/styleSheets}}.
-	</dd>
-
-	<dt><dfn constructor for=StyleSheetList lt="StyleSheetList(sheets))">StyleSheetList(sheets)</dfn></dt>
-	<dd>
-		Creates a {{StyleSheetList}} containing the contents of sheets.
 	</dd>
 </dl>
 
