@@ -1460,11 +1460,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-10-17">17 October 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-10-24">24 October 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://wicg.github.io/construct-stylesheets/index.html">https://wicg.github.io/construct-stylesheets/index.html</a>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/WICG/construct-stylesheets/issues/">GitHub</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://xanthir.com/contact/">Tab Atkins Jr.</a> (<span class="p-org org">Google</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:ericwilligers@google.com">Eric Willigers</a> (<span class="p-org org">Google</span>)
@@ -1474,7 +1476,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 17 October 2018,
+In addition, as of 24 October 2018,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1482,15 +1484,16 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>This draft defines additions to CSSOM to make StyleSheet objects directly constructable, along with methods and APIs to make it easier to deal with stylesheets in the context of custom elements and similar.</p>
+   <p>This draft defines additions to CSSOM to make <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet">CSSStyleSheet</a></code> objects directly constructable, along with a way to use them in <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a></code>s.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="#constructing-stylesheets"><span class="secno">1</span> <span class="content">Constructing Stylesheets</span></a>
-    <li><a href="#using-constructed-stylesheets"><span class="secno">2</span> <span class="content">Using Constructed Stylesheets</span></a>
-    <li><a href="#styles-in-all-contexts"><span class="secno">3</span> <span class="content">Applying Styles In All Contexts</span></a>
+    <li><a href="#motivation"><span class="secno">1</span> <span class="content">Motivation</span></a>
+    <li><a href="#proposed-solution"><span class="secno">2</span> <span class="content">Proposed Solution</span></a>
+    <li><a href="#constructing-stylesheets"><span class="secno">3</span> <span class="content">Constructing Stylesheets</span></a>
+    <li><a href="#using-constructed-stylesheets"><span class="secno">4</span> <span class="content">Using Constructed Stylesheets</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -1507,11 +1510,16 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="constructing-stylesheets"><span class="secno">1. </span><span class="content">Constructing Stylesheets</span><a class="self-link" href="#constructing-stylesheets"></a></h2>
+   <h2 class="heading settled" data-level="1" id="motivation"><span class="secno">1. </span><span class="content">Motivation</span><a class="self-link" href="#motivation"></a></h2>
+   <p>Most web components uses Shadow DOM. For a style sheet to take effect within the Shadow DOM, it currently must be specified using a style element within each shadow root.
+As a web page may contain tens of thousands of web components, this can easily have a large time and memory cost if user agents force the style sheet rules to be parsed and stored once for every style element. However, the duplications are actually not needed as the web components will most likely use the same styling, perhaps one for each component library.</p>
+   <p>Some user agents might attempt to optimize by sharing internal style sheet representations across different instances of the style element. However, component libraries may use JavaScript to modify the style sheet rules, which will thwart style sheet sharing and have large costs in performance and memory.</p>
+   <h2 class="heading settled" data-level="2" id="proposed-solution"><span class="secno">2. </span><span class="content">Proposed Solution</span><a class="self-link" href="#proposed-solution"></a></h2>
+   <p>We are proposing to provide an API for creating stylesheet objects from script, without needing style elements, and also a way to reuse them in multiple places. Script can optionally add or remove rules from a stylesheet object. Each stylesheet object can be added directly to any number of shadow roots (and/or the top level document).</p>
+   <h2 class="heading settled" data-level="3" id="constructing-stylesheets"><span class="secno">3. </span><span class="content">Constructing Stylesheets</span><a class="self-link" href="#constructing-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#document" id="ref-for-document"><c- g>Document</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject"><c- g>NewObject</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheet" id="ref-for-dom-document-createcssstylesheet"><c- g>createCSSStyleSheet</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Document/createCSSStyleSheet(text, options), Document/createCSSStyleSheet(text)" data-dfn-type="argument" data-export id="dom-document-createcssstylesheet-text-options-text"><code><c- g>text</c-></code></dfn>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheet(text, options), Document/createCSSStyleSheet(text)" data-dfn-type="argument" data-export id="dom-document-createcssstylesheet-text-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-document-createcssstylesheet-text-options-options"></a></dfn>);
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject①"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheetsync" id="ref-for-dom-document-createcssstylesheetsync"><c- g>createCSSStyleSheetSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheetSync(text, options), Document/createCSSStyleSheetSync(text)" data-dfn-type="argument" data-export id="dom-document-createcssstylesheetsync-text-options-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-document-createcssstylesheetsync-text-options-text"></a></dfn>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheetSync(text, options), Document/createCSSStyleSheetSync(text)" data-dfn-type="argument" data-export id="dom-document-createcssstylesheetsync-text-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-document-createcssstylesheetsync-text-options-options"></a></dfn>);
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject②"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createemptycssstylesheet" id="ref-for-dom-document-createemptycssstylesheet"><c- g>createEmptyCSSStyleSheet</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit②"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="Document/createEmptyCSSStyleSheet(options), Document/createEmptyCSSStyleSheet()" data-dfn-type="argument" data-export id="dom-document-createemptycssstylesheet-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-document-createemptycssstylesheet-options-options"></a></dfn>);
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject"><c- g>NewObject</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheet" id="ref-for-dom-document-createcssstylesheet"><c- g>createCSSStyleSheet</c-></a>(<c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Document/createCSSStyleSheet(text, options), Document/createCSSStyleSheet(text), Document/createCSSStyleSheet()" data-dfn-type="argument" data-export id="dom-document-createcssstylesheet-text-options-text"><code><c- g>text</c-></code></dfn>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheet(text, options), Document/createCSSStyleSheet(text), Document/createCSSStyleSheet()" data-dfn-type="argument" data-export id="dom-document-createcssstylesheet-text-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-document-createcssstylesheet-text-options-options"></a></dfn>);
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject①"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheetsync" id="ref-for-dom-document-createcssstylesheetsync"><c- g>createCSSStyleSheetSync</c-></a>(<c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheetSync(text, options), Document/createCSSStyleSheetSync(text), Document/createCSSStyleSheetSync()" data-dfn-type="argument" data-export id="dom-document-createcssstylesheetsync-text-options-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-document-createcssstylesheetsync-text-options-text"></a></dfn>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="Document/createCSSStyleSheetSync(text, options), Document/createCSSStyleSheetSync(text), Document/createCSSStyleSheetSync()" data-dfn-type="argument" data-export id="dom-document-createcssstylesheetsync-text-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-document-createcssstylesheetsync-text-options-options"></a></dfn>);
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cssstylesheetinit"><code><c- g>CSSStyleSheetInit</c-></code></dfn> {
@@ -1532,6 +1540,7 @@ with location set to the <code class="idl"><a data-link-type="idl" href="https:/
 no parent CSS style sheet,
 no owner node,
 no owner CSS rule,
+associated document to <var>this</var>,
 and a title set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title">title</a></code> attribute of <var>options</var>.
 Set <var>sheet’s</var> origin-clean flag.</p>
       <li data-md>
@@ -1553,12 +1562,10 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md>
        <p>Let <var>promise</var> be a promise.</p>
       <li data-md>
-       <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rules in <var>sheet</var>.</p>
+       <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rules in <var>sheet</var> and any nested loads from those rules in parallel.</p>
        <ul>
         <li data-md>
-         <p>If any of them resulted in a resource with a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type" id="ref-for-content-type">Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code>.</p>
-        <li data-md>
-         <p>If any of them failed to load, reject <var>promise</var> with reason set to <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> with the message "Loading import rules failed".</p>
+         <p>If any of them failed to load or resulted in a resource with a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type" id="ref-for-content-type">Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with reason set to <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> with name <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>.</p>
         <li data-md>
          <p>Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading.</p>
        </ul>
@@ -1575,6 +1582,7 @@ with location set to the <code class="idl"><a data-link-type="idl" href="https:/
 no parent CSS style sheet,
 no owner node,
 no owner CSS rule,
+associated document to <var>this</var>,
 and a title set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title①">title</a></code> attribute of <var>options</var>.
 Set <var>sheet’s</var> origin-clean flag.</p>
       <li data-md>
@@ -1594,54 +1602,34 @@ assign the list as <var>sheet’s</var> CSS rules;
 otherwise,
 set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md>
-       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#syntaxerror" id="ref-for-syntaxerror">SyntaxError</a></code>.</p>
-      <li data-md>
-       <p>Return <var>sheet</var>.</p>
-     </ol>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="method" data-export data-lt="createEmptyCSSStyleSheet()|createEmptyCSSStyleSheet(options)" id="dom-document-createemptycssstylesheet"><code>createEmptyCSSStyleSheet(options)</code></dfn>
-    <dd>
-      Synchronously creates an empty CSSStyleSheet object and returns it. 
-     <p>When called, execute these steps:</p>
-     <ol>
-      <li data-md>
-       <p>Construct a new <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑤">CSSStyleSheet</a></code> object <var>sheet</var>,
-with location set to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url②">base URL</a>,
-no parent CSS style sheet,
-no owner node,
-no owner CSS rule,
-and a title set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title②">title</a></code> attribute of <var>options</var>.
-Set <var>sheet’s</var> origin-clean flag.</p>
-      <li data-md>
-       <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-media" id="ref-for-dom-cssstylesheetinit-media②">media</a></code> attribute of <var>options</var> is a string, <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object" id="ref-for-create-a-medialist-object②">create a MediaList object</a> from the string
-and assign it as <var>sheet’s</var> media.
-Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.</p>
-      <li data-md>
-       <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-alternate" id="ref-for-dom-cssstylesheetinit-alternate②">alternate</a></code> attribute of <var>options</var> is true,
-set <var>sheet’s</var> alternate flag.</p>
-      <li data-md>
-       <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-disabled" id="ref-for-dom-cssstylesheetinit-disabled②">disabled</a></code> attribute of <var>options</var> is true,
-set <var>sheet’s</var> disabled flag.</p>
+       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code> with name <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>.</p>
       <li data-md>
        <p>Return <var>sheet</var>.</p>
      </ol>
    </dl>
-   <h2 class="heading settled" data-level="2" id="using-constructed-stylesheets"><span class="secno">2. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
-   <p>A <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥">CSSStyleSheet</a></code> can only be applied to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code> it is constructed on (e.g. the document on which the factory function is called on),
-and any <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> in the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> it is constructed on, by assigning an array containing the sheet to their <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets">adoptedStyleSheets</a></code>.
-So, a stylesheet can be used in multiple <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a></code>s within the document it is constructed on.</p>
-   <p>Non-explicitly constructed stylesheets cannot be added to <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets①">adoptedStyleSheets</a></code>.
-If <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets②">adoptedStyleSheets</a></code> got assigned an array that contains style sheets not made by <code class="idl"><a data-link-type="idl" href="#dom-document-createcssstylesheet" id="ref-for-dom-document-createcssstylesheet①">createCSSStyleSheet(text)</a></code>, <code class="idl"><a data-link-type="idl" href="#dom-document-createcssstylesheetsync" id="ref-for-dom-document-createcssstylesheetsync①">createCSSStyleSheetSync(text)</a></code> or <code class="idl"><a data-link-type="idl" href="#dom-document-createemptycssstylesheet" id="ref-for-dom-document-createemptycssstylesheet①">createEmptyCSSStyleSheet</a></code>,
-a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code> will be thrown.</p>
+   <h2 class="heading settled" data-level="4" id="using-constructed-stylesheets"><span class="secno">4. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③"><c- g>adoptedStyleSheets</c-></a>;
+  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑤"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
 };
 </pre>
    <dl>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export id="dom-documentorshadowroot-adoptedstylesheets"><code>adoptedStyleSheets</code></dfn>, <span> of type FrozenArray&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a>></span>
+    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export id="dom-documentorshadowroot-adoptedstylesheets"><code>adoptedStyleSheets</code></dfn>, <span> of type FrozenArray&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥">CSSStyleSheet</a>></span>
     <dd> Style sheets assigned to this attribute are part of the <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#document-document-css-style-sheets" id="ref-for-document-document-css-style-sheets">document CSS style sheets</a>.
 		They are ordered after the stylesheets in <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets" id="ref-for-dom-document-stylesheets">styleSheets</a></code>. 
    </dl>
-   <h2 class="heading settled" data-level="3" id="styles-in-all-contexts"><span class="secno">3. </span><span class="content">Applying Styles In All Contexts</span><a class="self-link" href="#styles-in-all-contexts"></a></h2>
+   <p>Every <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot②">DocumentOrShadowRoot</a></code> has adopted stylesheets (of type FrozenArray&lt;CSSStyleSheet>).</p>
+   <p>On getting, <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets①">adoptedStyleSheets</a></code> returns this DocumentOrShadowRoot’s adopted stylesheets.</p>
+   <p>On setting, <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets②">adoptedStyleSheets</a></code> performs the following steps:</p>
+   <ol>
+    <li data-md>
+     <p>Let <var>adopted</var> be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet></p>
+    <li data-md>
+     <p>If any entry of <var>adopted</var> has no associated document (e.g. it’s not made by factory methods to construct stylesheets), throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code> with name <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>.</p>
+    <li data-md>
+     <p>Set this <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot③">DocumentOrShadowRoot</a></code>'s adopted stylesheets to <var>adopted</var>.</p>
+    <li data-md>
+     <p>Now the adopted stylesheets are part of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot④">DocumentOrShadowRoot</a></code>'s style sheets and are ordered after the style sheets in <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets" id="ref-for-dom-document-stylesheets①">styleSheets</a></code>, and will be considered in style calcualtion of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑤">DocumentOrShadowRoot</a></code>.</p>
+   </ol>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1792,128 +1780,114 @@ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webid
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#dom-documentorshadowroot-adoptedstylesheets">adoptedStyleSheets</a><span>, in §2</span>
-   <li><a href="#dom-cssstylesheetinit-alternate">alternate</a><span>, in §1</span>
-   <li><a href="#dom-document-createcssstylesheetsync">createCSSStyleSheetSync(text)</a><span>, in §1</span>
-   <li><a href="#dom-document-createcssstylesheetsync">createCSSStyleSheetSync(text, options)</a><span>, in §1</span>
-   <li><a href="#dom-document-createcssstylesheet">createCSSStyleSheet(text)</a><span>, in §1</span>
-   <li><a href="#dom-document-createcssstylesheet">createCSSStyleSheet(text, options)</a><span>, in §1</span>
-   <li><a href="#dom-document-createemptycssstylesheet">createEmptyCSSStyleSheet()</a><span>, in §1</span>
-   <li><a href="#dom-document-createemptycssstylesheet">createEmptyCSSStyleSheet(options)</a><span>, in §1</span>
-   <li><a href="#dictdef-cssstylesheetinit">CSSStyleSheetInit</a><span>, in §1</span>
-   <li><a href="#dom-cssstylesheetinit-disabled">disabled</a><span>, in §1</span>
-   <li><a href="#dom-cssstylesheetinit-media">media</a><span>, in §1</span>
-   <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §1</span>
+   <li><a href="#dom-documentorshadowroot-adoptedstylesheets">adoptedStyleSheets</a><span>, in §4</span>
+   <li><a href="#dom-cssstylesheetinit-alternate">alternate</a><span>, in §3</span>
+   <li><a href="#dom-document-createcssstylesheetsync">createCSSStyleSheetSync(text)</a><span>, in §3</span>
+   <li><a href="#dom-document-createcssstylesheetsync">createCSSStyleSheetSync(text, options)</a><span>, in §3</span>
+   <li><a href="#dom-document-createcssstylesheet">createCSSStyleSheet(text)</a><span>, in §3</span>
+   <li><a href="#dom-document-createcssstylesheet">createCSSStyleSheet(text, options)</a><span>, in §3</span>
+   <li><a href="#dictdef-cssstylesheetinit">CSSStyleSheetInit</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheetinit-disabled">disabled</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheetinit-media">media</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-at-ruledef-import">
    <a href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import">https://drafts.csswg.org/css-cascade-4/#at-ruledef-import</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-at-ruledef-import">1. Constructing Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a>
+    <li><a href="#ref-for-at-ruledef-import">3. Constructing Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-parse-a-stylesheet">
    <a href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet">https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-parse-a-stylesheet">1. Constructing Stylesheets</a> <a href="#ref-for-parse-a-stylesheet①">(2)</a>
+    <li><a href="#ref-for-parse-a-stylesheet">3. Constructing Stylesheets</a> <a href="#ref-for-parse-a-stylesheet①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-cssstylesheet">
    <a href="https://drafts.csswg.org/cssom-1/#cssstylesheet">https://drafts.csswg.org/cssom-1/#cssstylesheet</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cssstylesheet">1. Constructing Stylesheets</a> <a href="#ref-for-cssstylesheet①">(2)</a> <a href="#ref-for-cssstylesheet②">(3)</a> <a href="#ref-for-cssstylesheet③">(4)</a> <a href="#ref-for-cssstylesheet④">(5)</a> <a href="#ref-for-cssstylesheet⑤">(6)</a>
-    <li><a href="#ref-for-cssstylesheet⑥">2. Using Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet⑦">(2)</a> <a href="#ref-for-cssstylesheet⑧">(3)</a>
+    <li><a href="#ref-for-cssstylesheet①">3. Constructing Stylesheets</a> <a href="#ref-for-cssstylesheet②">(2)</a> <a href="#ref-for-cssstylesheet③">(3)</a> <a href="#ref-for-cssstylesheet④">(4)</a>
+    <li><a href="#ref-for-cssstylesheet⑤">4. Using Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet⑥">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-medialist">
    <a href="https://drafts.csswg.org/cssom-1/#medialist">https://drafts.csswg.org/cssom-1/#medialist</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-medialist">1. Constructing Stylesheets</a>
+    <li><a href="#ref-for-medialist">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-create-a-medialist-object">
    <a href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object">https://drafts.csswg.org/cssom-1/#create-a-medialist-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-create-a-medialist-object">1. Constructing Stylesheets</a> <a href="#ref-for-create-a-medialist-object①">(2)</a> <a href="#ref-for-create-a-medialist-object②">(3)</a>
+    <li><a href="#ref-for-create-a-medialist-object">3. Constructing Stylesheets</a> <a href="#ref-for-create-a-medialist-object①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-document-document-css-style-sheets">
    <a href="https://drafts.csswg.org/cssom-1/#document-document-css-style-sheets">https://drafts.csswg.org/cssom-1/#document-document-css-style-sheets</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-document-document-css-style-sheets">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-document-document-css-style-sheets">4. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dom-document-stylesheets">
    <a href="https://drafts.csswg.org/cssom-1/#dom-document-stylesheets">https://drafts.csswg.org/cssom-1/#dom-document-stylesheets</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-document-stylesheets">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-dom-document-stylesheets">4. Using Constructed Stylesheets</a> <a href="#ref-for-dom-document-stylesheets①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-document">
    <a href="https://dom.spec.whatwg.org/#document">https://dom.spec.whatwg.org/#document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-document">1. Constructing Stylesheets</a> <a href="#ref-for-document①">(2)</a> <a href="#ref-for-document②">(3)</a> <a href="#ref-for-document③">(4)</a>
-    <li><a href="#ref-for-document④">2. Using Constructed Stylesheets</a> <a href="#ref-for-document⑤">(2)</a>
+    <li><a href="#ref-for-document">3. Constructing Stylesheets</a> <a href="#ref-for-document①">(2)</a> <a href="#ref-for-document②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-documentorshadowroot">
    <a href="https://dom.spec.whatwg.org/#documentorshadowroot">https://dom.spec.whatwg.org/#documentorshadowroot</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-documentorshadowroot">2. Using Constructed Stylesheets</a> <a href="#ref-for-documentorshadowroot①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-shadowroot">
-   <a href="https://dom.spec.whatwg.org/#shadowroot">https://dom.spec.whatwg.org/#shadowroot</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-shadowroot">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-documentorshadowroot①">4. Using Constructed Stylesheets</a> <a href="#ref-for-documentorshadowroot②">(2)</a> <a href="#ref-for-documentorshadowroot③">(3)</a> <a href="#ref-for-documentorshadowroot④">(4)</a> <a href="#ref-for-documentorshadowroot⑤">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-script-base-url">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url">https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-script-base-url">1. Constructing Stylesheets</a> <a href="#ref-for-concept-script-base-url①">(2)</a> <a href="#ref-for-concept-script-base-url②">(3)</a>
+    <li><a href="#ref-for-concept-script-base-url">3. Constructing Stylesheets</a> <a href="#ref-for-concept-script-base-url①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-content-type">
    <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type">https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-content-type">1. Constructing Stylesheets</a>
+    <li><a href="#ref-for-content-type">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
    <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMException">1. Constructing Stylesheets</a>
+    <li><a href="#ref-for-idl-DOMException">3. Constructing Stylesheets</a> <a href="#ref-for-idl-DOMException①">(2)</a>
+    <li><a href="#ref-for-idl-DOMException②">4. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
    <a href="https://heycam.github.io/webidl/#idl-DOMString">https://heycam.github.io/webidl/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMString">1. Constructing Stylesheets</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a>
+    <li><a href="#ref-for-idl-DOMString">3. Constructing Stylesheets</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-NewObject">
    <a href="https://heycam.github.io/webidl/#NewObject">https://heycam.github.io/webidl/#NewObject</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-NewObject">1. Constructing Stylesheets</a> <a href="#ref-for-NewObject①">(2)</a> <a href="#ref-for-NewObject②">(3)</a>
+    <li><a href="#ref-for-NewObject">3. Constructing Stylesheets</a> <a href="#ref-for-NewObject①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-syntaxerror">
-   <a href="https://heycam.github.io/webidl/#syntaxerror">https://heycam.github.io/webidl/#syntaxerror</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-notallowederror">
+   <a href="https://heycam.github.io/webidl/#notallowederror">https://heycam.github.io/webidl/#notallowederror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-syntaxerror">1. Constructing Stylesheets</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-exceptiondef-typeerror">
-   <a href="https://heycam.github.io/webidl/#exceptiondef-typeerror">https://heycam.github.io/webidl/#exceptiondef-typeerror</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-exceptiondef-typeerror">1. Constructing Stylesheets</a>
-    <li><a href="#ref-for-exceptiondef-typeerror①">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-notallowederror">3. Constructing Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a>
+    <li><a href="#ref-for-notallowederror②">4. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-boolean">
    <a href="https://heycam.github.io/webidl/#idl-boolean">https://heycam.github.io/webidl/#idl-boolean</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-boolean">1. Constructing Stylesheets</a> <a href="#ref-for-idl-boolean①">(2)</a>
+    <li><a href="#ref-for-idl-boolean">3. Constructing Stylesheets</a> <a href="#ref-for-idl-boolean①">(2)</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -1942,7 +1916,6 @@ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webid
     <ul>
      <li><span class="dfn-paneled" id="term-for-document" style="color:initial">Document</span>
      <li><span class="dfn-paneled" id="term-for-documentorshadowroot" style="color:initial">DocumentOrShadowRoot</span>
-     <li><span class="dfn-paneled" id="term-for-shadowroot" style="color:initial">ShadowRoot</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
@@ -1956,8 +1929,7 @@ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webid
      <li><span class="dfn-paneled" id="term-for-idl-DOMException" style="color:initial">DOMException</span>
      <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
      <li><span class="dfn-paneled" id="term-for-NewObject" style="color:initial">NewObject</span>
-     <li><span class="dfn-paneled" id="term-for-syntaxerror" style="color:initial">SyntaxError</span>
-     <li><span class="dfn-paneled" id="term-for-exceptiondef-typeerror" style="color:initial">TypeError</span>
+     <li><span class="dfn-paneled" id="term-for-notallowederror" style="color:initial">NotAllowedError</span>
      <li><span class="dfn-paneled" id="term-for-idl-boolean" style="color:initial">boolean</span>
     </ul>
   </ul>
@@ -1980,10 +1952,9 @@ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webid
    <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥"><c- g>Document</c-></a> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject③"><c- g>NewObject</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheet" id="ref-for-dom-document-createcssstylesheet②"><c- g>createCSSStyleSheet</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a> <a href="#dom-document-createcssstylesheet-text-options-text"><code><c- g>text</c-></code></a>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit③"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-document-createcssstylesheet-text-options-options"><code><c- g>options</c-></code></a>);
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject①①"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheetsync" id="ref-for-dom-document-createcssstylesheetsync②"><c- g>createCSSStyleSheetSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a href="#dom-document-createcssstylesheetsync-text-options-text"><code><c- g>text</c-></code></a>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-document-createcssstylesheetsync-text-options-options"><code><c- g>options</c-></code></a>);
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject②①"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createemptycssstylesheet" id="ref-for-dom-document-createemptycssstylesheet②"><c- g>createEmptyCSSStyleSheet</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit②①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-document-createemptycssstylesheet-options-options"><code><c- g>options</c-></code></a>);
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③"><c- g>Document</c-></a> {
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject②"><c- g>NewObject</c-></a>] <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheet" id="ref-for-dom-document-createcssstylesheet①"><c- g>createCSSStyleSheet</c-></a>(<c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a> <a href="#dom-document-createcssstylesheet-text-options-text"><code><c- g>text</c-></code></a>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit②"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-document-createcssstylesheet-text-options-options"><code><c- g>options</c-></code></a>);
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#NewObject" id="ref-for-NewObject①①"><c- g>NewObject</c-></a>] <a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a> <a class="idl-code" data-link-type="method" href="#dom-document-createcssstylesheetsync" id="ref-for-dom-document-createcssstylesheetsync①"><c- g>createCSSStyleSheetSync</c-></a>(<c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a href="#dom-document-createcssstylesheetsync-text-options-text"><code><c- g>text</c-></code></a>, <c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-document-createcssstylesheetsync-text-options-options"><code><c- g>options</c-></code></a>);
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-cssstylesheetinit"><code><c- g>CSSStyleSheetInit</c-></code></a> {
@@ -1994,71 +1965,62 @@ a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webid
 };
 
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③①"><c- g>adoptedStyleSheets</c-></a>;
+  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑤①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③"><c- g>adoptedStyleSheets</c-></a>;
 };
 
 </pre>
   <aside class="dfn-panel" data-for="dom-document-createcssstylesheet-text-options-text">
    <b><a href="#dom-document-createcssstylesheet-text-options-text">#dom-document-createcssstylesheet-text-options-text</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-document-createcssstylesheet-text-options-text">1. Constructing Stylesheets</a> <a href="#ref-for-dom-document-createcssstylesheet-text-options-text①">(2)</a>
+    <li><a href="#ref-for-dom-document-createcssstylesheet-text-options-text">3. Constructing Stylesheets</a> <a href="#ref-for-dom-document-createcssstylesheet-text-options-text①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dictdef-cssstylesheetinit">
    <b><a href="#dictdef-cssstylesheetinit">#dictdef-cssstylesheetinit</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-cssstylesheetinit">1. Constructing Stylesheets</a> <a href="#ref-for-dictdef-cssstylesheetinit①">(2)</a> <a href="#ref-for-dictdef-cssstylesheetinit②">(3)</a>
+    <li><a href="#ref-for-dictdef-cssstylesheetinit">3. Constructing Stylesheets</a> <a href="#ref-for-dictdef-cssstylesheetinit①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheetinit-media">
    <b><a href="#dom-cssstylesheetinit-media">#dom-cssstylesheetinit-media</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cssstylesheetinit-media">1. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-media①">(2)</a> <a href="#ref-for-dom-cssstylesheetinit-media②">(3)</a>
+    <li><a href="#ref-for-dom-cssstylesheetinit-media">3. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-media①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheetinit-title">
    <b><a href="#dom-cssstylesheetinit-title">#dom-cssstylesheetinit-title</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cssstylesheetinit-title">1. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-title①">(2)</a> <a href="#ref-for-dom-cssstylesheetinit-title②">(3)</a>
+    <li><a href="#ref-for-dom-cssstylesheetinit-title">3. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-title①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheetinit-alternate">
    <b><a href="#dom-cssstylesheetinit-alternate">#dom-cssstylesheetinit-alternate</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cssstylesheetinit-alternate">1. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-alternate①">(2)</a> <a href="#ref-for-dom-cssstylesheetinit-alternate②">(3)</a>
+    <li><a href="#ref-for-dom-cssstylesheetinit-alternate">3. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-alternate①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheetinit-disabled">
    <b><a href="#dom-cssstylesheetinit-disabled">#dom-cssstylesheetinit-disabled</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-cssstylesheetinit-disabled">1. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-disabled①">(2)</a> <a href="#ref-for-dom-cssstylesheetinit-disabled②">(3)</a>
+    <li><a href="#ref-for-dom-cssstylesheetinit-disabled">3. Constructing Stylesheets</a> <a href="#ref-for-dom-cssstylesheetinit-disabled①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-document-createcssstylesheet">
    <b><a href="#dom-document-createcssstylesheet">#dom-document-createcssstylesheet</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-document-createcssstylesheet">1. Constructing Stylesheets</a>
-    <li><a href="#ref-for-dom-document-createcssstylesheet①">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-dom-document-createcssstylesheet">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-document-createcssstylesheetsync">
    <b><a href="#dom-document-createcssstylesheetsync">#dom-document-createcssstylesheetsync</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-document-createcssstylesheetsync">1. Constructing Stylesheets</a>
-    <li><a href="#ref-for-dom-document-createcssstylesheetsync①">2. Using Constructed Stylesheets</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-document-createemptycssstylesheet">
-   <b><a href="#dom-document-createemptycssstylesheet">#dom-document-createemptycssstylesheet</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-document-createemptycssstylesheet">1. Constructing Stylesheets</a>
-    <li><a href="#ref-for-dom-document-createemptycssstylesheet①">2. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-dom-document-createcssstylesheetsync">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-documentorshadowroot-adoptedstylesheets">
    <b><a href="#dom-documentorshadowroot-adoptedstylesheets">#dom-documentorshadowroot-adoptedstylesheets</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets">2. Using Constructed Stylesheets</a> <a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets①">(2)</a> <a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets②">(3)</a> <a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets③">(4)</a>
+    <li><a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets">4. Using Constructed Stylesheets</a> <a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets①">(2)</a> <a href="#ref-for-dom-documentorshadowroot-adoptedstylesheets②">(3)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
