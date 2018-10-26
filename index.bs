@@ -75,7 +75,7 @@ dictionary CSSStyleSheetInit {
 			set <var>sheet’s</var> CSS rules to an empty list.
 		6. Let <var>promise</var> be a promise.
 		7. In parallel, wait for loading of <a spec=css-cascade-4>@import</a> rules in <var>sheet</var> and any nested <a spec=css-cascade-4>@import</a>s from those rules.
-			* If any of them failed to load or resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with reason set to {{NotAllowedError}} {{DOMException}}.
+			* If any of them failed to load or resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with reason set to "{{NotAllowedError}}" {{DOMException}}.
 		    * Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading.
 		8. Return <var>promise</var>.
 	</dd>
@@ -105,7 +105,7 @@ dictionary CSSStyleSheetInit {
 			assign the list as <var>sheet’s</var> CSS rules;
 			otherwise,
 			set <var>sheet’s</var> CSS rules to an empty list.
-		6. If <var>sheet</var> contains one or more <a spec=css-cascade-4>@import</a> rules, throw a {{NotAllowedError}} {{DOMException}}.
+		6. If <var>sheet</var> contains one or more <a spec=css-cascade-4>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
 		7. Return <var>sheet</var>.
 	</dd>
 
@@ -124,20 +124,20 @@ partial interface DocumentOrShadowRoot {
 <dl>
 	<dt><dfn attribute for=DocumentOrShadowRoot lt="adoptedStyleSheets">adoptedStyleSheets</dfn></dt>
 	<dd>
-		On getting, {{adoptedStyleSheets}} returns this DocumentOrShadowRoot's [=adopted stylesheets=].
+		On getting, {{adoptedStyleSheets}} returns this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=].
 
 		On setting, {{adoptedStyleSheets}} performs the following steps:
 
 		1. Let <var>adopted</var> be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet>
-		2. If any entry of <var>adopted</var> has no associated document (e.g. it's not made by factory methods to construct stylesheets), throw a {{NotAllowedError}} {{DOMException}}. 
-		3. Set this {{DocumentOrShadowRoot}}'s adopted stylesheets to <var>adopted</var>.
+		2. If any entry of <var>adopted</var> has no associated document (e.g. it's not made by factory methods to construct stylesheets), throw a "{{NotAllowedError}}" {{DOMException}}. 
+		3. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to <var>adopted</var>.
 	</dd>
 </dl>
 
 Every {{DocumentOrShadowRoot}} has <dfn>adopted stylesheets</dfn>.
 
 The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
-[=adopted stylesheets=] inside its <a spec=cssom-1>document CSS style sheets</a> collection if it is a {{Document}}, or shadow CSS style sheets collection if it is a {{ShadowRoot}}. The [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
+[=adopted stylesheets=] inside its <a>document or shadow root CSS style sheets</a>. The [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
 
 
