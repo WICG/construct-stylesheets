@@ -1460,7 +1460,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-11-08">8 November 2018</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2018-11-09">9 November 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1476,7 +1476,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 8 November 2018,
+In addition, as of 9 November 2018,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1538,25 +1538,25 @@ As a web page may contain tens of thousands of web components, this can easily h
      <ol>
       <li data-md>
        <p>Construct a new <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet③">CSSStyleSheet</a> object <var>sheet</var>,
-with location set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url">base URL</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> for the window where this constructor is called on,
-no parent CSS style sheet,
-no owner node,
-no owner CSS rule,
-and a title set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title">title</a></code> attribute of <var>options</var>.</p>
+with <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location" id="ref-for-concept-css-style-sheet-location">location</a> set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url">base URL</a> of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> for the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> where this constructor is called on,
+no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a>,
+no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node" id="ref-for-concept-css-style-sheet-owner-node">owner node</a>,
+no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-css-rule" id="ref-for-concept-css-style-sheet-owner-css-rule">owner CSS rule</a>,
+and <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-title" id="ref-for-concept-css-style-sheet-title">title</a> set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title">title</a></code> attribute of <var>options</var>.</p>
       <li data-md>
        <p>Set <var>sheet’s</var> origin-clean flag.
 Set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag">constructed flag</a>.
-Set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document">constructor document</a> to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> for the window where this constructor is called on.</p>
+Set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document">constructor document</a> to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> for the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> where this constructor is called on.</p>
       <li data-md>
        <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-media" id="ref-for-dom-cssstylesheetinit-media">media</a></code> attribute of <var>options</var> is a string, <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object" id="ref-for-create-a-medialist-object">create a MediaList object</a> from the string
-and assign it as <var>sheet’s</var> media.
-Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.</p>
+and assign it as <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media" id="ref-for-concept-css-style-sheet-media">media</a>.
+Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media" id="ref-for-concept-css-style-sheet-media①">media</a>.</p>
       <li data-md>
        <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-alternate" id="ref-for-dom-cssstylesheetinit-alternate">alternate</a></code> attribute of <var>options</var> is true,
-set <var>sheet’s</var> alternate flag.</p>
+set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag">alternate flag</a>.</p>
       <li data-md>
        <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-disabled" id="ref-for-dom-cssstylesheetinit-disabled">disabled</a></code> attribute of <var>options</var> is true,
-set <var>sheet’s</var> disabled flag.</p>
+set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag" id="ref-for-concept-css-style-sheet-disabled-flag">disabled flag</a>.</p>
       <li data-md>
        <p>Return <var>sheet</var>.</p>
      </ol>
@@ -1566,39 +1566,63 @@ set <var>sheet’s</var> disabled flag.</p>
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-disallow-modification-flag">disallow modification flag</dfn>
     <dd> Either set or unset. Unset by default. If set, modification to the stylesheet’s rules are not allowed. 
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-constructor-document">constructor document</dfn>
-    <dd> Specified when created. The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> where the CSSStyleSheet is originally constructed on. Null by default. 
+    <dd> Specified when created. The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> where the stylesheet is originally constructed on. Null by default. 
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-set-of-adopter-documents">set of adopter documents</dfn>
     <dd> A set of <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code>s on which the stylesheet is adopted (e.g. there is at least one <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①">DocumentOrShadowRoot</a></code> within that <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code>'s tree on which the sheet is part of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot②">DocumentOrShadowRoot</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets">adoptedStyleSheets</a></code>). 
    </dl>
    <h2 class="heading settled" data-level="4" id="modifying-constructed-stylesheets"><span class="secno">4. </span><span class="content">Modifying Constructed Stylesheets</span><a class="self-link" href="#modifying-constructed-stylesheets"></a></h2>
    <p>After construction, constructed stylesheets can be modified using rule modification methods like <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule" id="ref-for-dom-cssstylesheet-insertrule">insertRule(rule)</a> or <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule" id="ref-for-dom-cssstylesheet-deleterule">deleteRule(rule)</a>, or <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace①">replace(text)</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync①">replaceSync(text)</a></code> if the sheet’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag">disallow modification flag</a> is not set. If those methods are called when the sheet’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is set, or <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule" id="ref-for-dom-cssstylesheet-insertrule①">insertRule(rule)</a> is used to add an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rule, a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> must be thrown.</p>
    <dl>
+    <dt><dfn class="idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="method" data-export id="dom-cssstylesheet-insertrule"><code>insertRule(text)</code><a class="self-link" href="#dom-cssstylesheet-insertrule"></a></dfn>
+    <dd>
+     <ol>
+      <li data-md>
+       <p>Let <var>sheet</var> be the stylesheet on which this function is called on.</p>
+      <li data-md>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag①">constructed flag</a> and <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
+      <li data-md>
+       <p>If <var>rule</var> is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rule and this sheet’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag②">constructed flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
+      <li data-md>
+       <p>(The rest of the algorithm remains as in CSSOM)</p>
+     </ol>
+    <dt><dfn class="idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="method" data-export id="dom-cssstylesheet-deleterule"><code>deleteRule(text)</code><a class="self-link" href="#dom-cssstylesheet-deleterule"></a></dfn>
+    <dd>
+     <ol>
+      <li data-md>
+       <p>Let <var>sheet</var> be the stylesheet on which this function is called on.</p>
+      <li data-md>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> and <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
+      <li data-md>
+       <p>If <var>rule</var> is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a> rule and this sheet’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
+      <li data-md>
+       <p>(The rest of the algorithm remains as in CSSOM)</p>
+     </ol>
     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="method" data-export id="dom-cssstylesheet-replace"><code>replace(text)</code></dfn>
     <dd>
      <ol>
       <li data-md>
        <p>Let <var>sheet</var> be the stylesheet on which this function is called on.</p>
       <li data-md>
-       <p>If <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag①">constructed flag</a> is not set, or <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
+       <p>If <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is not set, or <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag④">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
       <li data-md>
-       <p>Set <var>sheet’s</var> CSS rules to an empty list, and set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a>.</p>
+       <p>Set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule">CSS rules</a> to an empty list, and set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet" id="ref-for-parse-a-stylesheet">Parse a stylesheet</a> from <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace-text-text" id="ref-for-dom-cssstylesheet-replace-text-text">text</a></code>.
+       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules">Parse a list of rules</a> from <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace-text-text" id="ref-for-dom-cssstylesheet-replace-text-text">text</a></code>.
 If it returned a list of rules,
-assign the list as <var>sheet’s</var> CSS rules;
+assign the list as <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule①">CSS rules</a>;
 otherwise,
-set <var>sheet’s</var> CSS rules to an empty list.</p>
+set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule②">CSS rules</a> to an empty list.</p>
       <li data-md>
-       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules and <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-set-of-adopter-documents" id="ref-for-cssstylesheet-set-of-adopter-documents">set of adopter documents</a> contains any other <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> than <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
+       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a> rules and <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-set-of-adopter-documents" id="ref-for-cssstylesheet-set-of-adopter-documents">set of adopter documents</a> contains any other <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> than <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑥">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
       <li data-md>
        <p>Let <var>promise</var> be a promise.</p>
       <li data-md>
-       <p>In parallel, wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a> rules in <var>sheet</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a>s from those rules.</p>
+       <p>In parallel, wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules in <var>sheet</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑤">@import</a>s from those rules.</p>
        <ul>
         <li data-md>
-         <p>If any of them failed to load or resulted in a resource with a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type" id="ref-for-content-type">Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with reason set to "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
+         <p>If any of them failed to load or resulted in a resource with a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#content-type" id="ref-for-content-type">Content-Type metadata</a> of anything other than <code>text/css</code>, reject <var>promise</var> with reason set to "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑦">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
         <li data-md>
-         <p>Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading. and unset <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag④">disallow modification flag</a>.</p>
+         <p>Otherwise, resolve <var>promise</var> with <var>sheet</var> once all of them have finished loading. and unset <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑥">disallow modification flag</a>.</p>
        </ul>
       <li data-md>
        <p>Return <var>promise</var>.</p>
@@ -1610,19 +1634,19 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md>
        <p>Let <var>sheet</var> be the stylesheet on which this function is called on.</p>
       <li data-md>
-       <p>If <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag②">constructed flag</a> is not set, or <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
+       <p>If <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑥">constructed flag</a> is not set, or <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑧">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑧">DOMException</a></code>.</p>
       <li data-md>
-       <p>Set <var>sheet’s</var> CSS rules to an empty list, and set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑥">disallow modification flag</a>.</p>
+       <p>Set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule③">CSS rules</a> to an empty list, and set <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑧">disallow modification flag</a>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet" id="ref-for-parse-a-stylesheet①">Parse a stylesheet</a> from <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace-text-text" id="ref-for-dom-cssstylesheet-replace-text-text①">text</a></code>.
+       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules①">Parse a list of rules</a> from <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace-text-text" id="ref-for-dom-cssstylesheet-replace-text-text①">text</a></code>.
 If it returned a list of rules,
-assign the list as <var>sheet’s</var> CSS rules;
+assign the list as <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule④">CSS rules</a>;
 otherwise,
-set <var>sheet’s</var> CSS rules to an empty list.</p>
+set <var>sheet’s</var> <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule⑤">CSS rules</a> to an empty list.</p>
       <li data-md>
-       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
+       <p>If <var>sheet</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑥">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑨">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑨">DOMException</a></code>.</p>
       <li data-md>
-       <p>Unset <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> and return <var>sheet</var>.</p>
+       <p>Unset <var>sheet’s</var> <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑨">disallow modification flag</a> and return <var>sheet</var>.</p>
      </ol>
    </dl>
    <h2 class="heading settled" data-level="5" id="using-constructed-stylesheets"><span class="secno">5. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
@@ -1639,7 +1663,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
       <li data-md>
        <p>Let <var>adopted</var> be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet></p>
       <li data-md>
-       <p>If any entry of <var>adopted</var> has its <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> not set  (e.g. it’s not made by factory methods to construct stylesheets), throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑥">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
+       <p>If any entry of <var>adopted</var> has its <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑦">constructed flag</a> not set  (e.g. it’s not made by factory methods to construct stylesheets), throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①⓪">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①⓪">DOMException</a></code>.</p>
       <li data-md>
        <p>Set this <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑤">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets①">adopted stylesheets</a> to <var>adopted</var>.</p>
       <li data-md>
@@ -1807,8 +1831,10 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet()</a><span>, in §3</span>
    <li><a href="#dictdef-cssstylesheetinit">CSSStyleSheetInit</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet(options)</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheet-deleterule">deleteRule(text)</a><span>, in §4</span>
    <li><a href="#dom-cssstylesheetinit-disabled">disabled</a><span>, in §3</span>
    <li><a href="#cssstylesheet-disallow-modification-flag">disallow modification flag</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheet-insertrule">insertRule(text)</a><span>, in §4</span>
    <li><a href="#dom-cssstylesheetinit-media">media</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-replacesync">replaceSync(text)</a><span>, in §4</span>
    <li><a href="#dom-cssstylesheet-replace">replace(text)</a><span>, in §4</span>
@@ -1818,13 +1844,13 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <aside class="dfn-panel" data-for="term-for-at-ruledef-import">
    <a href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import">https://drafts.csswg.org/css-cascade-4/#at-ruledef-import</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-at-ruledef-import">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a> <a href="#ref-for-at-ruledef-import②">(3)</a> <a href="#ref-for-at-ruledef-import③">(4)</a> <a href="#ref-for-at-ruledef-import④">(5)</a>
+    <li><a href="#ref-for-at-ruledef-import">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a> <a href="#ref-for-at-ruledef-import②">(3)</a> <a href="#ref-for-at-ruledef-import③">(4)</a> <a href="#ref-for-at-ruledef-import④">(5)</a> <a href="#ref-for-at-ruledef-import⑤">(6)</a> <a href="#ref-for-at-ruledef-import⑥">(7)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-parse-a-stylesheet">
-   <a href="https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet">https://drafts.csswg.org/css-syntax-3/#parse-a-stylesheet</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-parse-a-list-of-rules">
+   <a href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules">https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-parse-a-stylesheet">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-parse-a-stylesheet①">(2)</a>
+    <li><a href="#ref-for-parse-a-list-of-rules">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-parse-a-list-of-rules①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-cssstylesheet">
@@ -1840,16 +1866,34 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
     <li><a href="#ref-for-medialist">3. Constructing Stylesheets</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-alternate-flag">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-alternate-flag">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-create-a-medialist-object">
    <a href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object">https://drafts.csswg.org/cssom-1/#create-a-medialist-object</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-create-a-medialist-object">3. Constructing Stylesheets</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-css-rule">
+   <a href="https://drafts.csswg.org/cssom-1/#css-rule">https://drafts.csswg.org/cssom-1/#css-rule</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-css-rule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-css-rule①">(2)</a> <a href="#ref-for-css-rule②">(3)</a> <a href="#ref-for-css-rule③">(4)</a> <a href="#ref-for-css-rule④">(5)</a> <a href="#ref-for-css-rule⑤">(6)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-cssstylesheet-deleterule">
    <a href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule">https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cssstylesheet-deleterule">4. Modifying Constructed Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-disabled-flag">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-disabled-flag">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets">
@@ -1864,10 +1908,46 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
     <li><a href="#ref-for-dom-cssstylesheet-insertrule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-dom-cssstylesheet-insertrule①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-location">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-location">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-media">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-media">3. Constructing Stylesheets</a> <a href="#ref-for-concept-css-style-sheet-media①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-owner-css-rule">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-css-rule">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-css-rule</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-owner-css-rule">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-owner-node">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-owner-node">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-parent-css-style-sheet">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-parent-css-style-sheet">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-dom-documentorshadowroot-stylesheets">
    <a href="https://drafts.csswg.org/cssom-1/#dom-documentorshadowroot-stylesheets">https://drafts.csswg.org/cssom-1/#dom-documentorshadowroot-stylesheets</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-documentorshadowroot-stylesheets">5. Using Constructed Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-title">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-title">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-title</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-title">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-document">
@@ -1885,6 +1965,12 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
     <li><a href="#ref-for-documentorshadowroot③">5. Using Constructed Stylesheets</a> <a href="#ref-for-documentorshadowroot④">(2)</a> <a href="#ref-for-documentorshadowroot⑤">(3)</a> <a href="#ref-for-documentorshadowroot⑥">(4)</a> <a href="#ref-for-documentorshadowroot⑦">(5)</a> <a href="#ref-for-documentorshadowroot⑧">(6)</a> <a href="#ref-for-documentorshadowroot⑨">(7)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-window">
+   <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-window">3. Constructing Stylesheets</a> <a href="#ref-for-window①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-script-base-url">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url">https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url</a><b>Referenced in:</b>
    <ul>
@@ -1900,8 +1986,8 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
    <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMException">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-idl-DOMException①">(2)</a> <a href="#ref-for-idl-DOMException②">(3)</a> <a href="#ref-for-idl-DOMException③">(4)</a> <a href="#ref-for-idl-DOMException④">(5)</a> <a href="#ref-for-idl-DOMException⑤">(6)</a>
-    <li><a href="#ref-for-idl-DOMException⑥">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-idl-DOMException">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-idl-DOMException①">(2)</a> <a href="#ref-for-idl-DOMException②">(3)</a> <a href="#ref-for-idl-DOMException③">(4)</a> <a href="#ref-for-idl-DOMException④">(5)</a> <a href="#ref-for-idl-DOMException⑤">(6)</a> <a href="#ref-for-idl-DOMException⑥">(7)</a> <a href="#ref-for-idl-DOMException⑦">(8)</a> <a href="#ref-for-idl-DOMException⑧">(9)</a> <a href="#ref-for-idl-DOMException⑨">(10)</a>
+    <li><a href="#ref-for-idl-DOMException①⓪">5. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
@@ -1913,8 +1999,8 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
   <aside class="dfn-panel" data-for="term-for-notallowederror">
    <a href="https://heycam.github.io/webidl/#notallowederror">https://heycam.github.io/webidl/#notallowederror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-notallowederror">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a> <a href="#ref-for-notallowederror②">(3)</a> <a href="#ref-for-notallowederror③">(4)</a> <a href="#ref-for-notallowederror④">(5)</a> <a href="#ref-for-notallowederror⑤">(6)</a>
-    <li><a href="#ref-for-notallowederror⑥">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-notallowederror">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a> <a href="#ref-for-notallowederror②">(3)</a> <a href="#ref-for-notallowederror③">(4)</a> <a href="#ref-for-notallowederror④">(5)</a> <a href="#ref-for-notallowederror⑤">(6)</a> <a href="#ref-for-notallowederror⑥">(7)</a> <a href="#ref-for-notallowederror⑦">(8)</a> <a href="#ref-for-notallowederror⑧">(9)</a> <a href="#ref-for-notallowederror⑨">(10)</a>
+    <li><a href="#ref-for-notallowederror①⓪">5. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-boolean">
@@ -1933,18 +2019,27 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li>
     <a data-link-type="biblio">[css-syntax-3]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-parse-a-stylesheet" style="color:initial">parse a stylesheet</span>
+     <li><span class="dfn-paneled" id="term-for-parse-a-list-of-rules" style="color:initial">parse a list of rules</span>
     </ul>
    <li>
     <a data-link-type="biblio">[cssom-1]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-cssstylesheet" style="color:initial">CSSStyleSheet</span>
      <li><span class="dfn-paneled" id="term-for-medialist" style="color:initial">MediaList</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-alternate-flag" style="color:initial">alternate flag</span>
      <li><span class="dfn-paneled" id="term-for-create-a-medialist-object" style="color:initial">create a medialist object</span>
+     <li><span class="dfn-paneled" id="term-for-css-rule" style="color:initial">css rule</span>
      <li><span class="dfn-paneled" id="term-for-dom-cssstylesheet-deleterule" style="color:initial">deleteRule(index)</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-disabled-flag" style="color:initial">disabled flag</span>
      <li><span class="dfn-paneled" id="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets" style="color:initial">document or shadow root css style sheets</span>
      <li><span class="dfn-paneled" id="term-for-dom-cssstylesheet-insertrule" style="color:initial">insertRule(rule)</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-location" style="color:initial">location</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-media" style="color:initial">media</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-css-rule" style="color:initial">owner css rule</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-node" style="color:initial">owner node</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-parent-css-style-sheet" style="color:initial">parent css style sheet</span>
      <li><span class="dfn-paneled" id="term-for-dom-documentorshadowroot-stylesheets" style="color:initial">styleSheets</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-title" style="color:initial">title</span>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
@@ -1955,6 +2050,7 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
      <li><span class="dfn-paneled" id="term-for-concept-script-base-url" style="color:initial">base url</span>
      <li><span class="dfn-paneled" id="term-for-content-type" style="color:initial">content-type metadata</span>
     </ul>
@@ -2050,14 +2146,14 @@ set <var>sheet’s</var> CSS rules to an empty list.</p>
    <b><a href="#cssstylesheet-constructed-flag">#cssstylesheet-constructed-flag</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cssstylesheet-constructed-flag">3. Constructing Stylesheets</a>
-    <li><a href="#ref-for-cssstylesheet-constructed-flag①">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-constructed-flag②">(2)</a>
-    <li><a href="#ref-for-cssstylesheet-constructed-flag③">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-cssstylesheet-constructed-flag①">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-constructed-flag②">(2)</a> <a href="#ref-for-cssstylesheet-constructed-flag③">(3)</a> <a href="#ref-for-cssstylesheet-constructed-flag④">(4)</a> <a href="#ref-for-cssstylesheet-constructed-flag⑤">(5)</a> <a href="#ref-for-cssstylesheet-constructed-flag⑥">(6)</a>
+    <li><a href="#ref-for-cssstylesheet-constructed-flag⑦">5. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cssstylesheet-disallow-modification-flag">
    <b><a href="#cssstylesheet-disallow-modification-flag">#cssstylesheet-disallow-modification-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cssstylesheet-disallow-modification-flag">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag①">(2)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag②">(3)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag③">(4)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag④">(5)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑤">(6)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑥">(7)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑦">(8)</a>
+    <li><a href="#ref-for-cssstylesheet-disallow-modification-flag">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag①">(2)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag②">(3)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag③">(4)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag④">(5)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑤">(6)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑥">(7)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑦">(8)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑧">(9)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑨">(10)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cssstylesheet-constructor-document">
