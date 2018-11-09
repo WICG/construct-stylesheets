@@ -17,6 +17,8 @@ spec:dom; type:interface; text:Document
 spec:cssom-1; type:interface; for:/; text:CSSStyleSheet
 spec:cssom-1; type:method; for:CSSStyleSheet; text:insertRule(rule)
 spec:cssom-1; type:method; for:CSSStyleSheet; text:deleteRule(rule)
+spec:cssom-1; type:dfn; for:CSSStyleSheet; text:parent css style sheet
+spec:cssom-1; type:dfn; for:CSSStyleSheet; text:owner node
 </pre>
 
 Motivation {#motivation}
@@ -58,22 +60,22 @@ dictionary CSSStyleSheetInit {
 		When called, execute these steps:
 
 		1. Construct a new <a for="/" interface>CSSStyleSheet</a> object <var>sheet</var>,
-			with location set to the <a spec=html>base URL</a> of the {{Document}} for the window where this constructor is called on,
-			no parent CSS style sheet,
-			no owner node,
-			no owner CSS rule,
-			and a title set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
+			with <a spec=cssom>location</a> set to the <a spec=html>base URL</a> of the {{Document}} for the {{Window}} where this constructor is called on,
+			no <a spec=cssom>parent CSS style sheet</a>,
+			no <a spec=cssom>owner node</a>,
+			no <a spec=cssom>owner CSS rule</a>,
+			and <a spec=cssom>title</a> set to the {{CSSStyleSheetInit/title}} attribute of <var>options</var>.
 		2.	Set <var>sheet’s</var> origin-clean flag.
 			Set <var>sheet's</var> [=constructed flag=].
-			Set <var>sheet's</var> [=constructor document=] to the {{Document}} for the window where this constructor is called on.
+			Set <var>sheet's</var> [=constructor document=] to the {{Document}} for the {{Window}} where this constructor is called on.
 		3. If the {{CSSStyleSheetInit/media}} attribute of <var>options</var> is a string,
 			<a>create a MediaList object</a> from the string
-			and assign it as <var>sheet’s</var> media.
-			Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> media.
+			and assign it as <var>sheet’s</var> <a spec=cssom>media</a>.
+			Otherwise, assign a copy of the value of the attribute as <var>sheet’s</var> <a spec=cssom>media</a>.
 		4. If the {{CSSStyleSheetInit/alternate}} attribute of <var>options</var> is true,
-			set <var>sheet’s</var> alternate flag.
+			set <var>sheet’s</var> <a spec=cssom>alternate flag</a>.
 		5. If the {{CSSStyleSheetInit/disabled}} attribute of <var>options</var> is true,
-			set <var>sheet’s</var> disabled flag.
+			set <var>sheet’s</var> <a spec=cssom>disabled flag</a>.
 		6. Return <var>sheet</var>.
 	</dd>
 	<dt><dfn  for=CSSStyleSheet lt="constructed flag">constructed flag</dfn></dt>
@@ -87,7 +89,7 @@ dictionary CSSStyleSheetInit {
 	</dd>
 	<dt><dfn  for=CSSStyleSheet lt="constructor document">constructor document</dfn></dt>
 	<dd>
-		Specified when created. The {{Document}} where the CSSStyleSheet is originally constructed on. Null by default.
+		Specified when created. The {{Document}} where the stylesheet is originally constructed on. Null by default.
 	</dd>
 	<dt><dfn  for=CSSStyleSheet lt="set of adopter documents">set of adopter documents</dfn></dt>
 	<dd>
@@ -101,16 +103,32 @@ Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
 After construction, constructed stylesheets can be modified using rule modification methods like <a spec="cssom-1" for="CSSStyleSheet">insertRule(rule)</a> or <a spec="cssom-1" for="CSSStyleSheet">deleteRule(rule)</a>, or {{replace(text)}} and {{replaceSync(text)}} if the sheet's [=disallow modification flag=] is not set. If those methods are called when the sheet's [=disallow modification flag=] is set, or <a spec="cssom-1" for="CSSStyleSheet">insertRule(rule)</a> is used to add an <a spec=css-cascade-4>@import</a> rule, a "{{NotAllowedError}}" {{DOMException}} must be thrown. 
 
 <dl>
+    <dt><dfn method for=CSSStyleSheet lt="insertRule(text)">insertRule(text)</dfn></dt>
+    <dd>
+    	1. Let <var>sheet</var> be the stylesheet on which this function is called on.
+		2. If <var>sheet</var>'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+		3. If <var>rule</var> is an <a spec=css-cascade-4>@import</a> rule and this sheet's [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+		4. (The rest of the algorithm remains as in CSSOM)
+	</dd>
+
+	<dt><dfn method for=CSSStyleSheet lt="deleteRule(text)">deleteRule(text)</dfn></dt>
+    <dd>
+    	1. Let <var>sheet</var> be the stylesheet on which this function is called on.
+		2. If <var>sheet</var>'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+		3. If <var>rule</var> is an <a spec=css-cascade-4>@import</a> rule and this sheet's [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+		4. (The rest of the algorithm remains as in CSSOM)
+	</dd>
+
     <dt><dfn method for=CSSStyleSheet lt="replace(text)">replace(text)</dfn></dt>
     <dd>
 		1. Let <var>sheet</var> be the stylesheet on which this function is called on.
 		2. If <var>sheet’s</var> [=constructed flag=] is not set, or <var>sheet's</var> [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set <var>sheet’s</var> CSS rules to an empty list, and set <var>sheet's</var> [=disallow modification flag=].
-		4. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
+		3. Set <var>sheet’s</var> [=CSS rules=] to an empty list, and set <var>sheet's</var> [=disallow modification flag=].
+		4. <a spec=css-syntax-3>Parse a list of rules</a> from {{text}}.
 			If it returned a list of rules,
-			assign the list as <var>sheet’s</var> CSS rules;
+			assign the list as <var>sheet’s</var> [=CSS rules=];
 			otherwise,
-			set <var>sheet’s</var> CSS rules to an empty list.
+			set <var>sheet’s</var> [=CSS rules=] to an empty list.
 		5. If <var>sheet</var> contains one or more <a spec=css-cascade-4>@import</a> rules and <var>sheet's</var> [=set of adopter documents=] contains any other {{Document}} than <var>sheet's</var> [=constructor document=], throw a "{{NotAllowedError}}" {{DOMException}}.
 		6. Let <var>promise</var> be a promise.
 		7. In parallel, wait for loading of <a spec=css-cascade-4>@import</a> rules in <var>sheet</var> and any nested <a spec=css-cascade-4>@import</a>s from those rules.
@@ -125,12 +143,12 @@ After construction, constructed stylesheets can be modified using rule modificat
 
 		1. Let <var>sheet</var> be the stylesheet on which this function is called on.
 		2. If <var>sheet’s</var> [=constructed flag=] is not set, or <var>sheet's</var> [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set <var>sheet’s</var> CSS rules to an empty list, and set <var>sheet's</var> [=disallow modification flag=].
-		4. <a spec=css-syntax-3>Parse a stylesheet</a> from {{text}}.
+		3. Set <var>sheet’s</var> [=CSS rules=] to an empty list, and set <var>sheet's</var> [=disallow modification flag=].
+		4. <a spec=css-syntax-3>Parse a list of rules</a> from {{text}}.
 			If it returned a list of rules,
-			assign the list as <var>sheet’s</var> CSS rules;
+			assign the list as <var>sheet’s</var> [=CSS rules=];
 			otherwise,
-			set <var>sheet’s</var> CSS rules to an empty list.
+			set <var>sheet’s</var> [=CSS rules=] to an empty list.
 		5. If <var>sheet</var> contains one or more <a spec=css-cascade-4>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
 		6. Unset <var>sheet's</var> [=disallow modification flag=] and return <var>sheet</var>.
 	</dd>
