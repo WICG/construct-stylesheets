@@ -1,4 +1,5 @@
 
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
@@ -35,15 +36,20 @@ We can provide an API for creating stylesheet objects from script, without needi
 ### Example Usage
 
 ```js
-// Create style sheet when registering components.
-let someStyleSheet = document.createCSSStyleSheetSync("hr { color: green}");
-let anotherStyleSheet = await document.createCSSStyleSheet("@import fancystyle.css")
+// Create style sheets.
+let someStyleSheet = new CSSStyleSheet();
+someStyleSheet.replaceSync("hr { color: green }");
+let anotherStyleSheet = new CSSStyleSheet();
+await anotherStyleSheet.replace("@import fancystyle.css");
 
 // Apply style sheet in custom element constructor.
-shadowRoot.adoptedStyleSheets = [someStyleSheet, anotherStyleSheet];
-
-// Apply style sheet in top level document.
-document.adoptedStyleSheets = [someStyleSheet];
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({mode: "open"});
+    shadowRoot.adoptedStyleSheets = [someStyleSheet, anotherStyleSheet];
+  }
+};
 ```
 
 ### Behavior
@@ -55,7 +61,8 @@ document.adoptedStyleSheets = [someStyleSheet];
 	<div id="someDiv">some div</div>
 	</body>
 	<script>
-		let sheet = document.createCSSStyleSheetSync("* { color: red; })");
+		let sheet = new CSSStyleSheet();
+		sheet.replaceSync("* { color: red; })");
 		// this will fail
 		someFrame.contentDocument.adoptedStyleSheets = [sheet];
 		// this will work
@@ -66,7 +73,8 @@ document.adoptedStyleSheets = [someStyleSheet];
 * After a stylesheet is added to `DocumentOrShadowRoot`s, changes made to the stylesheet will also reflect in those `DocumentOrShadowRoot`s.
 	* Example:
 	```js
-	let sheet = document.createCSSStyleSheetSync("* { color: red; })");
+	let sheet = new CSSStyleSheet();
+	sheet.replaceSync("* { color: red; })");
 	document.adoptedStyleSheets = [sheet];
 	sheet.insertRule("* { background-color: blue; }");
 	// Now document will have blue background color as well.
