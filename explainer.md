@@ -40,7 +40,7 @@ We can provide an API for creating stylesheet objects from script, without needi
 let someStyleSheet = new CSSStyleSheet();
 someStyleSheet.replaceSync("hr { color: green }");
 let anotherStyleSheet = new CSSStyleSheet();
-await anotherStyleSheet.replace("@import fancystyle.css");
+await anotherStyleSheet.replace("@import url('fancystyle.css')");
 
 // Apply style sheet in custom element constructor.
 class MyElement extends HTMLElement {
@@ -53,6 +53,19 @@ class MyElement extends HTMLElement {
 ```
 
 ### Behavior
+* We can only construct empty stylesheets, but we can replace the contents of constructed stylesheets with `replace(text)` or `replaceSync(text)` method, and also modify with `insertRule(rule)` and `deleteRule(rule)` as well. 
+	* Calling `replace(text)` on a constructed stylesheet that returns a `Promise` that will resolve when all the `@import` rules in `text` had finished loading.
+	* Calling `replaceSync(text)` on a constructed stylesheet replaces the content of the stylesheet with `text` synchronously, but it doesn't allow any `@import` rules
+	* We can't insert `@import` rules with `insertRule(rule)` to constructed stylesheets.
+	* Example:
+	```js  
+	// Fine, returns Promise that resolves when 'some.css' finished loading.
+	sheet.replace("@import('some.css');"); 
+	// Fails
+	sheet.replace("@import('some.css');"); 
+	sheet.insertRule("@import('some.css');"); 
+	```
+
 * Each constructed `CSSStyleSheet` is "tied" to the `Document` it is constructed on, meaning that it can only be used in that document tree (whether in a top-level document or shadow trees).
 	* Example:
 	```html
@@ -81,5 +94,3 @@ class MyElement extends HTMLElement {
 	```
 * Stylesheets added to `adoptedStyleSheets` are part of the `DocumentOrShadowRoot`'s style sheets, and they are ordered after  the`DocumentOrShadowRoot`'s `styleSheets`.
 	* This means when there are conflicting rules in the `adoptedStyleSheets` and `styleSheets` and the resolution will consider the order of stylesheets, they treat the sheets in `adoptedStyleSheets` as ordered later.
-
-
