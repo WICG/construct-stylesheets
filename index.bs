@@ -125,7 +125,7 @@ After construction, constructed stylesheets can be modified using rule modificat
     <dd>
     	1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
-        3. <a>Parse a rule</a> from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+        3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
 		4. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
@@ -141,12 +141,12 @@ After construction, constructed stylesheets can be modified using rule modificat
 		1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. <a>Parse a list of rules</a> from |text|.
+		4. Let |promise| be a promise.
+		5. [=In parallel=], [=parse a list of rules=] from |text|.
 			If it returned a list of rules,
 			assign the list as |sheet|'s [=CSS rules=];
-		5. Let |promise| be a promise.
-		6. In parallel, wait for loading of <a>@import</a> rules in |sheet| and any nested <a>@import</a>s from those rules.
-			* If any of them failed to load, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
+		6. Once the rules parsing above had returned, wait for loading of <a>@import</a> rules in |sheet| and any nested <a>@import</a>s from those rules (and so on) [=in parallel=].
+			* If any of them failed to load, stop loading the remaining <a>@import</a> rules, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
 			    <p class="note">
 			     	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
 			    </p>
@@ -157,7 +157,7 @@ After construction, constructed stylesheets can be modified using rule modificat
 				    Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
 			    </p>
 		    * Otherwise, resolve |promise| with |sheet| once all of them have finished loading, and unset |sheet|'s [=disallow modification flag=].
-		8. Return |promise|.
+		7. Return |promise|.
 	</dd>
 
 
@@ -168,7 +168,7 @@ After construction, constructed stylesheets can be modified using rule modificat
 		1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. <a>Parse a list of rules</a> from |text|.
+		4. [=Parse a list of rules=] from |text|.
 			If it returned a list of rules,
 			assign the list as |sheet|'s [=CSS rules=];
 			otherwise,
