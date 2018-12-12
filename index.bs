@@ -3,7 +3,7 @@ Title: Constructable Stylesheet Objects
 Shortname: construct-stylesheets
 Level: 1
 Status: DREAM
-ED: https://wicg.github.io/construct-stylesheets/index.html
+ED: https://wicg.github.io/construct-stylesheets/
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact/
 Editor: Eric Willigers, Google, ericwilligers@google.com
 Editor: Rakina Zata Amni, Google, rakina@google.com
