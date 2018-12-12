@@ -33,7 +33,25 @@ Some user agents might attempt to optimize by sharing internal style sheet repre
 Proposed Solution {#proposed-solution}
 ============================
 
-We are proposing to provide an API for creating stylesheet objects from script, without needing style elements, and also a way to reuse them in multiple places. Script can optionally add or remove rules from a stylesheet object. Each stylesheet object can be added directly to any number of shadow roots (and/or the top level document).
+We are proposing to provide an API for creating stylesheet objects from script, without needing style elements, and also a way to reuse them in multiple places. Script can optionally add, remove, or replace rules from a stylesheet object. Each stylesheet object can be added directly to any number of shadow roots (and/or the top level document).
+
+<pre class='lang-js'>
+const myElementSheet = new CSSStyleSheet();
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    shadowRoot.adoptedStyleSheets = [myElementSheet];
+  }
+  
+  connectedCallback() {
+    // Only actually parse the stylesheet when the first instance is connected.
+    if (myElementSheet.cssRules.length == 0) {
+       myElementSheet.replaceSync(styleText);
+    }
+  }
+}
+</pre>
 
 Constructing Stylesheets {#constructing-stylesheets}
 =================================
@@ -91,11 +109,6 @@ dictionary CSSStyleSheetInit {
 	<dd>
 		Specified when created. The {{Document}} where the stylesheet is originally constructed on. Null by default.
 	</dd>
-	<dt><dfn for=CSSStyleSheet lt="list of adopter documents">list of adopter documents</dfn></dt>
-	<dd>
-		A list of {{Document}}s on which the stylesheet is adopted (e.g. the stylesheet is part of a {{DocumentOrShadowRoot}}'s {{DocumentOrShadowRoot/adoptedStyleSheets}} in that {{Document}}).
-		May contain the same {{Document}} multiple times, if used multiple time in that document tree.
-	</dd>
 </dl>
 
 Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
@@ -130,13 +143,22 @@ After construction, constructed stylesheets can be modified using rule modificat
 			assign the list as |sheet|'s [=CSS rules=];
 			otherwise,
 			set |sheet|'s [=CSS rules=] to an empty list.
-		5. If |sheet| contains one or more <a spec=css-cascade-4>@import</a> rules and |sheet|'s [=list of adopter documents=] contains any other {{Document}} than |sheet|'s [=constructor document=], throw a "{{NotAllowedError}}" {{DOMException}}.
-		6. Let |promise| be a promise.
-		7. In parallel, wait for loading of <a spec=css-cascade-4>@import</a> rules in |sheet| and any nested <a spec=css-cascade-4>@import</a>s from those rules.
-			* If any of them failed to load or resulted in a resource with a <a spec=html>Content-Type metadata</a> of anything other than <code>text/css</code>, reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
+		5. Let |promise| be a promise.
+		6. In parallel, wait for loading of <a spec=css-cascade-4>@import</a> rules in |sheet| and any nested <a spec=css-cascade-4>@import</a>s from those rules.
+			<p class="note">
+			 	Note: Loading  of <a spec=css-cascade-4>@import</a> rules should the rules used for fetching style sheets from <a spec=css-cascade-4>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
+			</p>
+			<p class "note">
+				Note: We will use the fetch group of |sheet|'s [=constructor document=] for <a spec=css-cascade-4>@import</a> rules and other (fonts, etc) loads.
+			</p>
+			<p class="note">
+				Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
+			</p>
+			* If any of them failed to load, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
 		    * Otherwise, resolve |promise| with |sheet| once all of them have finished loading. and unset |sheet|'s [=disallow modification flag=].
 		8. Return |promise|.
 	</dd>
+
 
     <dt><dfn method for=CSSStyleSheet lt="replaceSync(text)">replaceSync(text)</dfn></dt>
 	<dd>
@@ -174,19 +196,17 @@ partial interface DocumentOrShadowRoot {
 
 		1. Let |adopted| be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet>
 		2. If any entry of |adopted| has its [=constructed flag=] not set  (e.g. it's not made by factory methods to construct stylesheets), throw a "{{NotAllowedError}}" {{DOMException}}. 
-		3. Let |adopterDocument| be this {{DocumentOrShadowRoot}}, if this {{DocumentOrShadowRoot}} is a {{Document}}, or this {{DocumentOrShadowRoot}}'s [=node document=], if this {{DocumentOrShadowRoot}} is a {{ShadowRoot}}.
-		4. Iterate over each sheet in this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=], and remove one entry of |adopterDocument| from each sheet's [=list of adopter documents=].
-		5. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to |adopted|.
-		6. Iterate over each sheet in this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=], and add one entry of |adopterDocument| to each sheet's [=list of adopter documents=].
+		3. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to |adopted|.
 	</dd>
 </dl>
 
 Every {{DocumentOrShadowRoot}} has <dfn>adopted stylesheets</dfn>.
 
 The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
-[=adopted stylesheets=] inside its <a>document or shadow root CSS style sheets</a>. The [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
+[=adopted stylesheets=] whose [=constructor document=] is the same as its {{Document}} inside its <a>document or shadow root CSS style sheets</a>, and must not include all all style sheets in the {{DocumentOrShadowRoot}}'s
+[=adopted stylesheets=] whose [=constructor document=] is not the same as its {{Document}}. The [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
 <p class="note">
-Because the [=adopted stylesheets=] are a property of the {{DocumentOrShadowRoot}}, they move along with the {{ShadowRoot}} if it gets [=adopted=] into a different {{Document}}, e.g. when adopting its [=shadow host=].
+Note that because the [=adopted stylesheets=] are a property of the {{DocumentOrShadowRoot}}, they move along with the {{ShadowRoot}} if it gets [=adopted=] into a different {{Document}}, e.g. when adopting its [=shadow host=]. However, only [=adopted stylesheets=] that have the [=constructor document=] equal to the new {{Document}} will be applied, which means that a constructed <a interface>CSSStyleSheet</a> is only applicable in the document tree of its [=constructor document=].
 </p>
 
