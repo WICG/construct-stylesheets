@@ -204,7 +204,7 @@ partial interface DocumentOrShadowRoot {
 Every {{DocumentOrShadowRoot}} has <dfn>adopted stylesheets</dfn>.
 
 The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
-[=adopted stylesheets=] whose [=constructor document=] is the same as the {{DocumentOrShadowRoot}}'s {{Document}} inside its <a>document or shadow root CSS style sheets</a>.
+[=adopted stylesheets=] whose [=constructor document=] is the same as the {{DocumentOrShadowRoot}}'s [=node document=] inside its <a>document or shadow root CSS style sheets</a>.
 
 These [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
