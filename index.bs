@@ -118,14 +118,14 @@ dictionary CSSStyleSheetInit {
 Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
 =============================
 
-After construction, constructed stylesheets can be modified using rule modification methods like <a spec="cssom-1" for="CSSStyleSheet">insertRule(rule[, index])</a> or <a spec="cssom-1" for="CSSStyleSheet">deleteRule(index)</a>, or {{replace(text)}} and {{replaceSync(text)}} if the sheet's [=disallow modification flag=] is not set. If those methods are called when the sheet's [=disallow modification flag=] is set, or <a spec="cssom-1" for="CSSStyleSheet">insertRule(rule)</a> is used to add an <a spec=css-cascade-4>@import</a> rule, a "{{NotAllowedError}}" {{DOMException}} will be thrown as detailed in the below algorithms. 
+After construction, constructed stylesheets can be modified using rule modification methods like <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule[, index])</a> or <a spec=cssom-1 for="CSSStyleSheet">deleteRule(index)</a>, or {{replace(text)}} and {{replaceSync(text)}} if the sheet's [=disallow modification flag=] is not set. If those methods are called when the sheet's [=disallow modification flag=] is set, or <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule)</a> is used to add an <a >@import</a> rule, a "{{NotAllowedError}}" {{DOMException}} will be thrown as detailed in the below algorithms. 
 
 <dl>
     <dt><dfn method for=CSSStyleSheet lt="insertRule(rule[, index])">insertRule(rule[, index])</dfn></dt>
     <dd>
     	1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
-        3. <a spec=css-syntax-3>Parse a rule</a> from |rule|. If the result is an <a spec=css-cascade-4>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+        3. <a>Parse a rule</a> from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
 		4. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
@@ -141,19 +141,19 @@ After construction, constructed stylesheets can be modified using rule modificat
 		1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. <a spec=css-syntax-3>Parse a list of rules</a> from |text|.
+		4. <a>Parse a list of rules</a> from |text|.
 			If it returned a list of rules,
 			assign the list as |sheet|'s [=CSS rules=];
 			otherwise,
 			set |sheet|'s [=CSS rules=] to an empty list.
 		5. Let |promise| be a promise.
-		6. In parallel, wait for loading of <a spec=css-cascade-4>@import</a> rules in |sheet| and any nested <a spec=css-cascade-4>@import</a>s from those rules.
+		6. In parallel, wait for loading of <a >@import</a> rules in |sheet| and any nested <a >@import</a>s from those rules.
 			* If any of them failed to load, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
 			    <p class="note">
-			     	Note: Loading  of <a spec=css-cascade-4>@import</a> rules should the rules used for fetching style sheets from <a spec=css-cascade-4>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
+			     	Note: Loading  of <a >@import</a> rules should the rules used for fetching style sheets from <a >@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
 			    </p>
 			    <p class="note">
-				    Note: We will use the fetch group of |sheet|'s [=constructor document=] for <a spec=css-cascade-4>@import</a> rules and other (fonts, etc) loads.
+				    Note: We will use the fetch group of |sheet|'s [=constructor document=] for <a >@import</a> rules and other (fonts, etc) loads.
 			    </p>
 			    <p class="note">
 				    Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
@@ -170,12 +170,12 @@ After construction, constructed stylesheets can be modified using rule modificat
 		1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. <a spec=css-syntax-3>Parse a list of rules</a> from |text|.
+		4. <a>Parse a list of rules</a> from |text|.
 			If it returned a list of rules,
 			assign the list as |sheet|'s [=CSS rules=];
 			otherwise,
 			set |sheet|'s [=CSS rules=] to an empty list.
-		5. If |sheet| contains one or more <a spec=css-cascade-4>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
+		5. If |sheet| contains one or more <a >@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
 		6. Unset |sheet|'s [=disallow modification flag=] and return |sheet|.
 	</dd>
 
