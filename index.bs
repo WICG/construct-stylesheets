@@ -149,19 +149,20 @@ After construction, constructed stylesheets can be modified using rule modificat
 				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
                     1. Unset |sheet|'s [=disallow modification flag=].
                     2. Reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
-				        <p class="note">
-				         	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
-				        </p>
-				        <p class="note">
-					        Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
-				        </p>
-				        <p class="note">
-					        Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
-				        </p>
 			    * Otherwise, once  all of them have finished loading, [=queue a task=] on the [=networking task source=] to perform the following steps:
                     1. Unset |sheet|'s [=disallow modification flag=].
                     2. Set |sheet|'s [=CSS rules=] to |rules|.
-                    3. Resolve |promise| with |sheet|. 
+                    3. Resolve |promise| with |sheet|.
+
+				<p class="note">
+                    Note: Loading  of <a>@import</a> rules should follow the rules used for fetching style sheets for <a>@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
+				</p>
+				<p class="note">
+					Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
+				</p>
+				<p class="note">
+					Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
+				</p>
 		6. Return |promise|.
 	</dd>
 
