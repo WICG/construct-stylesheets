@@ -144,7 +144,7 @@ After construction, constructed stylesheets can be modified using rule modificat
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
 		4. Let |promise| be a promise.
 		5. [=In parallel=], do these steps:
-			1. Let |rules| be the result of running [=parse a list of rules=] from |text|.
+			1. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
 			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
 				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
                     1. Unset |sheet|'s [=disallow modification flag=].
@@ -173,14 +173,10 @@ After construction, constructed stylesheets can be modified using rule modificat
 
 		1. Let |sheet| be the stylesheet on which this function is called on.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. [=Parse a list of rules=] from |text|.
-			If it returned a list of rules,
-			assign the list as |sheet|'s [=CSS rules=];
-			otherwise,
-			set |sheet|'s [=CSS rules=] to an empty list.
+		3. Set |sheet|'s [=CSS rules=] to an empty list.
+		4. [=Parse a list of rules=] from |text|. If it returned a list of rules, assign the list as |sheet|'s [=CSS rules=].
 		5. If |sheet| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
-		6. Unset |sheet|'s [=disallow modification flag=] and return |sheet|.
+		6. Return |sheet|.
 	</dd>
 
 </dl>
