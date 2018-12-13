@@ -144,19 +144,23 @@ After construction, constructed stylesheets can be modified using rule modificat
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
 		4. Let |promise| be a promise.
 		5. [=In parallel=], do these steps:
-			1. [=Parse a list of rules=] from |text|. If it returned a list of rules, assign the list as |sheet|'s [=CSS rules=].
-			2. Wait for loading of <a>@import</a> rules in |sheet| and any nested <a>@import</a>s from those rules (and so on).
-				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
-				    <p class="note">
-				     	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
-				    </p>
-				    <p class="note">
-					    Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
-				    </p>
-				    <p class="note">
-					    Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
-				    </p>
-			    * Otherwise, resolve |promise| with |sheet| once all of them have finished loading, and unset |sheet|'s [=disallow modification flag=].
+			1. Let |rules| be the result of running [=parse a list of rules=] from |text|.
+			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
+				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
+                    * Unset |sheet|'s [=disallow modification flag=]
+                    * Reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.have finished loading.
+				        <p class="note">
+				         	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
+				        </p>
+				        <p class="note">
+					        Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
+				        </p>
+				        <p class="note">
+					        Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
+				        </p>
+			    * Otherwise, once  all of them have finished loading, [=queue a task=] on the [=networking task source=] to perform the following steps:
+                    * Unset |sheet|'s [=disallow modification flag=].
+                    * Resolve |promise| with |sheet| once all of them 
 		6. Return |promise|.
 	</dd>
 

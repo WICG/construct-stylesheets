@@ -66,7 +66,8 @@ class MyElement extends HTMLElement {
 	sheet.insertRule("@import('some.css');"); 
 	```
 
-* Each constructed `CSSStyleSheet` is "tied" to the `Document` it is constructed on, meaning that it can only be used in that document tree (whether in a top-level document or shadow trees).
+
+* Each constructed `CSSStyleSheet` is "tied" to the `Document` it is constructed on, meaning that it can only be used in that document tree (whether in a top-level document or shadow trees). It can be adopted into a different document tree, but it will be ignored for style calculation purposes.
 	* Example:
 	```html
 	<body>
@@ -74,12 +75,12 @@ class MyElement extends HTMLElement {
 	<div id="someDiv">some div</div>
 	</body>
 	<script>
+		let shadowRoot = someDiv.attachShadow({mode: "open"});
 		let sheet = new CSSStyleSheet();
 		sheet.replaceSync("* { color: red; })");
-		// this will fail
+		// This is OK, but will not affect styling. Contents of the frame will not be colored red.
 		someFrame.contentDocument.adoptedStyleSheets = [sheet];
-		// this will work
-		let shadowRoot = someDiv.attachShadow({mode: "open"});
+        // This will style "some div" to be colored red.
 		shadowRoot.adoptedStyleSheets = [sheet];
 	</script>
 	```
