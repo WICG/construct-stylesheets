@@ -43,13 +43,31 @@ let anotherStyleSheet = new CSSStyleSheet();
 await anotherStyleSheet.replace("@import url('fancystyle.css')");
 
 // Apply style sheet in custom element constructor.
-class MyElement extends HTMLElement {
+class SomeElement extends HTMLElement {
   constructor() {
     super();
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.adoptedStyleSheets = [someStyleSheet, anotherStyleSheet];
   }
 };
+
+// Other example, only filling the sheet with |styleText| when actually needed. 
+const myElementSheet = new CSSStyleSheet();
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({mode: "open"});
+    shadowRoot.adoptedStyleSheets = [myElementSheet];
+  }
+  
+  connectedCallback() {
+    // Only actually parse the stylesheet when the first instance is connected.
+    if (myElementSheet.cssRules.length == 0) {
+       myElementSheet.replaceSync(styleText);
+    }
+  }
+}
+
 ```
 
 ### Behavior
