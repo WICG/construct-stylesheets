@@ -80,7 +80,7 @@ class MyElement extends HTMLElement {
 	// Fine, returns Promise that resolves when 'some.css' finished loading.
 	sheet.replace("@import('some.css');"); 
 	// Fails
-	sheet.replace("@import('some.css');"); 
+	sheet.replaceSync("@import('some.css');"); 
 	sheet.insertRule("@import('some.css');"); 
 	```
 
