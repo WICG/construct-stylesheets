@@ -58,7 +58,7 @@ class MyElement extends HTMLElement {
 	* Calling `replaceSync(text)` on a constructed stylesheet replaces the content of the stylesheet with `text` synchronously, but it doesn't allow any `@import` rules
 	* We can't insert `@import` rules with `insertRule(rule)` to constructed stylesheets.
 	* Example:
-	```js  
+	```js
 	// Fine, returns Promise that resolves when 'some.css' finished loading.
 	sheet.replace("@import('some.css');"); 
 	// Fails
