@@ -4,7 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Constructable Stylesheet Objects](#constructable-stylesheet-objects)
+- [Constructible Stylesheet Objects](#constructible-stylesheet-objects)
     - [Problem Description](#problem-description)
     - [Past Solution: Shadow Piercing](#past-solution-shadow-piercing)
     - [Proposed Solution](#proposed-solution)
@@ -12,7 +12,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Constructable Stylesheet Objects
+# Constructible Stylesheet Objects
 
 
 ### Problem Description
