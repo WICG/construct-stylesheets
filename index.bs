@@ -213,7 +213,7 @@ partial interface DocumentOrShadowRoot {
 		On setting, {{adoptedStyleSheets}} performs the following steps:
 
 		1. Let |adopted| be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet>
-		2. If any entry of |adopted| has its [=constructed flag=] not set  (e.g. it's not made by factory methods to construct stylesheets), throw a "{{NotAllowedError}}" {{DOMException}}. 
+		2. If any entry of |adopted| has its [=constructed flag=] not set, throw a "{{NotAllowedError}}" {{DOMException}}. 
 		3. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to |adopted|.
 	</dd>
 </dl>
