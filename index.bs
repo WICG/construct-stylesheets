@@ -125,7 +125,7 @@ This is a known issue and we are going to move the definition to be on the <a fo
 Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
 =============================
 
-After construction, constructed stylesheets can be modified using rule modification methods like [[cssom/#dom-cssstylesheet-insertrule|insertRule]] or [[cssom/#dom-cssstylesheet-deleterule|deleteRule]], or {{replace(text)}} and {{replaceSync(text)}}. The behavior of those methods are affected by the [=disallow modification flag=] and [=constructed flag=] as described below.
+After construction, constructed stylesheets can be modified using rule modification methods like {{CSSStyleSheet/insertRule()}} or {{CSSStyleSheet/deleteRule()}}, or {{replace(text)}} and {{replaceSync(text)}}. The behavior of those methods are affected by the [=disallow modification flag=] and [=constructed flag=] as described below.
 
 <p class="note">
 Note that we're explicitly monkeypatching CSSOM. We are working on [merging this spec into CSSOM](https://github.com/w3c/csswg-drafts/issues/3433) soon.
@@ -136,7 +136,7 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
     <dd>
     	1. Let |sheet| be this <a for="/" interface>CSSStyleSheet</a> object.
 		2. If |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-        3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+        3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, or |sheet|'s [=parent CSS style sheet=]'s [=constructed flag=] is set, or that sheet's [=parent CSS style sheet=]'s [=constructed flag=] is set (and so on), throw a "{{NotAllowedError}}" {{DOMException}}.
 		4. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
