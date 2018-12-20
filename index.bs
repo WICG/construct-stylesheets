@@ -83,25 +83,24 @@ This is a known issue and we are going to move the definition to be on the <a fo
 	<dd>
 		When called, execute these steps:
 
-		1. Construct a new <a for="/" interface>CSSStyleSheet</a> object |sheet|,
-			with <a spec=cssom>location</a> set to the <a spec=html>base URL</a> of the [=associated Document=] for the [=current global object=],
-			no <a spec=cssom>parent CSS style sheet</a>,
-			no <a spec=cssom>owner node</a>,
-			no <a spec=cssom>owner CSS rule</a>,
-			and <a spec=cssom>title</a> set to the {{CSSStyleSheetInit/title}} attribute of |options|.
-		2.	Set |sheet|'s origin-clean flag.
-			Set |sheet|'s [=constructed flag=].
-			Set |sheet|'s [=constructor document=] to the {{Document}} for the {{Window}} where this constructor is called on.
-		3. If the {{CSSStyleSheetInit/media}} attribute of |options| is a string,
+		1. Construct a new <a for="/" interface>CSSStyleSheet</a> object |sheet| with the following properties:
+			* <a spec=cssom>location</a> set to the <a spec=html>base URL</a> of the [=associated Document=] for the [=current global object=]
+			* No <a spec=cssom>parent CSS style sheet</a>.
+			* No <a spec=cssom>owner node</a>.
+			* No <a spec=cssom>owner CSS rule</a>.
+			* <a spec=cssom>title</a> set to the {{CSSStyleSheetInit/title}} attribute of |options|.
+			* Set <a spec=cssom>alternate flag</a> if the {{CSSStyleSheetInit/alternate}} attribute of |options| is true, otherwise unset the <a spec=cssom>alternate flag</a>.
+			* Unset <a spec=cssom>origin-clean flag</a>.
+			* Set [=constructed flag=].
+			* [=Constructor document=] set to the [=associated Document=] for the [=current global object=].
+		2. If the {{CSSStyleSheetInit/media}} attribute of |options| is a string,
 			<a>create a MediaList object</a> from the string
 			and assign it as |sheet|'s <a spec=cssom>media</a>.
 			Otherwise, [=serialize a media query list=] from the attribute and then [=create a MediaList object=]
 			from the resulting string and set it as |sheet|'s <a spec=cssom>media</a>.
-		4. If the {{CSSStyleSheetInit/alternate}} attribute of |options| is true,
-			set |sheet|'s <a spec=cssom>alternate flag</a>.
-		5. If the {{CSSStyleSheetInit/disabled}} attribute of |options| is true,
+		3. If the {{CSSStyleSheetInit/disabled}} attribute of |options| is true,
 			set |sheet|'s <a spec=cssom>disabled flag</a>.
-		6. Return |sheet|.
+		4. Return |sheet|.
 	</dd>
 </dl>
 

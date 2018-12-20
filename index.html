@@ -1555,23 +1555,31 @@ This is a known issue and we are going to move the definition to be on the <a cl
       When called, execute these steps: 
      <ol>
       <li data-md>
-       <p>Construct a new <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet④">CSSStyleSheet</a> object <var>sheet</var>,
-with <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location" id="ref-for-concept-css-style-sheet-location">location</a> set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url">base URL</a> of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> for the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object">current global object</a>,
-no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a>,
-no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node" id="ref-for-concept-css-style-sheet-owner-node">owner node</a>,
-no <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-css-rule" id="ref-for-concept-css-style-sheet-owner-css-rule">owner CSS rule</a>,
-and <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-title" id="ref-for-concept-css-style-sheet-title">title</a> set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title">title</a></code> attribute of <var>options</var>.</p>
-      <li data-md>
-       <p>Set <var>sheet</var>’s origin-clean flag.
-Set <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag">constructed flag</a>.
-Set <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document">constructor document</a> to the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> for the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> where this constructor is called on.</p>
+       <p>Construct a new <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet④">CSSStyleSheet</a> object <var>sheet</var> with the following properties:</p>
+       <ul>
+        <li data-md>
+         <p><a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location" id="ref-for-concept-css-style-sheet-location">location</a> set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url">base URL</a> of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> for the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object">current global object</a></p>
+        <li data-md>
+         <p>No <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a>.</p>
+        <li data-md>
+         <p>No <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node" id="ref-for-concept-css-style-sheet-owner-node">owner node</a>.</p>
+        <li data-md>
+         <p>No <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-css-rule" id="ref-for-concept-css-style-sheet-owner-css-rule">owner CSS rule</a>.</p>
+        <li data-md>
+         <p><a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-title" id="ref-for-concept-css-style-sheet-title">title</a> set to the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-title" id="ref-for-dom-cssstylesheetinit-title">title</a></code> attribute of <var>options</var>.</p>
+        <li data-md>
+         <p>Set <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag">alternate flag</a> if the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-alternate" id="ref-for-dom-cssstylesheetinit-alternate">alternate</a></code> attribute of <var>options</var> is true, otherwise unset the <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag①">alternate flag</a>.</p>
+        <li data-md>
+         <p>Unset <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-origin-clean-flag" id="ref-for-concept-css-style-sheet-origin-clean-flag">origin-clean flag</a>.</p>
+        <li data-md>
+         <p>Set <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag">constructed flag</a>.</p>
+        <li data-md>
+         <p><a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document">Constructor document</a> set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window" id="ref-for-concept-document-window①">associated Document</a> for the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object①">current global object</a>.</p>
+       </ul>
       <li data-md>
        <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-media" id="ref-for-dom-cssstylesheetinit-media">media</a></code> attribute of <var>options</var> is a string, <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object" id="ref-for-create-a-medialist-object">create a MediaList object</a> from the string
 and assign it as <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media" id="ref-for-concept-css-style-sheet-media">media</a>.
 Otherwise, <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#serialize-a-media-query-list" id="ref-for-serialize-a-media-query-list">serialize a media query list</a> from the attribute and then <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#create-a-medialist-object" id="ref-for-create-a-medialist-object①">create a MediaList object</a> from the resulting string and set it as <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media" id="ref-for-concept-css-style-sheet-media①">media</a>.</p>
-      <li data-md>
-       <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-alternate" id="ref-for-dom-cssstylesheetinit-alternate">alternate</a></code> attribute of <var>options</var> is true,
-set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag">alternate flag</a>.</p>
       <li data-md>
        <p>If the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-disabled" id="ref-for-dom-cssstylesheetinit-disabled">disabled</a></code> attribute of <var>options</var> is true,
 set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag" id="ref-for-concept-css-style-sheet-disabled-flag">disabled flag</a>.</p>
@@ -1587,7 +1595,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-disallow-modification-flag">disallow modification flag</dfn>
     <dd> Either set or unset. Unset by default. If set, modification of the stylesheet’s rules is not allowed. 
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-constructor-document">constructor document</dfn>
-    <dd> Specified when created. The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> a constructed stylesheet is associated with. Null by default.
+    <dd> Specified when created. The <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> a constructed stylesheet is associated with. Null by default.
 		Only non-null for stylesheets that have <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag①">constructed flag</a> set. 
    </dl>
    <h2 class="heading settled" data-level="4" id="modifying-constructed-stylesheets"><span class="secno">4. </span><span class="content">Modifying Constructed Stylesheets</span><a class="self-link" href="#modifying-constructed-stylesheets"></a></h2>
@@ -1701,7 +1709,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <p>Every <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot④">DocumentOrShadowRoot</a></code> has <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="adopted-stylesheets">adopted stylesheets</dfn>.</p>
    <p>The user agent must include all style sheets in the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑤">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets②">adopted stylesheets</a> whose <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document②">constructor document</a> is the same as the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑥">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node document</a> inside its <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#documentorshadowroot-document-or-shadow-root-css-style-sheets" id="ref-for-documentorshadowroot-document-or-shadow-root-css-style-sheets">document or shadow root CSS style sheets</a>.</p>
    <p>These <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets③">adopted stylesheets</a> are ordered after all the other style sheets (i.e. those derived from <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-documentorshadowroot-stylesheets" id="ref-for-dom-documentorshadowroot-stylesheets">styleSheets</a></code>).</p>
-   <p class="note" role="note"> Note that because the <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets④">adopted stylesheets</a> are a property of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑦">DocumentOrShadowRoot</a></code>, they move along with the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> if it gets <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-adopt" id="ref-for-concept-node-adopt">adopted</a> into a different <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>, e.g. when adopting its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#element-shadow-host" id="ref-for-element-shadow-host">shadow host</a>. However, only <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets⑤">adopted stylesheets</a> that have the <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document③">constructor document</a> equal to the new <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> will be applied, which means that a constructed <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a> is only applicable in the document tree of its <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document④">constructor document</a>. </p>
+   <p class="note" role="note"> Note that because the <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets④">adopted stylesheets</a> are a property of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑦">DocumentOrShadowRoot</a></code>, they move along with the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> if it gets <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-adopt" id="ref-for-concept-node-adopt">adopted</a> into a different <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>, e.g. when adopting its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#element-shadow-host" id="ref-for-element-shadow-host">shadow host</a>. However, only <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets⑤">adopted stylesheets</a> that have the <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document③">constructor document</a> equal to the new <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> will be applied, which means that a constructed <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a> is only applicable in the document tree of its <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document④">constructor document</a>. </p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1903,7 +1911,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-alternate-flag">
    <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-css-style-sheet-alternate-flag">3. Constructing Stylesheets</a>
+    <li><a href="#ref-for-concept-css-style-sheet-alternate-flag">3. Constructing Stylesheets</a> <a href="#ref-for-concept-css-style-sheet-alternate-flag①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-create-a-medialist-object">
@@ -1940,6 +1948,12 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-media</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-css-style-sheet-media">3. Constructing Stylesheets</a> <a href="#ref-for-concept-css-style-sheet-media①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-origin-clean-flag">
+   <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-origin-clean-flag">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-origin-clean-flag</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-css-style-sheet-origin-clean-flag">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-owner-css-rule">
@@ -1981,8 +1995,8 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-document">
    <a href="https://dom.spec.whatwg.org/#document">https://dom.spec.whatwg.org/#document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-document">3. Constructing Stylesheets</a> <a href="#ref-for-document①">(2)</a>
-    <li><a href="#ref-for-document②">5. Using Constructed Stylesheets</a> <a href="#ref-for-document③">(2)</a>
+    <li><a href="#ref-for-document">3. Constructing Stylesheets</a>
+    <li><a href="#ref-for-document①">5. Using Constructed Stylesheets</a> <a href="#ref-for-document②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-documentorshadowroot">
@@ -2033,16 +2047,10 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <li><a href="#ref-for-concept-fetch-terminate">4. Modifying Constructed Stylesheets</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-window">
-   <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-window">3. Constructing Stylesheets</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-document-window">
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window">https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-document-window">3. Constructing Stylesheets</a>
+    <li><a href="#ref-for-concept-document-window">3. Constructing Stylesheets</a> <a href="#ref-for-concept-document-window①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-script-base-url">
@@ -2054,7 +2062,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-current-global-object">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object">https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-current-global-object">3. Constructing Stylesheets</a>
+    <li><a href="#ref-for-current-global-object">3. Constructing Stylesheets</a> <a href="#ref-for-current-global-object①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-in-parallel">
@@ -2144,6 +2152,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
      <li><span class="dfn-paneled" id="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets" style="color:initial">document or shadow root css style sheets</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-location" style="color:initial">location</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-media" style="color:initial">media</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-origin-clean-flag" style="color:initial">origin-clean flag</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-css-rule" style="color:initial">owner css rule</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-node" style="color:initial">owner node</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-parent-css-style-sheet" style="color:initial">parent css style sheet</span>
@@ -2171,7 +2180,6 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-window" style="color:initial">associated document</span>
      <li><span class="dfn-paneled" id="term-for-concept-script-base-url" style="color:initial">base url</span>
      <li><span class="dfn-paneled" id="term-for-current-global-object" style="color:initial">current global object</span>
