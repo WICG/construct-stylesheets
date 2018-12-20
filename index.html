@@ -1581,7 +1581,6 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    </dl>
    <p><a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑤">CSSStyleSheet</a> instances have the following associated states:</p>
    <dl>
-     &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 
     <dt><dfn class="dfn-paneled" data-dfn-for="CSSStyleSheet" data-dfn-type="dfn" data-noexport id="cssstylesheet-constructed-flag">constructed flag</dfn>
     <dd> Specified when created. Either set or unset. Unset by default.
 		Signifies whether this stylesheet was created by invoking the IDL-defined constructor. 
@@ -1592,26 +1591,8 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
 		Only non-null for stylesheets that have <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag①">constructed flag</a> set. 
    </dl>
    <h2 class="heading settled" data-level="4" id="modifying-constructed-stylesheets"><span class="secno">4. </span><span class="content">Modifying Constructed Stylesheets</span><a class="self-link" href="#modifying-constructed-stylesheets"></a></h2>
-   <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-After construction, constructed stylesheets can be modified using rule modification methods like <a href="https://www.w3.org/TR/cssom-1//#dom-cssstylesheet-insertrule">insertRule</a> or <a href="https://www.w3.org/TR/cssom-1//#dom-cssstylesheet-deleterule">deleteRule</a>, or <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace①">replace(text)</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync①">replaceSync(text)</a></code>. The behavior of those methods are affected by the <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag">disallow modification flag</a> and <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag②">constructed flag</a> as described below.</p>
+   <p>After construction, constructed stylesheets can be modified using rule modification methods like <a href="https://www.w3.org/TR/cssom-1//#dom-cssstylesheet-insertrule">insertRule</a> or <a href="https://www.w3.org/TR/cssom-1//#dom-cssstylesheet-deleterule">deleteRule</a>, or <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace①">replace(text)</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync①">replaceSync(text)</a></code>. The behavior of those methods are affected by the <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag">disallow modification flag</a> and <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag②">constructed flag</a> as described below.</p>
    <p class="note" role="note"> Note that we’re explicitly monkeypatching CSSOM. We are working on <a href="https://github.com/w3c/csswg-drafts/issues/3433">merging this spec into CSSOM</a> soon. </p>
-    =======
-After construction, constructed stylesheets can be modified using rule modification methods like <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule" id="ref-for-dom-cssstylesheet-insertrule">insertRule(rule[, index])</a> or <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule" id="ref-for-dom-cssstylesheet-deleterule">deleteRule(index)</a>, or <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace②">replace(text)</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync②">replaceSync(text)</a></code> if the sheet’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is not set. If those methods are called when the sheet’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, or <a data-link-type="functionish" href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule" id="ref-for-dom-cssstylesheet-insertrule①">insertRule(rule)</a> is used to add an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rule, a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> will be thrown as detailed in the below algorithms. 
-   <blockquote>
-    <blockquote>
-     <blockquote>
-      <blockquote>
-       <blockquote>
-        <blockquote>
-         <blockquote>
-          <p>aeafe52cd904c6fb7f4587136e22bb9d894c3090</p>
-         </blockquote>
-        </blockquote>
-       </blockquote>
-      </blockquote>
-     </blockquote>
-    </blockquote>
-   </blockquote>
    <dl>
     <dt><dfn class="idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="method" data-export id="dom-cssstylesheet-insertrule"><code>insertRule(<var>rule</var>, <var>index</var>)</code><a class="self-link" href="#dom-cssstylesheet-insertrule"></a></dfn>
     <dd>
@@ -1619,9 +1600,9 @@ After construction, constructed stylesheets can be modified using rule modificat
       <li data-md>
        <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>.</p>
       <li data-md>
-       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-rule" id="ref-for-parse-a-rule">Parse a rule</a> from <var>rule</var>. If the result is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rule and <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
+       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-rule" id="ref-for-parse-a-rule">Parse a rule</a> from <var>rule</var>. If the result is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rule and <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> is set, throw "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
       <li data-md>
        <p>(The rest of the algorithm remains as in CSSOM)</p>
      </ol>
@@ -1631,7 +1612,7 @@ After construction, constructed stylesheets can be modified using rule modificat
       <li data-md>
        <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object①">context object</a>.</p>
       <li data-md>
-       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag④">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
       <li data-md>
        <p>(The rest of the algorithm remains as in CSSOM)</p>
      </ol>
@@ -1641,9 +1622,9 @@ After construction, constructed stylesheets can be modified using rule modificat
       <li data-md>
        <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>.</p>
       <li data-md>
-       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
       <li data-md>
-       <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule">CSS rules</a> to an empty list, and set <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑥">disallow modification flag</a>.</p>
+       <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule">CSS rules</a> to an empty list, and set <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag④">disallow modification flag</a>.</p>
       <li data-md>
        <p>Let <var>promise</var> be a promise.</p>
       <li data-md>
@@ -1652,29 +1633,29 @@ After construction, constructed stylesheets can be modified using rule modificat
         <li data-md>
          <p>Let <var>rules</var> be the result of running <a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules">parse a list of rules</a> from <var>text</var>. If <var>rules</var> is not a list of rules (i.e. an error occurred during parsing), set <var>rules</var> to an empty list.</p>
         <li data-md>
-         <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a> rules in <var>rules</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a>s from those rules (and so on).</p>
+         <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules in <var>rules</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a>s from those rules (and so on).</p>
          <ul>
           <li data-md>
-           <p>If any of them failed to load, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-terminate" id="ref-for-concept-fetch-terminate">terminate</a> fetching of the remaining <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules,  and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> to perform the following steps:</p>
+           <p>If any of them failed to load, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-terminate" id="ref-for-concept-fetch-terminate">terminate</a> fetching of the remaining <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a> rules,  and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> to perform the following steps:</p>
            <ol>
             <li data-md>
-             <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a>.</p>
+             <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a>.</p>
             <li data-md>
-             <p>Reject <var>promise</var> with reason set to "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#networkerror" id="ref-for-networkerror">NetworkError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
+             <p>Reject <var>promise</var> with reason set to "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#networkerror" id="ref-for-networkerror">NetworkError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
            </ol>
           <li data-md>
            <p>Otherwise, once  all of them have finished loading, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task①">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source①">networking task source</a> to perform the following steps:</p>
            <ol>
             <li data-md>
-             <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑧">disallow modification flag</a>.</p>
+             <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑥">disallow modification flag</a>.</p>
             <li data-md>
              <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule①">CSS rules</a> to <var>rules</var>.</p>
             <li data-md>
              <p>Resolve <var>promise</var> with <var>sheet</var>.</p>
            </ol>
          </ul>
-         <p class="note" role="note"> Note: Loading  of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑤">@import</a> rules should follow the rules used for fetching style sheets for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑥">@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking. </p>
-         <p class="note" role="note"> Note: We will use the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-group" id="ref-for-concept-fetch-group">fetch group</a> of <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑦">@import</a> rules and other (fonts, etc) loads. </p>
+         <p class="note" role="note"> Note: Loading  of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules should follow the rules used for fetching style sheets for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑤">@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking. </p>
+         <p class="note" role="note"> Note: We will use the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-group" id="ref-for-concept-fetch-group">fetch group</a> of <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑥">@import</a> rules and other (fonts, etc) loads. </p>
          <p class="note" role="note"> Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere. </p>
        </ol>
       <li data-md>
@@ -1687,13 +1668,13 @@ After construction, constructed stylesheets can be modified using rule modificat
       <li data-md>
        <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>.</p>
       <li data-md>
-       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑨">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
+       <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
       <li data-md>
        <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule②">CSS rules</a> to an empty list.</p>
       <li data-md>
        <p>Let <var>rules</var> be the result of running <a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules①">parse a list of rules</a> from <var>text</var>. If <var>rules</var> is not a list of rules (i.e. an error occurred during parsing), set <var>rules</var> to an empty list.</p>
       <li data-md>
-       <p>If <var>rules</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑧">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑥">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
+       <p>If <var>rules</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑦">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
       <li data-md>
        <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule③">CSS rules</a> to <var>rules</var>.</p>
      </ol>
@@ -1712,7 +1693,7 @@ After construction, constructed stylesheets can be modified using rule modificat
       <li data-md>
        <p>Let <var>adopted</var> be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet></p>
       <li data-md>
-       <p>If any entry of <var>adopted</var> has its <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑥">constructed flag</a> not set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑦">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑧">DOMException</a></code>.</p>
+       <p>If any entry of <var>adopted</var> has its <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑥">constructed flag</a> not set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑥">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑦">DOMException</a></code>.</p>
       <li data-md>
        <p>Set this <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot③">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets①">adopted stylesheets</a> to <var>adopted</var>.</p>
      </ol>
@@ -1891,7 +1872,7 @@ After construction, constructed stylesheets can be modified using rule modificat
   <aside class="dfn-panel" data-for="term-for-at-ruledef-import">
    <a href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import">https://drafts.csswg.org/css-cascade-4/#at-ruledef-import</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-at-ruledef-import">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a> <a href="#ref-for-at-ruledef-import②">(3)</a> <a href="#ref-for-at-ruledef-import③">(4)</a> <a href="#ref-for-at-ruledef-import④">(5)</a> <a href="#ref-for-at-ruledef-import⑤">(6)</a> <a href="#ref-for-at-ruledef-import⑥">(7)</a> <a href="#ref-for-at-ruledef-import⑦">(8)</a> <a href="#ref-for-at-ruledef-import⑧">(9)</a>
+    <li><a href="#ref-for-at-ruledef-import">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a> <a href="#ref-for-at-ruledef-import②">(3)</a> <a href="#ref-for-at-ruledef-import③">(4)</a> <a href="#ref-for-at-ruledef-import④">(5)</a> <a href="#ref-for-at-ruledef-import⑤">(6)</a> <a href="#ref-for-at-ruledef-import⑥">(7)</a> <a href="#ref-for-at-ruledef-import⑦">(8)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-parse-a-list-of-rules">
@@ -1937,12 +1918,6 @@ After construction, constructed stylesheets can be modified using rule modificat
     <li><a href="#ref-for-css-rule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-css-rule①">(2)</a> <a href="#ref-for-css-rule②">(3)</a> <a href="#ref-for-css-rule③">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-cssstylesheet-deleterule">
-   <a href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule">https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-deleterule</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cssstylesheet-deleterule">4. Modifying Constructed Stylesheets</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-disabled-flag">
    <a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag">https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-disabled-flag</a><b>Referenced in:</b>
    <ul>
@@ -1953,12 +1928,6 @@ After construction, constructed stylesheets can be modified using rule modificat
    <a href="https://drafts.csswg.org/cssom-1/#documentorshadowroot-document-or-shadow-root-css-style-sheets">https://drafts.csswg.org/cssom-1/#documentorshadowroot-document-or-shadow-root-css-style-sheets</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-documentorshadowroot-document-or-shadow-root-css-style-sheets">5. Using Constructed Stylesheets</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-cssstylesheet-insertrule">
-   <a href="https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule">https://drafts.csswg.org/cssom-1/#dom-cssstylesheet-insertrule</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-cssstylesheet-insertrule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-dom-cssstylesheet-insertrule①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-location">
@@ -2115,8 +2084,8 @@ After construction, constructed stylesheets can be modified using rule modificat
   <aside class="dfn-panel" data-for="term-for-idl-DOMException">
    <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-idl-DOMException">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-idl-DOMException①">(2)</a> <a href="#ref-for-idl-DOMException②">(3)</a> <a href="#ref-for-idl-DOMException③">(4)</a> <a href="#ref-for-idl-DOMException④">(5)</a> <a href="#ref-for-idl-DOMException⑤">(6)</a> <a href="#ref-for-idl-DOMException⑥">(7)</a> <a href="#ref-for-idl-DOMException⑦">(8)</a>
-    <li><a href="#ref-for-idl-DOMException⑧">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-idl-DOMException">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-idl-DOMException①">(2)</a> <a href="#ref-for-idl-DOMException②">(3)</a> <a href="#ref-for-idl-DOMException③">(4)</a> <a href="#ref-for-idl-DOMException④">(5)</a> <a href="#ref-for-idl-DOMException⑤">(6)</a> <a href="#ref-for-idl-DOMException⑥">(7)</a>
+    <li><a href="#ref-for-idl-DOMException⑦">5. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-DOMString">
@@ -2134,8 +2103,8 @@ After construction, constructed stylesheets can be modified using rule modificat
   <aside class="dfn-panel" data-for="term-for-notallowederror">
    <a href="https://heycam.github.io/webidl/#notallowederror">https://heycam.github.io/webidl/#notallowederror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-notallowederror">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a> <a href="#ref-for-notallowederror②">(3)</a> <a href="#ref-for-notallowederror③">(4)</a> <a href="#ref-for-notallowederror④">(5)</a> <a href="#ref-for-notallowederror⑤">(6)</a> <a href="#ref-for-notallowederror⑥">(7)</a>
-    <li><a href="#ref-for-notallowederror⑦">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-notallowederror">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a> <a href="#ref-for-notallowederror②">(3)</a> <a href="#ref-for-notallowederror③">(4)</a> <a href="#ref-for-notallowederror④">(5)</a> <a href="#ref-for-notallowederror⑤">(6)</a>
+    <li><a href="#ref-for-notallowederror⑥">5. Using Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-USVString">
@@ -2171,10 +2140,8 @@ After construction, constructed stylesheets can be modified using rule modificat
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-alternate-flag" style="color:initial">alternate flag</span>
      <li><span class="dfn-paneled" id="term-for-create-a-medialist-object" style="color:initial">create a medialist object</span>
      <li><span class="dfn-paneled" id="term-for-css-rule" style="color:initial">css rule</span>
-     <li><span class="dfn-paneled" id="term-for-dom-cssstylesheet-deleterule" style="color:initial">deleteRule(index)</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-disabled-flag" style="color:initial">disabled flag</span>
      <li><span class="dfn-paneled" id="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets" style="color:initial">document or shadow root css style sheets</span>
-     <li><span class="dfn-paneled" id="term-for-dom-cssstylesheet-insertrule" style="color:initial">insertRule(rule)</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-location" style="color:initial">location</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-media" style="color:initial">media</span>
      <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-css-rule" style="color:initial">owner css rule</span>
@@ -2247,8 +2214,8 @@ After construction, constructed stylesheets can be modified using rule modificat
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>Constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a>)]
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- g>CSSStyleSheet</c-></a> {
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace③"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
-  <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync③"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace②"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
+  <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync②"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-cssstylesheetinit"><code><c- g>CSSStyleSheetInit</c-></code></a> {
@@ -2310,7 +2277,7 @@ After construction, constructed stylesheets can be modified using rule modificat
   <aside class="dfn-panel" data-for="cssstylesheet-disallow-modification-flag">
    <b><a href="#cssstylesheet-disallow-modification-flag">#cssstylesheet-disallow-modification-flag</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-cssstylesheet-disallow-modification-flag">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag①">(2)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag②">(3)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag③">(4)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag④">(5)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑤">(6)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑥">(7)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑦">(8)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑧">(9)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑨">(10)</a>
+    <li><a href="#ref-for-cssstylesheet-disallow-modification-flag">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag①">(2)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag②">(3)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag③">(4)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag④">(5)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑤">(6)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑥">(7)</a> <a href="#ref-for-cssstylesheet-disallow-modification-flag⑦">(8)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cssstylesheet-constructor-document">
@@ -2325,14 +2292,14 @@ After construction, constructed stylesheets can be modified using rule modificat
    <b><a href="#dom-cssstylesheet-replace">#dom-cssstylesheet-replace</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cssstylesheet-replace">3. Constructing Stylesheets</a>
-    <li><a href="#ref-for-dom-cssstylesheet-replace①">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-dom-cssstylesheet-replace②">(2)</a>
+    <li><a href="#ref-for-dom-cssstylesheet-replace①">4. Modifying Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-cssstylesheet-replacesync">
    <b><a href="#dom-cssstylesheet-replacesync">#dom-cssstylesheet-replacesync</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-cssstylesheet-replacesync">3. Constructing Stylesheets</a>
-    <li><a href="#ref-for-dom-cssstylesheet-replacesync①">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-dom-cssstylesheet-replacesync②">(2)</a>
+    <li><a href="#ref-for-dom-cssstylesheet-replacesync①">4. Modifying Constructed Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-documentorshadowroot-adoptedstylesheets">
