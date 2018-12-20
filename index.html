@@ -1606,7 +1606,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object">context object</a>.</p>
+       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥">CSSStyleSheet</a> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
       <li data-md>
@@ -1618,7 +1618,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object①">context object</a>.</p>
+       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦">CSSStyleSheet</a> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
       <li data-md>
@@ -1628,7 +1628,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object②">context object</a>.</p>
+       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
       <li data-md>
@@ -1649,7 +1649,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
             <li data-md>
              <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a>.</p>
             <li data-md>
-             <p>Reject <var>promise</var> with reason set to "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#networkerror" id="ref-for-networkerror">NetworkError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
+             <p>Reject <var>promise</var> with a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#networkerror" id="ref-for-networkerror">NetworkError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException④">DOMException</a></code>.</p>
            </ol>
           <li data-md>
            <p>Otherwise, once  all of them have finished loading, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task①">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source①">networking task source</a> to perform the following steps:</p>
@@ -1674,7 +1674,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
       When called, execute these steps: 
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be the <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#context-object" id="ref-for-context-object③">context object</a>.</p>
+       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨">CSSStyleSheet</a> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
       <li data-md>
@@ -1689,11 +1689,11 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    </dl>
    <h2 class="heading settled" data-level="5" id="using-constructed-stylesheets"><span class="secno">5. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
+  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①⓪"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
 };
 </pre>
    <dl>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export id="dom-documentorshadowroot-adoptedstylesheets"><code>adoptedStyleSheets</code></dfn>, <span> of type FrozenArray&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦">CSSStyleSheet</a>></span>
+    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="DocumentOrShadowRoot" data-dfn-type="attribute" data-export id="dom-documentorshadowroot-adoptedstylesheets"><code>adoptedStyleSheets</code></dfn>, <span> of type FrozenArray&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①">CSSStyleSheet</a>></span>
     <dd>
       On getting, <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets①">adoptedStyleSheets</a></code> returns this <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot②">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets">adopted stylesheets</a>. 
      <p>On setting, <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets②">adoptedStyleSheets</a></code> performs the following steps:</p>
@@ -1709,7 +1709,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <p>Every <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot④">DocumentOrShadowRoot</a></code> has <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="adopted-stylesheets">adopted stylesheets</dfn>.</p>
    <p>The user agent must include all style sheets in the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑤">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets②">adopted stylesheets</a> whose <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document②">constructor document</a> is the same as the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑥">DocumentOrShadowRoot</a></code>'s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node document</a> inside its <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#documentorshadowroot-document-or-shadow-root-css-style-sheets" id="ref-for-documentorshadowroot-document-or-shadow-root-css-style-sheets">document or shadow root CSS style sheets</a>.</p>
    <p>These <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets③">adopted stylesheets</a> are ordered after all the other style sheets (i.e. those derived from <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-documentorshadowroot-stylesheets" id="ref-for-dom-documentorshadowroot-stylesheets">styleSheets</a></code>).</p>
-   <p class="note" role="note"> Note that because the <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets④">adopted stylesheets</a> are a property of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑦">DocumentOrShadowRoot</a></code>, they move along with the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> if it gets <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-adopt" id="ref-for-concept-node-adopt">adopted</a> into a different <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>, e.g. when adopting its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#element-shadow-host" id="ref-for-element-shadow-host">shadow host</a>. However, only <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets⑤">adopted stylesheets</a> that have the <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document③">constructor document</a> equal to the new <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> will be applied, which means that a constructed <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a> is only applicable in the document tree of its <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document④">constructor document</a>. </p>
+   <p class="note" role="note"> Note that because the <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets④">adopted stylesheets</a> are a property of the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot⑦">DocumentOrShadowRoot</a></code>, they move along with the <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> if it gets <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-adopt" id="ref-for-concept-node-adopt">adopted</a> into a different <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code>, e.g. when adopting its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#element-shadow-host" id="ref-for-element-shadow-host">shadow host</a>. However, only <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets⑤">adopted stylesheets</a> that have the <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document③">constructor document</a> equal to the new <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> will be applied, which means that a constructed <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①②">CSSStyleSheet</a> is only applicable in the document tree of its <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document④">constructor document</a>. </p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1899,7 +1899,8 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <a href="https://drafts.csswg.org/cssom-1/#cssstylesheet">https://drafts.csswg.org/cssom-1/#cssstylesheet</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-cssstylesheet①">3. Constructing Stylesheets</a> <a href="#ref-for-cssstylesheet②">(2)</a> <a href="#ref-for-cssstylesheet③">(3)</a> <a href="#ref-for-cssstylesheet④">(4)</a> <a href="#ref-for-cssstylesheet⑤">(5)</a>
-    <li><a href="#ref-for-cssstylesheet⑥">5. Using Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet⑦">(2)</a> <a href="#ref-for-cssstylesheet⑧">(3)</a>
+    <li><a href="#ref-for-cssstylesheet⑥">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet⑦">(2)</a> <a href="#ref-for-cssstylesheet⑧">(3)</a> <a href="#ref-for-cssstylesheet⑨">(4)</a>
+    <li><a href="#ref-for-cssstylesheet①⓪">5. Using Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet①①">(2)</a> <a href="#ref-for-cssstylesheet①②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-medialist">
@@ -2015,12 +2016,6 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <a href="https://dom.spec.whatwg.org/#concept-node-adopt">https://dom.spec.whatwg.org/#concept-node-adopt</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-node-adopt">5. Using Constructed Stylesheets</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-context-object">
-   <a href="https://dom.spec.whatwg.org/#context-object">https://dom.spec.whatwg.org/#context-object</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-context-object">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-context-object①">(2)</a> <a href="#ref-for-context-object②">(3)</a> <a href="#ref-for-context-object③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-node-document">
@@ -2167,7 +2162,6 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
      <li><span class="dfn-paneled" id="term-for-documentorshadowroot" style="color:initial">DocumentOrShadowRoot</span>
      <li><span class="dfn-paneled" id="term-for-shadowroot" style="color:initial">ShadowRoot</span>
      <li><span class="dfn-paneled" id="term-for-concept-node-adopt" style="color:initial">adopt</span>
-     <li><span class="dfn-paneled" id="term-for-context-object" style="color:initial">context object</span>
      <li><span class="dfn-paneled" id="term-for-concept-node-document" style="color:initial">node document</span>
      <li><span class="dfn-paneled" id="term-for-element-shadow-host" style="color:initial">shadow host</span>
     </ul>
@@ -2221,7 +2215,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>Constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a>)]
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- g>CSSStyleSheet</c-></a> {
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①③"><c- g>CSSStyleSheet</c-></a> {
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace②"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
   <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync②"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
 };
@@ -2234,7 +2228,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
 };
 
 <c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③"><c- g>adoptedStyleSheets</c-></a>;
+  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①⓪①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③"><c- g>adoptedStyleSheets</c-></a>;
 };
 
 </pre>
