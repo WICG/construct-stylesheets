@@ -10,6 +10,7 @@ Editor: Rakina Zata Amni, Google, rakina@google.com
 Repository: https://github.com/WICG/construct-stylesheets/
 Abstract: This draft defines additions to CSSOM to make <a for="/" interface>CSSStyleSheet</a> objects directly constructable, along with a way to use them in {{DocumentOrShadowRoot}}s.
 Ignored Terms: create a medialist object, add a css style sheet, document css style sheets
+Markup Shorthands: markdown yes
 </pre>
 
 <pre class='link-defaults'>
@@ -72,6 +73,10 @@ dictionary CSSStyleSheetInit {
 };
 </pre>
 
+<p class="note">
+Note that `[Constructor]` is defined in Web IDL to only be allowed on interfaces, not partial interfaces. 
+This is a known issue and we are going to move the definition to be on the <a for="/" interface>CSSStyleSheet</a> interface when we [merge this spec to CSSOM](https://github.com/w3c/csswg-drafts/issues/3433).
+</p>
 
 <dl>
 	<dt><dfn constructor for=CSSStyleSheet lt="CSSStyleSheet()|CSSStyleSheet(options)">CSSStyleSheet(|options|)</dfn></dt>
@@ -79,7 +84,7 @@ dictionary CSSStyleSheetInit {
 		When called, execute these steps:
 
 		1. Construct a new <a for="/" interface>CSSStyleSheet</a> object |sheet|,
-			with <a spec=cssom>location</a> set to the <a spec=html>base URL</a> of the {{Document}} for the {{Window}} where this constructor is called on,
+			with <a spec=cssom>location</a> set to the <a spec=html>base URL</a> of the [=associated Document=] for the [=current global object=],
 			no <a spec=cssom>parent CSS style sheet</a>,
 			no <a spec=cssom>owner node</a>,
 			no <a spec=cssom>owner CSS rule</a>,
@@ -90,7 +95,8 @@ dictionary CSSStyleSheetInit {
 		3. If the {{CSSStyleSheetInit/media}} attribute of |options| is a string,
 			<a>create a MediaList object</a> from the string
 			and assign it as |sheet|'s <a spec=cssom>media</a>.
-			Otherwise, assign a copy of the value of the attribute as |sheet|'s <a spec=cssom>media</a>.
+			Otherwise, [=serialize a media query list=] from the attribute and then [=create a MediaList object=]
+			from the resulting string and set it as |sheet|'s <a spec=cssom>media</a>.
 		4. If the {{CSSStyleSheetInit/alternate}} attribute of |options| is true,
 			set |sheet|'s <a spec=cssom>alternate flag</a>.
 		5. If the {{CSSStyleSheetInit/disabled}} attribute of |options| is true,
@@ -101,52 +107,57 @@ dictionary CSSStyleSheetInit {
 
 <a interface>CSSStyleSheet</a> instances have the following associated states:
 <dl>
-	<dt><dfn  for=CSSStyleSheet lt="constructed flag">constructed flag</dfn></dt>
+	<dt><dfn for=CSSStyleSheet lt="constructed flag">constructed flag</dfn></dt>
 	<dd>
 		Specified when created. Either set or unset. Unset by default.
-		Signifies whether this stylesheet is made via constructor or not, so must be set only for stylesheets that are constructed using the {{CSSStyleSheet()}} or {{CSSStyleSheet(options)}} function.
+		Signifies whether this stylesheet was created by invoking the IDL-defined constructor.
 	</dd>
 	<dt><dfn for=CSSStyleSheet lt="disallow modification flag">disallow modification flag</dfn></dt>
 	<dd>
-		Either set or unset. Unset by default. If set, modification to the stylesheet's rules are not allowed.
+		Either set or unset. Unset by default. If set, modification of the stylesheet's rules is not allowed.
 	</dd>
 	<dt><dfn for=CSSStyleSheet lt="constructor document">constructor document</dfn></dt>
 	<dd>
-		Specified when created. The {{Document}} where the stylesheet is originally constructed on. Null by default.
+		Specified when created. The {{Document}} a constructed stylesheet is associated with. Null by default.
+		Only non-null for stylesheets that have [=constructed flag=] set.
 	</dd>
 </dl>
 
 Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
 =============================
 
-After construction, constructed stylesheets can be modified using rule modification methods like <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule[, index])</a> or <a spec=cssom-1 for="CSSStyleSheet">deleteRule(index)</a>, or {{replace(text)}} and {{replaceSync(text)}} if the sheet's [=disallow modification flag=] is not set. If those methods are called when the sheet's [=disallow modification flag=] is set, or <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule)</a> is used to add an <a>@import</a> rule, a "{{NotAllowedError}}" {{DOMException}} will be thrown as detailed in the below algorithms. 
+After construction, constructed stylesheets can be modified using rule modification methods like [[cssom/#dom-cssstylesheet-insertrule|insertRule]] or [[cssom/#dom-cssstylesheet-deleterule|deleteRule]], or {{replace(text)}} and {{replaceSync(text)}}. The behavior of those methods are affected by the [=disallow modification flag=] and [=constructed flag=] as described below.
+
+<p class="note">
+Note that we're explicitly monkeypatching CSSOM. We are working on [merging this spec into CSSOM](https://github.com/w3c/csswg-drafts/issues/3433) soon.
+</p>
 
 <dl>
     <dt><dfn method for=CSSStyleSheet>insertRule(|rule|, |index|)</dfn></dt>
     <dd>
-    	1. Let |sheet| be the stylesheet on which this function is called on.
-		2. If |sheet|'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+    	1. Let |sheet| be the [=context object=].
+		2. If |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
         3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
 		4. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
     <dt><dfn method for=CSSStyleSheet>deleteRule(|index|)</dfn></dt>
     <dd>
-    	1. Let |sheet| be the stylesheet on which this function is called on.
-		2. If |sheet|'s [=constructed flag=] and [=disallow modification flag=] is set, throw "{{NotAllowedError}}" {{DOMException}}.
+    	1. Let |sheet| be the [=context object=].
+		2. If |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
     <dt><dfn method for=CSSStyleSheet>replace(|text|)</dfn></dt>
     <dd>
-		1. Let |sheet| be the stylesheet on which this function is called on.
+    	1. Let |sheet| be the [=context object=].
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
 		4. Let |promise| be a promise.
 		5. [=In parallel=], do these steps:
 			1. [=Parse a list of rules=] from |text|. If it returned a list of rules, assign the list as |sheet|'s [=CSS rules=].
 			2. Wait for loading of <a>@import</a> rules in |sheet| and any nested <a>@import</a>s from those rules (and so on).
-				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NotAllowedError}}" {{DOMException}}.
+				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NetworkError}}" {{DOMException}}.
 				    <p class="note">
 				     	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
 				    </p>
@@ -165,16 +176,14 @@ After construction, constructed stylesheets can be modified using rule modificat
 	<dd>
 		When called, execute these steps:
 
-		1. Let |sheet| be the stylesheet on which this function is called on.
+    	1. Let |sheet| be the [=context object=].
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
 		4. [=Parse a list of rules=] from |text|.
 			If it returned a list of rules,
 			assign the list as |sheet|'s [=CSS rules=];
-			otherwise,
-			set |sheet|'s [=CSS rules=] to an empty list.
 		5. If |sheet| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
-		6. Unset |sheet|'s [=disallow modification flag=] and return |sheet|.
+		6. Unset |sheet|'s [=disallow modification flag=].
 	</dd>
 
 </dl>
