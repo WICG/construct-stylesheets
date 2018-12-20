@@ -107,6 +107,7 @@ This is a known issue and we are going to move the definition to be on the <a fo
 
 <a interface>CSSStyleSheet</a> instances have the following associated states:
 <dl>
+<<<<<<< HEAD
 	<dt><dfn for=CSSStyleSheet lt="constructed flag">constructed flag</dfn></dt>
 	<dd>
 		Specified when created. Either set or unset. Unset by default.
@@ -126,11 +127,15 @@ This is a known issue and we are going to move the definition to be on the <a fo
 Modifying Constructed Stylesheets {#modifying-constructed-stylesheets}
 =============================
 
+<<<<<<< HEAD
 After construction, constructed stylesheets can be modified using rule modification methods like [[cssom/#dom-cssstylesheet-insertrule|insertRule]] or [[cssom/#dom-cssstylesheet-deleterule|deleteRule]], or {{replace(text)}} and {{replaceSync(text)}}. The behavior of those methods are affected by the [=disallow modification flag=] and [=constructed flag=] as described below.
 
 <p class="note">
 Note that we're explicitly monkeypatching CSSOM. We are working on [merging this spec into CSSOM](https://github.com/w3c/csswg-drafts/issues/3433) soon.
 </p>
+=======
+After construction, constructed stylesheets can be modified using rule modification methods like <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule[, index])</a> or <a spec=cssom-1 for="CSSStyleSheet">deleteRule(index)</a>, or {{replace(text)}} and {{replaceSync(text)}} if the sheet's [=disallow modification flag=] is not set. If those methods are called when the sheet's [=disallow modification flag=] is set, or <a spec=cssom-1 for="CSSStyleSheet">insertRule(rule)</a> is used to add an <a>@import</a> rule, a "{{NotAllowedError}}" {{DOMException}} will be thrown as detailed in the below algorithms. 
+>>>>>>> aeafe52cd904c6fb7f4587136e22bb9d894c3090
 
 <dl>
     <dt><dfn method for=CSSStyleSheet>insertRule(|rule|, |index|)</dfn></dt>
@@ -155,19 +160,25 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
 		4. Let |promise| be a promise.
 		5. [=In parallel=], do these steps:
-			1. [=Parse a list of rules=] from |text|. If it returned a list of rules, assign the list as |sheet|'s [=CSS rules=].
-			2. Wait for loading of <a>@import</a> rules in |sheet| and any nested <a>@import</a>s from those rules (and so on).
-				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules, set |sheet|'s [=CSS rules=] to an empty list, unset |sheet|'s [=disallow modification flag=], and reject |promise| with reason set to "{{NetworkError}}" {{DOMException}}.
-				    <p class="note">
-				     	Note: Loading  of <a>@import</a> rules should the rules used for fetching style sheets from <a>@import</a> of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
-				    </p>
-				    <p class="note">
-					    Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
-				    </p>
-				    <p class="note">
-					    Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
-				    </p>
-			    * Otherwise, resolve |promise| with |sheet| once all of them have finished loading, and unset |sheet|'s [=disallow modification flag=].
+			1. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
+			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
+				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
+                    1. Unset |sheet|'s [=disallow modification flag=].
+                    2. Reject |promise| with reason set to "{{NetworkError}}" {{DOMException}}.
+			    * Otherwise, once  all of them have finished loading, [=queue a task=] on the [=networking task source=] to perform the following steps:
+                    1. Unset |sheet|'s [=disallow modification flag=].
+                    2. Set |sheet|'s [=CSS rules=] to |rules|.
+                    3. Resolve |promise| with |sheet|.
+
+				<p class="note">
+                    Note: Loading  of <a>@import</a> rules should follow the rules used for fetching style sheets for <a>@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
+				</p>
+				<p class="note">
+					Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
+				</p>
+				<p class="note">
+					Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
+				</p>
 		6. Return |promise|.
 	</dd>
 
@@ -175,15 +186,12 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
     <dt><dfn method for=CSSStyleSheet>replaceSync(|text|)</dfn></dt>
 	<dd>
 		When called, execute these steps:
-
     	1. Let |sheet| be the [=context object=].
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. [=Parse a list of rules=] from |text|.
-			If it returned a list of rules,
-			assign the list as |sheet|'s [=CSS rules=];
-		5. If |sheet| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
-		6. Unset |sheet|'s [=disallow modification flag=].
+		3. Set |sheet|'s [=CSS rules=] to an empty list.
+		4. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
+		5. If |rules| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
+		6. Set |sheet|'s [=CSS rules=] to |rules|.
 	</dd>
 
 </dl>
