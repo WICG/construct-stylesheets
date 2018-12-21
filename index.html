@@ -1484,7 +1484,7 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>This draft defines additions to CSSOM to make <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet">CSSStyleSheet</a> objects directly constructable, along with a way to use them in <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a></code>s.</p>
+   <p>This draft defines additions to CSSOM to make <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet">CSSStyleSheet</a></code> objects directly constructable, along with a way to use them in <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot">DocumentOrShadowRoot</a></code>s.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -1548,14 +1548,14 @@ As a web page may contain tens of thousands of web components, this can easily h
 };
 </pre>
    <p class="note" role="note"> Note that <code>[Constructor]</code> is defined in Web IDL to only be allowed on interfaces, not partial interfaces. 
-This is a known issue and we are going to move the definition to be on the <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet③">CSSStyleSheet</a> interface when we <a href="https://github.com/w3c/csswg-drafts/issues/3433">merge this spec to CSSOM</a>. </p>
+This is a known issue and we are going to move the definition to be on the <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet③">CSSStyleSheet</a></code> interface when we <a href="https://github.com/w3c/csswg-drafts/issues/3433">merge this spec to CSSOM</a>. </p>
    <dl>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export data-lt="CSSStyleSheet()|CSSStyleSheet(options)" id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(<var>options</var>)</code></dfn>
+    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(<var>options</var>)</code></dfn>
     <dd>
       When called, execute these steps: 
      <ol>
       <li data-md>
-       <p>Construct a new <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet④">CSSStyleSheet</a> object <var>sheet</var> with the following properties:</p>
+       <p>Construct a new <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet④">CSSStyleSheet</a></code> object <var>sheet</var> with the following properties:</p>
        <ul>
         <li data-md>
          <p><a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location" id="ref-for-concept-css-style-sheet-location">location</a> set to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url" id="ref-for-concept-script-base-url">base URL</a> of the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> for the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-global-object" id="ref-for-current-global-object">current global object</a></p>
@@ -1606,7 +1606,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥">CSSStyleSheet</a> object.</p>
+       <p>Let <var>sheet</var> be this <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑥">CSSStyleSheet</a></code> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
       <li data-md>
@@ -1618,7 +1618,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦">CSSStyleSheet</a> object.</p>
+       <p>Let <var>sheet</var> be this <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑦">CSSStyleSheet</a></code> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag②">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror②">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
       <li data-md>
@@ -1628,7 +1628,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <dd>
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a> object.</p>
+       <p>Let <var>sheet</var> be this <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑧">CSSStyleSheet</a></code> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑥">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag③">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror③">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException③">DOMException</a></code>.</p>
       <li data-md>
@@ -1674,7 +1674,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
       When called, execute these steps: 
      <ol>
       <li data-md>
-       <p>Let <var>sheet</var> be this <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨">CSSStyleSheet</a> object.</p>
+       <p>Let <var>sheet</var> be this <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨">CSSStyleSheet</a></code> object.</p>
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑦">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
       <li data-md>
@@ -1865,7 +1865,6 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <li><a href="#dom-cssstylesheetinit-alternate">alternate</a><span>, in §3</span>
    <li><a href="#cssstylesheet-constructed-flag">constructed flag</a><span>, in §3</span>
    <li><a href="#cssstylesheet-constructor-document">constructor document</a><span>, in §3</span>
-   <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet()</a><span>, in §3</span>
    <li><a href="#dictdef-cssstylesheetinit">CSSStyleSheetInit</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet(options)</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-deleterule">deleteRule(index)</a><span>, in §4</span>
