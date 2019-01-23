@@ -198,7 +198,7 @@ partial interface DocumentOrShadowRoot {
 		On setting, {{adoptedStyleSheets}} performs the following steps:
 
 		1. Let |adopted| be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet>
-		2. If any entry of |adopted| has its [=constructed flag=] not set  (e.g. it's not made by factory methods to construct stylesheets), throw a "{{NotAllowedError}}" {{DOMException}}. 
+		2. If any entry of |adopted| has its [=constructed flag=] not set  (e.g. it's not made by factory methods to construct stylesheets), or its [=constructor document=] is not equal to this {{DocumentOrShadowRoot}}'s [=node document=], throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to |adopted|.
 	</dd>
 </dl>
@@ -206,11 +206,9 @@ partial interface DocumentOrShadowRoot {
 Every {{DocumentOrShadowRoot}} has <dfn>adopted stylesheets</dfn>.
 
 The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
-[=adopted stylesheets=] whose [=constructor document=] is the same as the {{DocumentOrShadowRoot}}'s [=node document=] inside its <a>document or shadow root CSS style sheets</a>.
+[=adopted stylesheets=] inside its <a>document or shadow root CSS style sheets</a>.
 
 These [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
-<p class="note">
-Note that because the [=adopted stylesheets=] are a property of the {{DocumentOrShadowRoot}}, they move along with the {{ShadowRoot}} if it gets [=adopted=] into a different {{Document}}, e.g. when adopting its [=shadow host=]. However, only [=adopted stylesheets=] that have the [=constructor document=] equal to the new {{Document}} will be applied, which means that a constructed <a interface>CSSStyleSheet</a> is only applicable in the document tree of its [=constructor document=].
-</p>
+If a {{ShadowRoot}} gets [=adopted=] into a different {{Document}}, e.g. when adopting its [=shadow host=], the {{ShadowRoot}}'s [=adopted stylesheets=] must be emptied.
 
