@@ -221,7 +221,7 @@ The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
 
 These [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
-This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and <var ignore> oldDocument</var>:
+This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and <var ignore>oldDocument</var>:
 
 1. Set |node|'s {{adoptedStyleSheets}} to the empty list.
 

@@ -67,7 +67,7 @@ class MyElement extends HTMLElement {
 	```
 
 
-* Each constructed `CSSStyleSheet` is "tied" to the `Document` it is constructed on, meaning that it can only be used in that document tree (whether in a top-level document or shadow trees). If you try to adopt a `CSSStyleSheet` that's constructed in a different `Document`, a `NotAllowedError` will be thrown.
+* Each constructed `CSSStyleSheet` is "tied" to the `Document` it is constructed on, meaning that it can only be used in that document tree (whether in a top-level document or shadow trees). If you try to adopt a `CSSStyleSheet` that's constructed in a different `Document`, a "`NotAllowedError`" `DOMException` will be thrown.
 	* Example:
 	```html
 	<body>
