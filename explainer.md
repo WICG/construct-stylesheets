@@ -27,7 +27,7 @@ Often, the main functionality inside the shadow root is provided by a single HTM
 
 ### Past Solution: Shadow Piercing
 
-Early versions of the Web Component specifications allowed shadow piercing (/deep/, >>> and ::shadow). This allowed document-level style sheets to specify the styles that apply within shadow roots. This avoiding the problem of needing a style element within each Shadow DOM, but reduced encapsulation and has been [removed](https://www.w3.org/wiki/Webapps/WebComponentsApril2015Meeting) from the specifications.
+Early versions of the Web Component specifications allowed shadow piercing (/deep/, >>> and ::shadow). This allowed document-level style sheets to specify the styles that apply within shadow roots. This avoided the problem of needing a style element within each Shadow DOM, but reduced encapsulation and has been [removed](https://www.w3.org/wiki/Webapps/WebComponentsApril2015Meeting) from the specifications.
 
 ### Proposed Solution
 
