@@ -182,10 +182,9 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 		When called, execute these steps:
     	1. Let |sheet| be this {{/CSSStyleSheet}} object.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set |sheet|'s [=CSS rules=] to an empty list.
-		4. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
-		5. If |rules| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
-		6. Set |sheet|'s [=CSS rules=] to |rules|.
+		3. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
+		4. If |rules| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
+		5. Set |sheet|'s [=CSS rules=] to |rules|.
 	</dd>
 
 </dl>

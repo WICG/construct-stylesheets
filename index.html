@@ -1029,7 +1029,7 @@ Possible extra rowspan handling
 		}
 	/* } */
 
-	@supports (display:grid) {
+	@supports (display:grid) and (display:contents) {
 		/* Use #toc over .toc to override non-@supports rules. */
 		#toc {
 			display: grid;
@@ -1212,7 +1212,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version eee3e9e7543e2188fb60d183a6cf3fe3a7d971c1" name="generator">
+  <meta content="Bikeshed version 087ea90e1ebd0321c20373d89950d1c6b73d5df1" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -1460,7 +1460,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-01-24">24 January 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2019-12-13">13 December 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1476,7 +1476,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 24 January 2019,
+In addition, as of 13 December 2019,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1550,7 +1550,7 @@ As a web page may contain tens of thousands of web components, this can easily h
    <p class="note" role="note"> Note that <code>[Constructor]</code> is defined in Web IDL to only be allowed on interfaces, not partial interfaces. 
 This is a known issue and we are going to move the definition to be on the <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet③">CSSStyleSheet</a></code> interface when we <a href="https://github.com/w3c/csswg-drafts/issues/3433">merge this spec to CSSOM</a>. </p>
    <dl>
-    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(<var>options</var>)</code></dfn>
+    <dt><dfn class="dfn-paneled idl-code" data-dfn-for="CSSStyleSheet" data-dfn-type="constructor" data-export data-lt="CSSStyleSheet(options)|CSSStyleSheet()" id="dom-cssstylesheet-cssstylesheet"><code>CSSStyleSheet(<var>options</var>)</code></dfn>
     <dd>
       When called, execute these steps: 
      <ol>
@@ -1678,13 +1678,11 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑦">constructed flag</a> is not set, or <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑦">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑤">DOMException</a></code>.</p>
       <li data-md>
-       <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule②">CSS rules</a> to an empty list.</p>
-      <li data-md>
        <p>Let <var>rules</var> be the result of running <a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules①">parse a list of rules</a> from <var>text</var>. If <var>rules</var> is not a list of rules (i.e. an error occurred during parsing), set <var>rules</var> to an empty list.</p>
       <li data-md>
        <p>If <var>rules</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑦">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
       <li data-md>
-       <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule③">CSS rules</a> to <var>rules</var>.</p>
+       <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule②">CSS rules</a> to <var>rules</var>.</p>
      </ol>
    </dl>
    <h2 class="heading settled" data-level="5" id="using-constructed-stylesheets"><span class="secno">5. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
@@ -1869,6 +1867,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <li><a href="#dom-cssstylesheetinit-alternate">alternate</a><span>, in §3</span>
    <li><a href="#cssstylesheet-constructed-flag">constructed flag</a><span>, in §3</span>
    <li><a href="#cssstylesheet-constructor-document">constructor document</a><span>, in §3</span>
+   <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet()</a><span>, in §3</span>
    <li><a href="#dictdef-cssstylesheetinit">CSSStyleSheetInit</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-cssstylesheet">CSSStyleSheet(options)</a><span>, in §3</span>
    <li><a href="#dom-cssstylesheet-deleterule">deleteRule(index)</a><span>, in §4</span>
@@ -1927,7 +1926,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-css-rule">
    <a href="https://drafts.csswg.org/cssom-1/#css-rule">https://drafts.csswg.org/cssom-1/#css-rule</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-css-rule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-css-rule①">(2)</a> <a href="#ref-for-css-rule②">(3)</a> <a href="#ref-for-css-rule③">(4)</a>
+    <li><a href="#ref-for-css-rule">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-css-rule①">(2)</a> <a href="#ref-for-css-rule②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-css-style-sheet-disabled-flag">
@@ -2195,7 +2194,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <dt id="biblio-css-cascade-4">[CSS-CASCADE-4]
    <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/css-cascade-4/">CSS Cascading and Inheritance Level 4</a>. 28 August 2018. CR. URL: <a href="https://www.w3.org/TR/css-cascade-4/">https://www.w3.org/TR/css-cascade-4/</a>
    <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
-   <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 20 February 2014. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
+   <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 16 July 2019. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
    <dt id="biblio-cssom-1">[CSSOM-1]
    <dd>Simon Pieters; Glenn Adams. <a href="https://www.w3.org/TR/cssom-1/">CSS Object Model (CSSOM)</a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-1/">https://www.w3.org/TR/cssom-1/</a>
    <dt id="biblio-dom">[DOM]
@@ -2207,7 +2206,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-webidl">[WebIDL]
-   <dd>Cameron McCormack; Boris Zbarsky; Tobie Langel. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>Constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a>)]
