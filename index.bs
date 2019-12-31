@@ -151,9 +151,8 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
     <dd>
     	1. Let |sheet| be this {{/CSSStyleSheet}} object.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-		3. Set |sheet|'s [=CSS rules=] to an empty list, and set |sheet|'s [=disallow modification flag=].
-		4. Let |promise| be a promise.
-		5. [=In parallel=], do these steps:
+		3. Let |promise| be a promise.
+		4. [=In parallel=], do these steps:
 			1. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
 			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
 				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
@@ -173,7 +172,7 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 				<p class="note">
 					Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
 				</p>
-		6. Return |promise|.
+		5. Return |promise|.
 	</dd>
 
 
