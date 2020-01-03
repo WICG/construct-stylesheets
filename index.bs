@@ -157,10 +157,12 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 			1. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
 			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
 				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
-                    1. Reject |promise| with a "{{NetworkError}}" {{DOMException}}.
+                    1. Unset |sheet|'s [=disallow modification flag=].
+                    2. Reject |promise| with a "{{NetworkError}}" {{DOMException}}.
 			    * Otherwise, once  all of them have finished loading, [=queue a task=] on the [=networking task source=] to perform the following steps:
                     1. Set |sheet|'s [=CSS rules=] to |rules|.
-                    2. Resolve |promise| with |sheet|.
+                    2. Unset |sheet|'s [=disallow modification flag=].
+                    3. Resolve |promise| with |sheet|.
 
 				<p class="note">
                     Note: Loading  of <a>@import</a> rules should follow the rules used for fetching style sheets for <a>@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
@@ -171,8 +173,7 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 				<p class="note">
 					Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
 				</p>
-		6. Unset |sheet|'s [=disallow modification flag=].
-		7. Return |promise|.
+		6. Return |promise|.
 	</dd>
 
 
