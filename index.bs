@@ -85,7 +85,7 @@ dictionary CSSStyleSheetInit {
 			* No <a spec=cssom>owner CSS rule</a>.
 			* <a spec=cssom>title</a> set to the {{CSSStyleSheetInit/title}} attribute of |options|.
 			* Set <a spec=cssom>alternate flag</a> if the {{CSSStyleSheetInit/alternate}} attribute of |options| is true, otherwise unset the <a spec=cssom>alternate flag</a>.
-			* Unset <a spec=cssom>origin-clean flag</a>.
+			* Set <a spec=cssom>origin-clean flag</a>.
 			* Set [=constructed flag=].
 			* [=Constructor document=] set to the [=associated Document=] for the [=current global object=].
 		2. If the {{CSSStyleSheetInit/media}} attribute of |options| is a string,
