@@ -187,35 +187,21 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 Using Constructed Stylesheets {#using-constructed-stylesheets}
 =============================
 
-<pre class='idl'>
+<!-- TODO: add back class='idl' after Web IDL parser updates -->
+<pre>
 partial interface DocumentOrShadowRoot {
-	attribute FrozenArray&lt;CSSStyleSheet> adoptedStyleSheets;
+	attribute ObservableArray&lt;CSSStyleSheet> adoptedStyleSheets;
 };
 </pre>
 
-<dl>
-	<dt><dfn attribute for=DocumentOrShadowRoot lt="adoptedStyleSheets">adoptedStyleSheets</dfn></dt>
-	<dd>
-		On getting, {{adoptedStyleSheets}} returns this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=].
+The <a href="https://pr-preview.s3.amazonaws.com/heycam/webidl/pull/840.html#observable-array-attribute-set-an-indexed-value">set an indexed value</a> algorithm for <dfn attribute for="DocumentOrShadowRoot"><code>adoptedStyleSheets</code></dfn>, given |value| and |index|, is the following:
+	1.	If |value|'s [=constructed flag=] is not set, or its [=constructor document=] is not equal to this {{DocumentOrShadowRoot}}'s [=node document=], throw a "{{NotAllowedError}}" {{DOMException}}.
+	1.	Include |value| in this {{DocumentOrShadowRoot}}'s [=document or shadow root CSS style sheets=], ordered after all style sheets derived from {{DocumentOrShadowRoot/styleSheets}}, and positioned relative to other constructed style sheets according to |index|.
 
-		On setting, {{adoptedStyleSheets}} performs the following steps:
-
-		1. Let |adopted| be the result of converting the given value to a FrozenArray&lt;CSSStyleSheet>
-
-		2. If any entry of |adopted| has its [=constructed flag=] not set, or its [=constructor document=] is not equal to this {{DocumentOrShadowRoot}}'s [=node document=], throw a "{{NotAllowedError}}" {{DOMException}}.
-
-		3. Set this {{DocumentOrShadowRoot}}'s [=adopted stylesheets=] to |adopted|.
-	</dd>
-</dl>
-
-Every {{DocumentOrShadowRoot}} has <dfn>adopted stylesheets</dfn>.
-
-The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
-[=adopted stylesheets=] inside its <a>document or shadow root CSS style sheets</a>.
-
-These [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
+The <a href="https://pr-preview.s3.amazonaws.com/heycam/webidl/pull/840.html#observable-array-attribute-delete-an-indexed-value">delete an indexed value</a> algorithm for {{adoptedStyleSheets}}, given |value| and |index|, is the following:
+	1.	Remove |value| from this {{DocumentOrShadowRoot}}'s [=document or shadow root CSS style sheets=] at the appropriate location, according to |index|.
+			<p class="note">|value| may appear more than once, which is why |index| is used to distinguish.</p>
 
 This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and <var ignore>oldDocument</var>:
 
-1. Set |node|'s {{adoptedStyleSheets}} to the empty list.
-
+1. <a href="https://pr-preview.s3.amazonaws.com/heycam/webidl/pull/840.html#observable-array-attribute-clear">Clear</a> |node|'s {{adoptedStyleSheets}}.
