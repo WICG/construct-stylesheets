@@ -2,6 +2,7 @@
 Title: Constructable Stylesheet Objects
 Shortname: construct-stylesheets
 Level: 1
+Group: WICG
 Status: CG-DRAFT
 ED: https://wicg.github.io/construct-stylesheets/
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact/
@@ -218,4 +219,3 @@ These [=adopted stylesheets=] are ordered after all the other style sheets (i.e.
 This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and <var ignore>oldDocument</var>:
 
 1. Set |node|'s {{adoptedStyleSheets}} to the empty list.
-
