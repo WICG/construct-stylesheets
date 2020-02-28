@@ -188,7 +188,7 @@ Using Constructed Stylesheets {#using-constructed-stylesheets}
 =============================
 
 <pre class='idl'>
-partial interface DocumentOrShadowRoot {
+partial interface mixin DocumentOrShadowRoot {
 	attribute FrozenArray&lt;CSSStyleSheet> adoptedStyleSheets;
 };
 </pre>
