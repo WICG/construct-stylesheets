@@ -1167,6 +1167,18 @@ Possible extra rowspan handling
 		margin-left: auto;
 		margin-right: auto;
 	}
+	.overlarge {
+		/* Magic to create good table positioning:
+		   "content column" is 50ems wide at max; less on smaller screens.
+		   Extra space (after ToC + content) is empty on the right.
+
+		   1. When table < content column, centers table in column.
+		   2. When content < table < available, left-aligns.
+		   3. When table > available, fills available + scroll bar.
+		*/ 
+		display: grid;
+		grid-template-columns: minmax(0, 50em);
+	}
 	.overlarge > table {
 		/* limit preferred width of table */
 		max-width: 50em;
@@ -1176,7 +1188,6 @@ Possible extra rowspan handling
 
 	@media (min-width: 55em) {
 		.overlarge {
-			margin-left: calc(13px + 26.5rem - 50vw);
 			margin-right: calc(13px + 26.5rem - 50vw);
 			max-width: none;
 		}
@@ -1184,14 +1195,12 @@ Possible extra rowspan handling
 	@media screen and (min-width: 78em) {
 		body:not(.toc-inline) .overlarge {
 			/* 30.5em body padding 50em content area */
-			margin-left: calc(40em - 50vw) !important;
 			margin-right: calc(40em - 50vw) !important;
 		}
 	}
 	@media screen and (min-width: 90em) {
 		body:not(.toc-inline) .overlarge {
 			/* 4em html margin 30.5em body padding 50em content area */
-			margin-left: 0 !important;
 			margin-right: calc(84.5em - 100vw) !important;
 		}
 	}
@@ -1212,7 +1221,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 087ea90e1ebd0321c20373d89950d1c6b73d5df1" name="generator">
+  <meta content="Bikeshed version 5721fde7f6b8111f662b83b678f9e181a9838206" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -1460,7 +1469,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2020-01-02">2 January 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2020-03-03">3 March 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1476,7 +1485,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 2 January 2020,
+In addition, as of 3 March 2020,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1535,7 +1544,7 @@ As a web page may contain tens of thousands of web components, this can easily h
 </pre>
    <h2 class="heading settled" data-level="3" id="constructing-stylesheets"><span class="secno">3. </span><span class="content">Constructing Stylesheets</span><a class="self-link" href="#constructing-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①"><c- g>CSSStyleSheet</c-></a> {
-  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/constructor(options), CSSStyleSheet/constructor()" data-dfn-type="argument" data-export id="dom-cssstylesheet-constructor-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cssstylesheet-constructor-options-options"></a></dfn> = {});
+  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/CSSStyleSheet(options), CSSStyleSheet/constructor(options), CSSStyleSheet/CSSStyleSheet(), CSSStyleSheet/constructor()" data-dfn-type="argument" data-export id="dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cssstylesheet-cssstylesheet-options-options"></a></dfn> = {});
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replace(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replace-text-text"></a></dfn>);
   <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replaceSync(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replacesync-text-text"></a></dfn>);
 };
@@ -1568,7 +1577,7 @@ As a web page may contain tens of thousands of web components, this can easily h
         <li data-md>
          <p>Set <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag">alternate flag</a> if the <code class="idl"><a data-link-type="idl" href="#dom-cssstylesheetinit-alternate" id="ref-for-dom-cssstylesheetinit-alternate">alternate</a></code> attribute of <var>options</var> is true, otherwise unset the <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-alternate-flag" id="ref-for-concept-css-style-sheet-alternate-flag①">alternate flag</a>.</p>
         <li data-md>
-         <p>Unset <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-origin-clean-flag" id="ref-for-concept-css-style-sheet-origin-clean-flag">origin-clean flag</a>.</p>
+         <p>Set <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-origin-clean-flag" id="ref-for-concept-css-style-sheet-origin-clean-flag">origin-clean flag</a>.</p>
         <li data-md>
          <p>Set <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag">constructed flag</a>.</p>
         <li data-md>
@@ -1684,7 +1693,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
      </ol>
    </dl>
    <h2 class="heading settled" data-level="5" id="using-constructed-stylesheets"><span class="secno">5. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①"><c- g>DocumentOrShadowRoot</c-></a> {
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①"><c- g>DocumentOrShadowRoot</c-></a> {
   <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
 };
 </pre>
@@ -2210,7 +2219,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- g>CSSStyleSheet</c-></a> {
-  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-constructor-options-options"><code><c- g>options</c-></code></a> = {});
+  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a> = {});
   <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace②"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
   <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync②"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
 };
@@ -2222,7 +2231,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><c- b>boolean</c-></a> <a data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-disabled"><code><c- g>disabled</c-></code></a> = <c- b>false</c->;
 };
 
-<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①①"><c- g>DocumentOrShadowRoot</c-></a> {
+<c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①①"><c- g>DocumentOrShadowRoot</c-></a> {
   <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets④"><c- g>adoptedStyleSheets</c-></a>;
 };
 
