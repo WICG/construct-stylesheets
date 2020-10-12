@@ -68,9 +68,18 @@
  *
  ******************************************************************************/
 
+/* color variables included separately for reliability */
+
 /******************************************************************************/
 /*                                   Body                                     */
 /******************************************************************************/
+
+	html {
+		color: black;
+		color: var(--text);
+		background-color: white;
+		background-color: var(--bg);
+	}
 
 	body {
 		counter-reset: example figure issue;
@@ -90,9 +99,7 @@
 		overflow-wrap: break-word;
 		hyphens: auto;
 
-		/* Colors */
-		color: black;
-		background: white top left fixed no-repeat;
+		background: transparent top left fixed no-repeat;
 		background-size: 25px auto;
 	}
 
@@ -124,10 +131,13 @@
 	.head img[src*="logos/W3C"] {
 		display: block;
 		border: solid #1a5e9a;
+		border: solid var(--logo-bg);
 		border-width: .65rem .7rem .6rem;
 		border-radius: .4rem;
 		background: #1a5e9a;
+		background: var(--logo-bg);
 		color: white;
+		color: var(--logo-text);
 		font-weight: bold;
 	}
 
@@ -138,7 +148,9 @@
 
 	.head a:active > img[src*="logos/W3C"] {
 		background: #c00;
+		background: var(--logo-active-bg);
 		border-color: #c00;
+		border-color: var(--logo-active-bg);
 	}
 
 	/* see also additional rules in Link Styling section */
@@ -165,7 +177,6 @@
 			border-top-right-radius: 2rem;
 			box-shadow: 0 0 2px;
 			font-size: 1.5em;
-			color: black;
 		}
 		#toc-nav > a {
 			display: block;
@@ -175,23 +186,32 @@
 			padding: .1em 0.3em;
 			margin: 0;
 
-			background: white;
 			box-shadow: 0 0 2px;
 			border: none;
 			border-top-right-radius: 1.33em;
+
+			color: #707070;
+			color: var(--tocnav-normal-text);
 			background: white;
+			background: var(--tocnav-normal-bg);
 		}
+		#toc-nav > a:hover,
+		#toc-nav > a:focus {
+			color: black;
+			color: var(--tocnav-hover-text);
+			background: #f8f8f8;
+			background: var(--tocnav-hover-bg);
+		}
+		#toc-nav > a:active {
+			color: #c00;
+			color: var(--tocnav-active-text);
+			background: white;
+			background: var(--tocnav-active-bg);
+		}
+
 		#toc-nav > #toc-jump {
 			padding-bottom: 2em;
 			margin-bottom: -1.9em;
-		}
-
-		#toc-nav > a:hover,
-		#toc-nav > a:focus {
-			background: #f8f8f8;
-		}
-		#toc-nav > a:not(:hover):not(:focus) {
-			color: #707070;
 		}
 
 		/* statusbar gets in the way on keyboard focus; remove once browsers fix */
@@ -205,26 +225,6 @@
 		}
 		#toc-nav > a > span + span {
 			padding-right: 0.2em;
-		}
-
-		#toc-toggle-inline {
-			vertical-align: 0.05em;
-			font-size: 80%;
-			color: gray;
-			color: hsla(203,20%,40%,.7);
-			border-style: none;
-			background: transparent;
-			position: relative;
-		}
-		#toc-toggle-inline:hover:not(:active),
-		#toc-toggle-inline:focus:not(:active) {
-			text-shadow: 1px 1px silver;
-			top: -1px;
-			left: -1px;
-		}
-
-		#toc-nav :active {
-			color: #C00;
 		}
 	}
 
@@ -243,10 +243,14 @@
 			padding: 0 1em;
 			padding-left: 42px;
 			padding-left: calc(1em + 26px);
+			color: black;
+			color: var(--tocsidebar-text);
 			background: inherit;
 			background-color: #f7f8f9;
+			background-color: var(--tocsidebar-bg);
 			z-index: 1;
 			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
+			box-shadow: -.1em 0 .25em var(--tocsidebar-shadow) inset;
 		}
 		body.toc-sidebar #toc h2 {
 			margin-top: .8rem;
@@ -256,6 +260,7 @@
 			font-weight: bold;
 			color: gray;
 			color: hsla(203,20%,40%,.7);
+			color: var(--tocsidebar-heading-text);
 		}
 		body.toc-sidebar #toc-jump:not(:focus) {
 			width: 0;
@@ -283,10 +288,14 @@
 			padding: 0 1em;
 			padding-left: 42px;
 			padding-left: calc(1em + 26px);
+			color: black;
+			color: var(--tocsidebar-text);
 			background: inherit;
 			background-color: #f7f8f9;
+			background-color: var(--tocsidebar-bg);
 			z-index: 1;
 			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
+			box-shadow: -.1em 0 .25em var(--tocsidebar-shadow) inset;
 		}
 		body:not(.toc-inline) #toc h2 {
 			margin-top: .8rem;
@@ -296,6 +305,7 @@
 			font-weight: bold;
 			color: gray;
 			color: hsla(203,20%,40%,.7);
+			color: var(--tocsidebar-heading-text);
 		}
 
 		body:not(.toc-inline) {
@@ -338,7 +348,7 @@
 
 	h1, h2, h3 {
 		color: #005A9C;
-		background: transparent;
+		color: var(--heading-text);
 	}
 
 	h1 { font-size: 170%; }
@@ -365,11 +375,13 @@
 
 /** Section divider ***********************************************************/
 
-	:not(.head) > hr {
+	:not(.head) > :not(.head) + hr {
 		font-size: 1.5em;
 		text-align: center;
 		margin: 1em auto;
 		height: auto;
+		color: black;
+		color: var(--hr-text);
 		border: transparent solid 0;
 		background: transparent;
 	}
@@ -412,12 +424,15 @@
 	ol.algorithm ol:not(.algorithm),
 	.algorithm > ol ol:not(.algorithm) {
 	 border-left: 0.5em solid #DEF;
+	 border-left: 0.5em solid var(--algo-border);
 	}
 
 	/* Put nice boxes around each algorithm. */
 	[data-algorithm]:not(.heading) {
 	  padding: .5em;
-	  border: thin solid #ddd; border-radius: .5em;
+	  border: thin solid #ddd;
+	  border: thin solid var(--algo-border);
+	  border-radius: .5em;
 	  margin: .5em calc(-0.5em - 1px);
 	}
 	[data-algorithm]:not(.heading) > :first-child {
@@ -478,8 +493,20 @@
 
 /** Change Marking ************************************************************/
 
-	del { color: red;  text-decoration: line-through; }
-	ins { color: #080; text-decoration: underline;    }
+	del {
+		color: red;
+		color: var(--del-text);
+		background: transparent;
+		background: var(--del-bg);
+		text-decoration: line-through;
+	}
+	ins {
+		color: #080;
+		color: var(--ins-text);
+		background: transparent;
+		background: var(--ins-bg);
+		text-decoration: underline;
+	}
 
 /** Miscellaneous improvements to inline formatting ***************************/
 
@@ -497,9 +524,14 @@
 	pre, code, samp {
 		font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
 		font-size: .9em;
-		page-break-inside: avoid;
 		hyphens: none;
 		text-transform: none;
+		text-align: left;
+		text-align: start;
+		font-variant: normal;
+		orphans: 3;
+		widows: 3;
+		page-break-before: avoid;
 	}
 	pre code,
 	code code {
@@ -525,14 +557,19 @@
 	/* We hyperlink a lot, so make it less intrusive */
 	a[href] {
 		color: #034575;
+		color: var(--a-normal-text);
 		text-decoration: none;
 		border-bottom: 1px solid #707070;
+		border-bottom: 1px solid var(--a-normal-underline);
 		/* Need a bit of extending for it to look okay */
 		padding: 0 1px 0;
 		margin: 0 -1px 0;
 	}
 	a:visited {
-		border-bottom-color: #BBB;
+		color: #034575;
+		color: var(--a-visited-text);
+		border-bottom-color: #bbb;
+		border-bottom-color: var(--a-visited-underline);
 	}
 
 	/* Use distinguishing colors when user is interacting with the link */
@@ -540,12 +577,15 @@
 	a[href]:hover {
 		background: #f8f8f8;
 		background: rgba(75%, 75%, 75%, .25);
+		background: var(--a-hover-bg);
 		border-bottom-width: 3px;
 		margin-bottom: -2px;
 	}
 	a[href]:active {
-		color: #C00;
-		border-color: #C00;
+		color: #c00;
+		color: var(--a-active-text);
+		border-color: #c00;
+		border-color: var(--a-active-underline);
 	}
 
 	/* Backout above styling for W3C logo */
@@ -564,6 +604,11 @@
 		border-style: none;
 	}
 
+	img, svg {
+		/* Intentionally not color-scheme aware. */
+		background: white;
+	}
+
 	/* For autogen numbers, add
 	   .caption::before, figcaption::before { content: "Figure " counter(figure) ". "; }
 	*/
@@ -577,6 +622,7 @@
 	.figure object, .sidefigure object, figure object {
 		max-width: 100%;
 		margin: auto;
+		height: auto;
 	}
 	.figure pre, .sidefigure pre, figure pre {
 		text-align: left;
@@ -639,25 +685,46 @@
 		margin-bottom: 0;
 	}
 
+
+	.issue::before, .issue > .marker,
+	.example::before, .example > .marker,
+	.note::before, .note > .marker,
+	details.note > summary > .marker {
+		text-transform: uppercase;
+		padding-right: 1em;
+	}
+
+	.example::before, .example > .marker {
+		display: block;
+		padding-right: 0em;
+	}
+
 /** Blockquotes ***************************************************************/
 
 	blockquote {
 		border-color: silver;
+		border-color: var(--blockquote-border);
+		background: transparent;
+		background: var(--blockquote-bg);
+		color: currentcolor;
+		color: var(--blockquote-text);
 	}
 
 /** Open issue ****************************************************************/
 
 	.issue {
-		border-color: #E05252;
-		background: #FBE9E9;
+		border-color: #e05252;
+		border-color: var(--issue-border);
+		background: #fbe9e9;
+		background: var(--issue-bg);
+		color: black;
+		color: var(--issue-text);
 		counter-increment: issue;
 		overflow: auto;
 	}
 	.issue::before, .issue > .marker {
-		text-transform: uppercase;
-		color: #AE1E1E;
-		padding-right: 1em;
-		text-transform: uppercase;
+		color: #831616;
+		color: var(--issueheading-text);
 	}
 	/* Add .issue::before { content: "Issue " counter(issue) " "; } for autogen numbers,
 	   or use class="marker" to mark up the issue number in source. */
@@ -665,17 +732,19 @@
 /** Example *******************************************************************/
 
 	.example {
-		border-color: #E0CB52;
-		background: #FCFAEE;
+		border-color: #e0cb52;
+		border-color: var(--example-border);
+		background: #fcfaee;
+		background: var(--example-bg);
+		color: black;
+		color: var(--example-text);
 		counter-increment: example;
 		overflow: auto;
 		clear: both;
 	}
 	.example::before, .example > .marker {
-		text-transform: uppercase;
-		color: #827017;
-		min-width: 7.5em;
-		display: block;
+		color: #574b0f;
+		color: var(--exampleheading-text);
 	}
 	/* Add .example::before { content: "Example " counter(example) " "; } for autogen numbers,
 	   or use class="marker" to mark up the example number in source. */
@@ -683,27 +752,26 @@
 /** Non-normative Note ********************************************************/
 
 	.note {
-		border-color: #52E052;
-		background: #E9FBE9;
+		border-color: #52e052;
+		border-color: var(--note-border);
+		background: #e9fbe9;
+		background: var(--note-bg);
+		color: black;
+		color: var(--note-text);
 		overflow: auto;
 	}
 
 	.note::before, .note > .marker,
-	details.note > summary::before,
-	details.note > summary > .marker {
-		text-transform: uppercase;
-		display: block;
+	details.note > summary {
 		color: hsl(120, 70%, 30%);
+		color: var(--noteheading-text);
 	}
-	/* Add .note::before { content: "Note"; } for autogen label,
+	/* Add .note::before { content: "Note "; } for autogen label,
 	   or use class="marker" to mark up the label in source. */
 
-	details.note > summary {
-		display: block;
-		color: hsl(120, 70%, 30%);
-	}
 	details.note[open] > summary {
 		border-bottom: 1px silver solid;
+		border-bottom: 1px var(--notesummary-underline) solid;
 	}
 
 /** Assertion Box *************************************************************/
@@ -711,7 +779,11 @@
 
 	.assertion {
 		border-color: #AAA;
+		border-color: var(--assertion-border);
 		background: #EEE;
+		background: var(--assertion-bg);
+		color: black;
+		color: var(--assertion-text);
 	}
 
 /** Advisement Box ************************************************************/
@@ -719,15 +791,20 @@
 
 	.advisement {
 		border-color: orange;
+		border-color: var(--advisement-border);
 		border-style: none solid;
-		background: #FFEECC;
+		background: #fec;
+		background: var(--advisement-bg);
+		color: black;
+		color: var(--advisement-text);
 	}
 	strong.advisement {
 		display: block;
 		text-align: center;
 	}
-	.advisement > .marker {
-		color: #B35F00;
+	.advisement::before, .advisement > .marker {
+		color: #b35f00;
+		color: var(--advisementheading-text);
 	}
 
 /** Spec Obsoletion Notice ****************************************************/
@@ -743,27 +820,30 @@
 	.annoying-warning:not(details),
 	details.annoying-warning:not([open]) > summary,
 	details.annoying-warning[open] {
-		background: #fdd;
-		color: red;
-		font-weight: bold;
+		background: hsla(40,100%,50%,0.95);
+		background: var(--warning-bg);
+		color: black;
+		color: var(--warning-text);
 		padding: .75em 1em;
-		border: thick red;
-		border-style: solid;
-		border-radius: 1em;
+		border: red;
+		border: var(--warning-border);
+		border-style: solid none;
+		box-shadow: 0 2px 8px black;
+		text-align: center;
 	}
 	.annoying-warning :last-child {
 		margin-bottom: 0;
 	}
 
-@media not print {
-	details.annoying-warning[open] {
-		position: fixed;
-		left: 1em;
-		right: 1em;
-		bottom: 1em;
-		z-index: 1000;
+	@media not print {
+		details.annoying-warning[open] {
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 2em;
+			z-index: 1000;
+		}
 	}
-}
 
 	details.annoying-warning:not([open]) > summary {
 		text-align: center;
@@ -773,9 +853,13 @@
 
 	.def {
 		padding: .5em 1em;
-		background: #DEF;
+		background: #def;
+		background: var(--def-bg);
 		margin: 1.2em 0;
-		border-left: 0.5em solid #8CCBF2;
+		border-left: 0.5em solid #8ccbf2;
+		border-left: 0.5em solid var(--def-border);
+		color: black;
+		color: var(--def-text);
 	}
 
 /******************************************************************************/
@@ -800,6 +884,7 @@
 		padding: 0.5em;
 		vertical-align: baseline;
 		border-bottom: 1px solid #bbd7e9;
+		border-bottom: 1px solid var(--defrow-border);
 	}
 
 	table.def > tbody > tr:last-child th,
@@ -820,10 +905,10 @@
 	}
 
 	/* A footnote at the bottom of a def table */
-	table.def           td.footnote {
+	table.def td.footnote {
 		padding-top: 0.6em;
 	}
-	table.def           td.footnote::before {
+	table.def td.footnote::before {
 		content: " ";
 		display: block;
 		height: 0.6em;
@@ -868,6 +953,7 @@
 		padding: 0.5em 1em;
 		border-width: 1px;
 		border-color: silver;
+		border-color: var(--datacell-border);
 		border-top-style: solid;
 	}
 
@@ -892,6 +978,7 @@
 	table.index tbody th:first-child  {
 		border-right: 2px solid;
 		border-top: 1px solid silver;
+		border-top: 1px solid var(--datacell-border);
 		padding-right: 1em;
 	}
 
@@ -903,13 +990,14 @@
 	table.complex.data th,
 	table.complex.data td {
 		border: 1px solid silver;
+		border: 1px solid var(--datacell-border);
 		text-align: center;
 	}
 
 	table.data.longlastcol td:last-child,
 	table.data td.long {
-	 vertical-align: baseline;
-	 text-align: left;
+		vertical-align: baseline;
+		text-align: left;
 	}
 
 	table.data img {
@@ -967,12 +1055,15 @@ Possible extra rowspan handling
 		display: block;
 		/* Reverse color scheme */
 		color: black;
-		border-color: #3980B5;
-		border-bottom-width: 3px !important;
-		margin-bottom: 0px !important;
+		color: var(--toclink-text);
+		border-color: #3980b5;
+		border-color: var(--toclink-underline);
 	}
 	.toc a:visited {
+		color: black;
+		color: var(--toclink-visited-text);
 		border-color: #054572;
+		border-color: var(--toclink-visited-underline);
 	}
 	.toc a:not(:focus):not(:hover) {
 		/* Allow colors to cascade through from link styling */
@@ -1027,6 +1118,15 @@ Possible extra rowspan handling
 			.toc > li li li li .secno    { margin-left: -6rem; }
 			.toc > li li li li li .secno { margin-left: -7rem; }
 		}
+		/* Loosen it on wide screens */
+		@media screen and (min-width: 78em) {
+			body:not(.toc-inline) :not(li) > .toc              { margin-left:  4rem; }
+			body:not(.toc-inline) .toc .secno                  { margin-left: -4rem; }
+			body:not(.toc-inline) .toc > li li li              { margin-left:  1rem; }
+			body:not(.toc-inline) .toc > li li li .secno       { margin-left: -5rem; }
+			body:not(.toc-inline) .toc > li li li li .secno    { margin-left: -6rem; }
+			body:not(.toc-inline) .toc > li li li li li .secno { margin-left: -7rem; }
+	}
 	/* } */
 
 	@supports (display:grid) and (display:contents) {
@@ -1068,9 +1168,12 @@ Possible extra rowspan handling
 			width: auto;
 			margin-right: 1rem;
 		}
-		#toc .content:hover {
+		#toc .content:hover,
+		#toc .content:focus {
 			background: rgba(75%, 75%, 75%, .25);
+			background: var(--a-hover-bg);
 			border-bottom: 3px solid #054572;
+			border-bottom: 3px solid var(--toclink-underline);
 			margin-bottom: -3px;
 		}
 		#toc li li li .content {
@@ -1095,12 +1198,13 @@ Possible extra rowspan handling
 	ul.index ul,
 	ul.index dl { font-size: smaller; }
 	@media not print {
-		ul.index li span {
+		ul.index li span:not(.dfn-paneled) {
 			white-space: nowrap;
 			color: transparent; }
 		ul.index li a:hover + span,
 		ul.index li a:focus + span {
 			color: #707070;
+			color: var(--indexinfo-text);
 		}
 	}
 
@@ -1122,7 +1226,10 @@ Possible extra rowspan handling
 
 	table.index tr:hover td:not([rowspan]),
 	table.index tr:hover th:not([rowspan]) {
+		color: black;
+		color: var(--indextable-hover-text);
 		background: #f7f8f9;
+		background: var(--indextable-hover-bg);
 	}
 
 	/* The link in the first column in the property table (formerly a TD) */
@@ -1148,13 +1255,6 @@ Possible extra rowspan handling
 		margin: 1.5cm 1.1cm;
 	}
 
-/******************************************************************************/
-/*                                    Legacy                                  */
-/******************************************************************************/
-
-	/* This rule is inherited from past style sheets. No idea what it's for. */
-	.hide { display: none }
-
 
 
 /******************************************************************************/
@@ -1175,7 +1275,7 @@ Possible extra rowspan handling
 		   1. When table < content column, centers table in column.
 		   2. When content < table < available, left-aligns.
 		   3. When table > available, fills available + scroll bar.
-		*/ 
+		*/
 		display: grid;
 		grid-template-columns: minmax(0, 50em);
 	}
@@ -1221,97 +1321,12 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 5721fde7f6b8111f662b83b678f9e181a9838206" name="generator">
+  <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
   <link href="https://wicg.github.io/construct-stylesheets/" rel="canonical">
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: gray;
-    color: white;
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: black;
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
-    color: #005a9c;
+    color: var(--a-normal-text);
     font-size: inherit;
     font-family: inherit;
 }
@@ -1370,8 +1385,149 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }</style>
+<style>/* style-colors */
+
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+html {
+    color: black;
+    color: var(--text);
+    background-color: white;
+    background-color: var(--bg);
+}
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #707070;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #bbb;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
 <style>/* style-dfn-panel */
 
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 .dfn-panel {
     position: absolute;
     z-index: 35;
@@ -1383,14 +1539,14 @@ pre .property::before, pre .property::after {
     overflow: auto;
     padding: 0.5em 0.75em;
     font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: #DDDDDD;
-    color: black;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
     border: outset 0.2em;
 }
 .dfn-panel:not(.on) { display: none; }
 .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
 .dfn-panel > b { display: block; }
-.dfn-panel a { color: black; }
+.dfn-panel a { color: var(--dfnpanel-text); }
 .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
 .dfn-panel > b + b { margin-top: 0.25em; }
 .dfn-panel ul { padding: 0; }
@@ -1407,11 +1563,78 @@ pre .property::before, pre .property::after {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
 <style>/* style-syntax-highlighting */
-pre.idl.highlight { color: #708090; }
-.highlight:not(.idl) { background: hsl(24, 20%, 95%); }
+
+            pre.idl.highlight {
+                background: var(--borderedblock-bg, var(--def-bg));
+            }
+            
 code.highlight { padding: .1em; border-radius: .3em; }
 pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+
+.highlight:not(.idl) { background: #fdf6e3; }
 c-[a] { color: #990055 } /* Keyword.Declaration */
 c-[b] { color: #990055 } /* Keyword.Type */
 c-[c] { color: #708090 } /* Comment */
@@ -1465,11 +1688,194 @@ c-[vg] { color: #0077aa } /* Name.Variable.Global */
 c-[vi] { color: #0077aa } /* Name.Variable.Instance */
 c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
+<style>/* style-darkmode */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
+
+    c-[a] { color: #d33682 } /* Keyword.Declaration */
+    c-[b] { color: #d33682 } /* Keyword.Type */
+    c-[c] { color: #2aa198 } /* Comment */
+    c-[d] { color: #2aa198 } /* Comment.Multiline */
+    c-[e] { color: #268bd2 } /* Name.Attribute */
+    c-[f] { color: #b58900 } /* Name.Tag */
+    c-[g] { color: #cb4b16 } /* Name.Variable */
+    c-[k] { color: #d33682 } /* Keyword */
+    c-[l] { color: #657b83 } /* Literal */
+    c-[m] { color: #657b83 } /* Literal.Number */
+    c-[n] { color: #268bd2 } /* Name */
+    c-[o] { color: #657b83 } /* Operator */
+    c-[p] { color: #657b83 } /* Punctuation */
+    c-[s] { color: #6c71c4 } /* Literal.String */
+    c-[t] { color: #6c71c4 } /* Literal.String.Single */
+    c-[u] { color: #6c71c4 } /* Literal.String.Double */
+    c-[ch] { color: #2aa198 } /* Comment.Hashbang */
+    c-[cp] { color: #2aa198 } /* Comment.Preproc */
+    c-[cpf] { color: #2aa198 } /* Comment.PreprocFile */
+    c-[c1] { color: #2aa198 } /* Comment.Single */
+    c-[cs] { color: #2aa198 } /* Comment.Special */
+    c-[kc] { color: #d33682 } /* Keyword.Constant */
+    c-[kn] { color: #d33682 } /* Keyword.Namespace */
+    c-[kp] { color: #d33682 } /* Keyword.Pseudo */
+    c-[kr] { color: #d33682 } /* Keyword.Reserved */
+    c-[ld] { color: #657b83 } /* Literal.Date */
+    c-[nc] { color: #268bd2 } /* Name.Class */
+    c-[no] { color: #268bd2 } /* Name.Constant */
+    c-[nd] { color: #268bd2 } /* Name.Decorator */
+    c-[ni] { color: #268bd2 } /* Name.Entity */
+    c-[ne] { color: #268bd2 } /* Name.Exception */
+    c-[nf] { color: #268bd2 } /* Name.Function */
+    c-[nl] { color: #268bd2 } /* Name.Label */
+    c-[nn] { color: #268bd2 } /* Name.Namespace */
+    c-[py] { color: #268bd2 } /* Name.Property */
+    c-[ow] { color: #657b83 } /* Operator.Word */
+    c-[mb] { color: #657b83 } /* Literal.Number.Bin */
+    c-[mf] { color: #657b83 } /* Literal.Number.Float */
+    c-[mh] { color: #657b83 } /* Literal.Number.Hex */
+    c-[mi] { color: #657b83 } /* Literal.Number.Integer */
+    c-[mo] { color: #657b83 } /* Literal.Number.Oct */
+    c-[sa] { color: #6c71c4 } /* Literal.String.Affix */
+    c-[sb] { color: #6c71c4 } /* Literal.String.Backtick */
+    c-[sc] { color: #6c71c4 } /* Literal.String.Char */
+    c-[dl] { color: #6c71c4 } /* Literal.String.Delimiter */
+    c-[sd] { color: #6c71c4 } /* Literal.String.Doc */
+    c-[se] { color: #6c71c4 } /* Literal.String.Escape */
+    c-[sh] { color: #6c71c4 } /* Literal.String.Heredoc */
+    c-[si] { color: #6c71c4 } /* Literal.String.Interpol */
+    c-[sx] { color: #6c71c4 } /* Literal.String.Other */
+    c-[sr] { color: #6c71c4 } /* Literal.String.Regex */
+    c-[ss] { color: #6c71c4 } /* Literal.String.Symbol */
+    c-[fm] { color: #268bd2 } /* Name.Function.Magic */
+    c-[vc] { color: #cb4b16 } /* Name.Variable.Class */
+    c-[vg] { color: #cb4b16 } /* Name.Variable.Global */
+    c-[vi] { color: #cb4b16 } /* Name.Variable.Instance */
+    c-[vm] { color: #cb4b16 } /* Name.Variable.Magic */
+    c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
+}
+</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Constructable Stylesheet Objects</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2020-03-03">3 March 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">A Collection of Interesting Ideas, <time class="dt-updated" datetime="2020-10-12">12 October 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1485,7 +1891,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 3 March 2020,
+In addition, as of 12 October 2020,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1533,7 +1939,7 @@ As a web page may contain tens of thousands of web components, this can easily h
     <c- kr>const</c-> shadowRoot <c- o>=</c-> <c- k>this</c-><c- p>.</c->attachShadow<c- p>({</c-> mode<c- o>:</c-> <c- u>"open"</c-> <c- p>});</c->
     shadowRoot<c- p>.</c->adoptedStyleSheets <c- o>=</c-> <c- p>[</c->myElementSheet<c- p>];</c->
   <c- p>}</c->
-  
+
   connectedCallback<c- p>()</c-> <c- p>{</c->
     <c- c1>// Only actually parse the stylesheet when the first instance is connected.</c->
     <c- k>if</c-> <c- p>(</c->myElementSheet<c- p>.</c->cssRules<c- p>.</c->length <c- o>==</c-> <c- mi>0</c-><c- p>)</c-> <c- p>{</c->
@@ -1544,13 +1950,13 @@ As a web page may contain tens of thousands of web components, this can easily h
 </pre>
    <h2 class="heading settled" data-level="3" id="constructing-stylesheets"><span class="secno">3. </span><span class="content">Constructing Stylesheets</span><a class="self-link" href="#constructing-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①"><c- g>CSSStyleSheet</c-></a> {
-  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/CSSStyleSheet(options), CSSStyleSheet/constructor(options), CSSStyleSheet/CSSStyleSheet(), CSSStyleSheet/constructor()" data-dfn-type="argument" data-export id="dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cssstylesheet-cssstylesheet-options-options"></a></dfn> = {});
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replace(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replace-text-text"></a></dfn>);
-  <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replaceSync(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replacesync-text-text"></a></dfn>);
+  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet"><c- g>constructor</c-></a>(<c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/CSSStyleSheet(options), CSSStyleSheet/constructor(options), CSSStyleSheet/CSSStyleSheet(), CSSStyleSheet/constructor()" data-dfn-type="argument" data-export id="dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code><a class="self-link" href="#dom-cssstylesheet-cssstylesheet-options-options"></a></dfn> = {});
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replace(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replace-text-text"></a></dfn>);
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-undefined" id="ref-for-idl-undefined"><c- b>undefined</c-></a> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①"><c- b>USVString</c-></a> <dfn class="idl-code" data-dfn-for="CSSStyleSheet/replaceSync(text)" data-dfn-type="argument" data-export id="dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code><a class="self-link" href="#dom-cssstylesheet-replacesync-text-text"></a></dfn>);
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-cssstylesheetinit"><code><c- g>CSSStyleSheetInit</c-></code></dfn> {
-  (<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#medialist" id="ref-for-medialist"><c- n>MediaList</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a>) <dfn class="dfn-paneled idl-code" data-default="&quot;&quot;" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export data-type="(MediaList or DOMString) " id="dom-cssstylesheetinit-media"><code><c- g>media</c-></code></dfn> = "";
+  (<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#medialist" id="ref-for-medialist"><c- n>MediaList</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a>) <dfn class="dfn-paneled idl-code" data-default="&quot;&quot;" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export data-type="(MediaList or DOMString) " id="dom-cssstylesheetinit-media"><code><c- g>media</c-></code></dfn> = "";
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-default="&quot;&quot;" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-cssstylesheetinit-title"><code><c- g>title</c-></code></dfn> = "";
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-default="false" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export data-type="boolean " id="dom-cssstylesheetinit-alternate"><code><c- g>alternate</c-></code></dfn> = <c- b>false</c->;
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <dfn class="dfn-paneled idl-code" data-default="false" data-dfn-for="CSSStyleSheetInit" data-dfn-type="dict-member" data-export data-type="boolean " id="dom-cssstylesheetinit-disabled"><code><c- g>disabled</c-></code></dfn> = <c- b>false</c->;
@@ -1617,7 +2023,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
       <li data-md>
        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag①">disallow modification flag</a> is set, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-rule" id="ref-for-parse-a-rule">Parse a rule</a> from <var>rule</var>. If the result is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rule and <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> is set, or <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet①">parent CSS style sheet</a>'s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is set, or that sheet’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet②">parent CSS style sheet</a>'s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is set (and so on), throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
+       <p><a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-rule" id="ref-for-parse-a-rule">Parse a rule</a> from <var>rule</var>. If the result is an <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import">@import</a> rule and <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag③">constructed flag</a> is set, or <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet①">parent CSS style sheet</a>'s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag④">constructed flag</a> is set, or that sheet’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet②">parent CSS style sheet</a>'s <a data-link-type="dfn" href="#cssstylesheet-constructed-flag" id="ref-for-cssstylesheet-constructed-flag⑤">constructed flag</a> is set (and so on), throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
       <li data-md>
        <p>(The rest of the algorithm remains as in CSSOM)</p>
      </ol>
@@ -1648,10 +2054,10 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
         <li data-md>
          <p>Let <var>rules</var> be the result of running <a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules">parse a list of rules</a> from <var>text</var>. If <var>rules</var> is not a list of rules (i.e. an error occurred during parsing), set <var>rules</var> to an empty list.</p>
         <li data-md>
-         <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules in <var>rules</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a>s from those rules (and so on).</p>
+         <p>Wait for loading of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import①">@import</a> rules in <var>rules</var> and any nested <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import②">@import</a>s from those rules (and so on).</p>
          <ul>
           <li data-md>
-           <p>If any of them failed to load, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-terminate" id="ref-for-concept-fetch-terminate">terminate</a> fetching of the remaining <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a> rules,  and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> to perform the following steps:</p>
+           <p>If any of them failed to load, <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-terminate" id="ref-for-concept-fetch-terminate">terminate</a> fetching of the remaining <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import③">@import</a> rules,  and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task" id="ref-for-queue-a-task">queue a task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> to perform the following steps:</p>
            <ol>
             <li data-md>
              <p>Unset <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-disallow-modification-flag" id="ref-for-cssstylesheet-disallow-modification-flag⑤">disallow modification flag</a>.</p>
@@ -1669,8 +2075,8 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
              <p>Resolve <var>promise</var> with <var>sheet</var>.</p>
            </ol>
          </ul>
-         <p class="note" role="note"> Note: Loading  of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules should follow the rules used for fetching style sheets for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑤">@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking. </p>
-         <p class="note" role="note"> Note: We will use the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-group" id="ref-for-concept-fetch-group">fetch group</a> of <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑥">@import</a> rules and other (fonts, etc) loads. </p>
+         <p class="note" role="note"> Note: Loading  of <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import④">@import</a> rules should follow the rules used for fetching style sheets for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import⑤">@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking. </p>
+         <p class="note" role="note"> Note: We will use the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-fetch-group" id="ref-for-concept-fetch-group">fetch group</a> of <var>sheet</var>’s <a data-link-type="dfn" href="#cssstylesheet-constructor-document" id="ref-for-cssstylesheet-constructor-document①">constructor document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> for <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import⑥">@import</a> rules and other (fonts, etc) loads. </p>
          <p class="note" role="note"> Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere. </p>
        </ol>
       <li data-md>
@@ -1687,14 +2093,14 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
       <li data-md>
        <p>Let <var>rules</var> be the result of running <a data-link-type="dfn" href="https://drafts.csswg.org/css-syntax-3/#parse-a-list-of-rules" id="ref-for-parse-a-list-of-rules①">parse a list of rules</a> from <var>text</var>. If <var>rules</var> is not a list of rules (i.e. an error occurred during parsing), set <var>rules</var> to an empty list.</p>
       <li data-md>
-       <p>If <var>rules</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import" id="ref-for-at-ruledef-import⑦">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
+       <p>If <var>rules</var> contains one or more <a class="css" data-link-type="at-rule" href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import" id="ref-for-at-ruledef-import⑦">@import</a> rules, throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#notallowederror" id="ref-for-notallowederror⑤">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code>.</p>
       <li data-md>
        <p>Set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-rule" id="ref-for-css-rule①">CSS rules</a> to <var>rules</var>.</p>
      </ol>
    </dl>
    <h2 class="heading settled" data-level="5" id="using-constructed-stylesheets"><span class="secno">5. </span><span class="content">Using Constructed Stylesheets</span><a class="self-link" href="#using-constructed-stylesheets"></a></h2>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
+  <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-frozen-array" id="ref-for-idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
 };
 </pre>
    <dl>
@@ -1716,6 +2122,10 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <p>These <a data-link-type="dfn" href="#adopted-stylesheets" id="ref-for-adopted-stylesheets③">adopted stylesheets</a> are ordered after all the other style sheets (i.e. those derived from <code class="idl"><a data-link-type="idl" href="https://drafts.csswg.org/cssom-1/#dom-documentorshadowroot-stylesheets" id="ref-for-dom-documentorshadowroot-stylesheets">styleSheets</a></code>).</p>
    <p>This specification defines the following <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-adopt-ext" id="ref-for-concept-node-adopt-ext">adopting steps</a> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#shadowroot" id="ref-for-shadowroot">ShadowRoot</a></code> nodes, given <var>node</var> and <var>oldDocument</var>:</p>
    <ol>
+    <li data-md>
+     <p>If <var>oldDocument</var> is <var>node</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document①">node document</a>'s <a data-link-type="dfn">associated inert template document</a>, then return.</p>
+    <li data-md>
+     <p>If <var>oldDocument</var>’s <a data-link-type="dfn">associated inert template document</a> is <var>node</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document②">node document</a>, then return.</p>
     <li data-md>
      <p>Set <var>node</var>’s <code class="idl"><a data-link-type="idl" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets③">adoptedStyleSheets</a></code> to the empty list.</p>
    </ol>
@@ -1889,7 +2299,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <li><a href="#dom-cssstylesheetinit-title">title</a><span>, in §3</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-at-ruledef-import">
-   <a href="https://drafts.csswg.org/css-cascade-4/#at-ruledef-import">https://drafts.csswg.org/css-cascade-4/#at-ruledef-import</a><b>Referenced in:</b>
+   <a href="https://drafts.csswg.org/css-cascade-5/#at-ruledef-import">https://drafts.csswg.org/css-cascade-5/#at-ruledef-import</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-at-ruledef-import">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-at-ruledef-import①">(2)</a> <a href="#ref-for-at-ruledef-import②">(3)</a> <a href="#ref-for-at-ruledef-import③">(4)</a> <a href="#ref-for-at-ruledef-import④">(5)</a> <a href="#ref-for-at-ruledef-import⑤">(6)</a> <a href="#ref-for-at-ruledef-import⑥">(7)</a> <a href="#ref-for-at-ruledef-import⑦">(8)</a>
    </ul>
@@ -1909,6 +2319,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-cssstylesheet">
    <a href="https://drafts.csswg.org/cssom-1/#cssstylesheet">https://drafts.csswg.org/cssom-1/#cssstylesheet</a><b>Referenced in:</b>
    <ul>
+    <li><a href="#ref-for-cssstylesheet">Unnumbered Section</a>
     <li><a href="#ref-for-cssstylesheet①">3. Constructing Stylesheets</a> <a href="#ref-for-cssstylesheet②">(2)</a> <a href="#ref-for-cssstylesheet③">(3)</a> <a href="#ref-for-cssstylesheet④">(4)</a>
     <li><a href="#ref-for-cssstylesheet⑤">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet⑥">(2)</a> <a href="#ref-for-cssstylesheet⑦">(3)</a> <a href="#ref-for-cssstylesheet⑧">(4)</a>
     <li><a href="#ref-for-cssstylesheet⑨">5. Using Constructed Stylesheets</a> <a href="#ref-for-cssstylesheet①⓪">(2)</a>
@@ -2014,6 +2425,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-documentorshadowroot">
    <a href="https://dom.spec.whatwg.org/#documentorshadowroot">https://dom.spec.whatwg.org/#documentorshadowroot</a><b>Referenced in:</b>
    <ul>
+    <li><a href="#ref-for-documentorshadowroot">Unnumbered Section</a>
     <li><a href="#ref-for-documentorshadowroot①">5. Using Constructed Stylesheets</a> <a href="#ref-for-documentorshadowroot②">(2)</a> <a href="#ref-for-documentorshadowroot③">(3)</a> <a href="#ref-for-documentorshadowroot④">(4)</a> <a href="#ref-for-documentorshadowroot⑤">(5)</a> <a href="#ref-for-documentorshadowroot⑥">(6)</a>
    </ul>
   </aside>
@@ -2032,7 +2444,7 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
   <aside class="dfn-panel" data-for="term-for-concept-node-document">
    <a href="https://dom.spec.whatwg.org/#concept-node-document">https://dom.spec.whatwg.org/#concept-node-document</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-node-document">5. Using Constructed Stylesheets</a>
+    <li><a href="#ref-for-concept-node-document">5. Using Constructed Stylesheets</a> <a href="#ref-for-concept-node-document①">(2)</a> <a href="#ref-for-concept-node-document②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-fetch-group">
@@ -2102,6 +2514,12 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <li><a href="#ref-for-idl-DOMString">3. Constructing Stylesheets</a> <a href="#ref-for-idl-DOMString①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-frozen-array">
+   <a href="https://heycam.github.io/webidl/#idl-frozen-array">https://heycam.github.io/webidl/#idl-frozen-array</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-frozen-array">5. Using Constructed Stylesheets</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-networkerror">
    <a href="https://heycam.github.io/webidl/#networkerror">https://heycam.github.io/webidl/#networkerror</a><b>Referenced in:</b>
    <ul>
@@ -2113,6 +2531,12 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <ul>
     <li><a href="#ref-for-notallowederror">4. Modifying Constructed Stylesheets</a> <a href="#ref-for-notallowederror①">(2)</a> <a href="#ref-for-notallowederror②">(3)</a> <a href="#ref-for-notallowederror③">(4)</a> <a href="#ref-for-notallowederror④">(5)</a> <a href="#ref-for-notallowederror⑤">(6)</a>
     <li><a href="#ref-for-notallowederror⑥">5. Using Constructed Stylesheets</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-promise">
+   <a href="https://heycam.github.io/webidl/#idl-promise">https://heycam.github.io/webidl/#idl-promise</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-promise">3. Constructing Stylesheets</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-USVString">
@@ -2127,81 +2551,90 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
     <li><a href="#ref-for-idl-boolean">3. Constructing Stylesheets</a> <a href="#ref-for-idl-boolean①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-idl-undefined">
+   <a href="https://heycam.github.io/webidl/#idl-undefined">https://heycam.github.io/webidl/#idl-undefined</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-idl-undefined">3. Constructing Stylesheets</a>
+   </ul>
+  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[css-cascade-4]</a> defines the following terms:
+    <a data-link-type="biblio">[css-cascade-5]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-at-ruledef-import" style="color:initial">@import</span>
+     <li><span class="dfn-paneled" id="term-for-at-ruledef-import">@import</span>
     </ul>
    <li>
     <a data-link-type="biblio">[css-syntax-3]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-parse-a-list-of-rules" style="color:initial">parse a list of rules</span>
-     <li><span class="dfn-paneled" id="term-for-parse-a-rule" style="color:initial">parse a rule</span>
+     <li><span class="dfn-paneled" id="term-for-parse-a-list-of-rules">parse a list of rules</span>
+     <li><span class="dfn-paneled" id="term-for-parse-a-rule">parse a rule</span>
     </ul>
    <li>
     <a data-link-type="biblio">[cssom-1]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-cssstylesheet" style="color:initial">CSSStyleSheet</span>
-     <li><span class="dfn-paneled" id="term-for-medialist" style="color:initial">MediaList</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-alternate-flag" style="color:initial">alternate flag</span>
-     <li><span class="dfn-paneled" id="term-for-create-a-medialist-object" style="color:initial">create a medialist object</span>
-     <li><span class="dfn-paneled" id="term-for-css-rule" style="color:initial">css rule</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-disabled-flag" style="color:initial">disabled flag</span>
-     <li><span class="dfn-paneled" id="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets" style="color:initial">document or shadow root css style sheets</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-location" style="color:initial">location</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-media" style="color:initial">media</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-origin-clean-flag" style="color:initial">origin-clean flag</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-css-rule" style="color:initial">owner css rule</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-node" style="color:initial">owner node</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-parent-css-style-sheet" style="color:initial">parent css style sheet</span>
-     <li><span class="dfn-paneled" id="term-for-serialize-a-media-query-list" style="color:initial">serialize a media query list</span>
-     <li><span class="dfn-paneled" id="term-for-dom-documentorshadowroot-stylesheets" style="color:initial">styleSheets</span>
-     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-title" style="color:initial">title</span>
+     <li><span class="dfn-paneled" id="term-for-cssstylesheet">CSSStyleSheet</span>
+     <li><span class="dfn-paneled" id="term-for-medialist">MediaList</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-alternate-flag">alternate flag</span>
+     <li><span class="dfn-paneled" id="term-for-create-a-medialist-object">create a medialist object</span>
+     <li><span class="dfn-paneled" id="term-for-css-rule">css rule</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-disabled-flag">disabled flag</span>
+     <li><span class="dfn-paneled" id="term-for-documentorshadowroot-document-or-shadow-root-css-style-sheets">document or shadow root css style sheets</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-location">location</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-media">media</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-origin-clean-flag">origin-clean flag</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-css-rule">owner css rule</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-owner-node">owner node</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-parent-css-style-sheet">parent css style sheet</span>
+     <li><span class="dfn-paneled" id="term-for-serialize-a-media-query-list">serialize a media query list</span>
+     <li><span class="dfn-paneled" id="term-for-dom-documentorshadowroot-stylesheets">styleSheets</span>
+     <li><span class="dfn-paneled" id="term-for-concept-css-style-sheet-title">title</span>
     </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-document" style="color:initial">Document</span>
-     <li><span class="dfn-paneled" id="term-for-documentorshadowroot" style="color:initial">DocumentOrShadowRoot</span>
-     <li><span class="dfn-paneled" id="term-for-shadowroot" style="color:initial">ShadowRoot</span>
-     <li><span class="dfn-paneled" id="term-for-concept-node-adopt-ext" style="color:initial">adopting steps</span>
-     <li><span class="dfn-paneled" id="term-for-concept-node-document" style="color:initial">node document</span>
+     <li><span class="dfn-paneled" id="term-for-document">Document</span>
+     <li><span class="dfn-paneled" id="term-for-documentorshadowroot">DocumentOrShadowRoot</span>
+     <li><span class="dfn-paneled" id="term-for-shadowroot">ShadowRoot</span>
+     <li><span class="dfn-paneled" id="term-for-concept-node-adopt-ext">adopting steps</span>
+     <li><span class="dfn-paneled" id="term-for-concept-node-document">node document</span>
     </ul>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-concept-fetch-group" style="color:initial">fetch group</span>
-     <li><span class="dfn-paneled" id="term-for-concept-fetch-terminate" style="color:initial">terminated</span>
+     <li><span class="dfn-paneled" id="term-for-concept-fetch-group">fetch group</span>
+     <li><span class="dfn-paneled" id="term-for-concept-fetch-terminate">terminated</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-concept-document-window" style="color:initial">associated document</span>
-     <li><span class="dfn-paneled" id="term-for-concept-script-base-url" style="color:initial">base url</span>
-     <li><span class="dfn-paneled" id="term-for-current-global-object" style="color:initial">current global object</span>
-     <li><span class="dfn-paneled" id="term-for-in-parallel" style="color:initial">in parallel</span>
-     <li><span class="dfn-paneled" id="term-for-networking-task-source" style="color:initial">networking task source</span>
-     <li><span class="dfn-paneled" id="term-for-queue-a-task" style="color:initial">queue a task</span>
-     <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-window">associated document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-script-base-url">base url</span>
+     <li><span class="dfn-paneled" id="term-for-current-global-object">current global object</span>
+     <li><span class="dfn-paneled" id="term-for-in-parallel">in parallel</span>
+     <li><span class="dfn-paneled" id="term-for-networking-task-source">networking task source</span>
+     <li><span class="dfn-paneled" id="term-for-queue-a-task">queue a task</span>
+     <li><span class="dfn-paneled" id="term-for-relevant-settings-object">relevant settings object</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-idl-DOMException" style="color:initial">DOMException</span>
-     <li><span class="dfn-paneled" id="term-for-idl-DOMString" style="color:initial">DOMString</span>
-     <li><span class="dfn-paneled" id="term-for-networkerror" style="color:initial">NetworkError</span>
-     <li><span class="dfn-paneled" id="term-for-notallowederror" style="color:initial">NotAllowedError</span>
-     <li><span class="dfn-paneled" id="term-for-idl-USVString" style="color:initial">USVString</span>
-     <li><span class="dfn-paneled" id="term-for-idl-boolean" style="color:initial">boolean</span>
+     <li><span class="dfn-paneled" id="term-for-idl-DOMException">DOMException</span>
+     <li><span class="dfn-paneled" id="term-for-idl-DOMString">DOMString</span>
+     <li><span class="dfn-paneled" id="term-for-idl-frozen-array">FrozenArray</span>
+     <li><span class="dfn-paneled" id="term-for-networkerror">NetworkError</span>
+     <li><span class="dfn-paneled" id="term-for-notallowederror">NotAllowedError</span>
+     <li><span class="dfn-paneled" id="term-for-idl-promise">Promise</span>
+     <li><span class="dfn-paneled" id="term-for-idl-USVString">USVString</span>
+     <li><span class="dfn-paneled" id="term-for-idl-boolean">boolean</span>
+     <li><span class="dfn-paneled" id="term-for-idl-undefined">undefined</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-css-cascade-4">[CSS-CASCADE-4]
-   <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/css-cascade-4/">CSS Cascading and Inheritance Level 4</a>. 28 August 2018. CR. URL: <a href="https://www.w3.org/TR/css-cascade-4/">https://www.w3.org/TR/css-cascade-4/</a>
+   <dt id="biblio-css-cascade-5">[CSS-CASCADE-5]
+   <dd>CSS Cascading and Inheritance Level 5 URL: <a href="https://www.w3.org/TR/css-cascade-5/">https://www.w3.org/TR/css-cascade-5/</a>
    <dt id="biblio-css-syntax-3">[CSS-SYNTAX-3]
    <dd>Tab Atkins Jr.; Simon Sapin. <a href="https://www.w3.org/TR/css-syntax-3/">CSS Syntax Module Level 3</a>. 16 July 2019. CR. URL: <a href="https://www.w3.org/TR/css-syntax-3/">https://www.w3.org/TR/css-syntax-3/</a>
    <dt id="biblio-cssom-1">[CSSOM-1]
@@ -2218,21 +2651,21 @@ set <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet①①"><c- g>CSSStyleSheet</c-></a> {
-  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet" id="ref-for-dom-cssstylesheet-cssstylesheet①"><c- g>constructor</c-></a>(<c- b>optional</c-> <a class="n" data-link-type="idl-name" href="#dictdef-cssstylesheetinit" id="ref-for-dictdef-cssstylesheetinit①"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a> = {});
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet②①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace" id="ref-for-dom-cssstylesheet-replace②"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString②"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
-  <c- b>void</c-> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync" id="ref-for-dom-cssstylesheet-replacesync②"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString" id="ref-for-idl-USVString①①"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://drafts.csswg.org/cssom-1/#cssstylesheet"><c- g>CSSStyleSheet</c-></a> {
+  <a class="idl-code" data-link-type="constructor" href="#dom-cssstylesheet-cssstylesheet"><c- g>constructor</c-></a>(<c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-cssstylesheetinit"><c- n>CSSStyleSheetInit</c-></a> <a href="#dom-cssstylesheet-cssstylesheet-options-options"><code><c- g>options</c-></code></a> = {});
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replace"><c- g>replace</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replace-text-text"><code><c- g>text</c-></code></a>);
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-undefined"><c- b>undefined</c-></a> <a class="idl-code" data-link-type="method" href="#dom-cssstylesheet-replacesync"><c- g>replaceSync</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-USVString"><c- b>USVString</c-></a> <a href="#dom-cssstylesheet-replacesync-text-text"><code><c- g>text</c-></code></a>);
 };
 
 <c- b>dictionary</c-> <a href="#dictdef-cssstylesheetinit"><code><c- g>CSSStyleSheetInit</c-></code></a> {
-  (<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#medialist" id="ref-for-medialist①"><c- n>MediaList</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a>) <a data-default="&quot;&quot;" data-type="(MediaList or DOMString) " href="#dom-cssstylesheetinit-media"><code><c- g>media</c-></code></a> = "";
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-cssstylesheetinit-title"><code><c- g>title</c-></code></a> = "";
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②"><c- b>boolean</c-></a> <a data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-alternate"><code><c- g>alternate</c-></code></a> = <c- b>false</c->;
-  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①①"><c- b>boolean</c-></a> <a data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-disabled"><code><c- g>disabled</c-></code></a> = <c- b>false</c->;
+  (<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#medialist"><c- n>MediaList</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a>) <a data-default="&quot;&quot;" data-type="(MediaList or DOMString) " href="#dom-cssstylesheetinit-media"><code><c- g>media</c-></code></a> = "";
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-DOMString"><c- b>DOMString</c-></a> <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-cssstylesheetinit-title"><code><c- g>title</c-></code></a> = "";
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-alternate"><code><c- g>alternate</c-></code></a> = <c- b>false</c->;
+  <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-default="false" data-type="boolean " href="#dom-cssstylesheetinit-disabled"><code><c- g>disabled</c-></code></a> = <c- b>false</c->;
 };
 
-<c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot" id="ref-for-documentorshadowroot①①"><c- g>DocumentOrShadowRoot</c-></a> {
-  <c- b>attribute</c-> <c- b>FrozenArray</c->&lt;<a class="n" data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet" id="ref-for-cssstylesheet⑨①"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets" id="ref-for-dom-documentorshadowroot-adoptedstylesheets④"><c- g>adoptedStyleSheets</c-></a>;
+<c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#documentorshadowroot"><c- g>DocumentOrShadowRoot</c-></a> {
+  <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a data-link-type="idl-name" href="https://drafts.csswg.org/cssom-1/#cssstylesheet"><c- n>CSSStyleSheet</c-></a>> <a class="idl-code" data-link-type="attribute" data-type="FrozenArray<CSSStyleSheet>" href="#dom-documentorshadowroot-adoptedstylesheets"><c- g>adoptedStyleSheets</c-></a>;
 };
 
 </pre>

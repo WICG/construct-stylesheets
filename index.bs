@@ -26,7 +26,7 @@ spec:fetch; type:dfn; for:fetch; text:terminated
 Motivation {#motivation}
 ============================
 
-Most web components uses Shadow DOM. For a style sheet to take effect within the Shadow DOM, it currently must be specified using a style element within each shadow root. 
+Most web components uses Shadow DOM. For a style sheet to take effect within the Shadow DOM, it currently must be specified using a style element within each shadow root.
 As a web page may contain tens of thousands of web components, this can easily have a large time and memory cost if user agents force the style sheet rules to be parsed and stored once for every style element. However, the duplications are actually not needed as the web components will most likely use the same styling, perhaps one for each component library.
 
 Some user agents might attempt to optimize by sharing internal style sheet representations across different instances of the style element. However, component libraries may use JavaScript to modify the style sheet rules, which will thwart style sheet sharing and have large costs in performance and memory.
@@ -45,7 +45,7 @@ class MyElement extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: "open" });
     shadowRoot.adoptedStyleSheets = [myElementSheet];
   }
-  
+
   connectedCallback() {
     // Only actually parse the stylesheet when the first instance is connected.
     if (myElementSheet.cssRules.length == 0) {
@@ -215,7 +215,8 @@ The user agent must include all style sheets in the {{DocumentOrShadowRoot}}'s
 
 These [=adopted stylesheets=] are ordered after all the other style sheets (i.e. those derived from {{DocumentOrShadowRoot/styleSheets}}).
 
-This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and <var ignore>oldDocument</var>:
+This specification defines the following [=adopting steps=] for {{ShadowRoot}} nodes, given |node| and |oldDocument|:
 
-1. Set |node|'s {{adoptedStyleSheets}} to the empty list.
-
+1. If |oldDocument| is |node|'s [=node document=]'s [=associated inert template document=], then return.
+2. If |oldDocument|'s [=associated inert template document=] is |node|'s [=node document=], then return.
+3. Set |node|'s {{adoptedStyleSheets}} to the empty list.
