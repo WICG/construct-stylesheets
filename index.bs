@@ -131,7 +131,7 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
     <dd>
     	1. Let |sheet| be this {{/CSSStyleSheet}} object.
 		2. If |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
-        3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, or |sheet|'s [=parent CSS style sheet=]'s [=constructed flag=] is set, or that sheet's [=parent CSS style sheet=]'s [=constructed flag=] is set (and so on), throw a "{{NotAllowedError}}" {{DOMException}}.
+        3. [=Parse a rule=] from |rule|. If the result is an <a>@import</a> rule and |sheet|'s [=constructed flag=] is set, or |sheet|'s [=parent CSS style sheet=]'s [=constructed flag=] is set, or that sheet's [=parent CSS style sheet=]'s [=constructed flag=] is set (and so on), throw a "{{SyntaxError}}" {{DOMException}}.
 		4. (The rest of the algorithm remains as in CSSOM)
 	</dd>
 
@@ -150,24 +150,15 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
 		4. Set |sheet|'s [=disallow modification flag=].
 		5. [=In parallel=], do these steps:
 			1. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
-			2. Wait for loading of <a>@import</a> rules in |rules| and any nested <a>@import</a>s from those rules (and so on).
-				* If any of them failed to load, [=terminate=] fetching of the remaining <a>@import</a> rules,  and [=queue a task=] on the [=networking task source=] to perform the following steps:
-                    1. Unset |sheet|'s [=disallow modification flag=].
-                    2. Reject |promise| with a "{{NetworkError}}" {{DOMException}}.
-			    * Otherwise, once  all of them have finished loading, [=queue a task=] on the [=networking task source=] to perform the following steps:
-                    1. Set |sheet|'s [=CSS rules=] to |rules|.
-                    2. Unset |sheet|'s [=disallow modification flag=].
-                    3. Resolve |promise| with |sheet|.
+			2. [=list/For each=] |rule| of |rules|, if |rule| is an <a>@import</a>, [=list/remove=] it from |rules|.
+			3. [=Queue a task=] on the [=networking task source=] to perform the following steps:
+				1. Set |sheet|'s [=CSS rules=] to |rules|.
+				2. Unset |sheet|'s [=disallow modification flag=].
+				3. Resolve |promise| with |sheet|.
 
-				<p class="note">
-                    Note: Loading  of <a>@import</a> rules should follow the rules used for fetching style sheets for <a>@import</a> rules of stylesheets from &lt;link> elements, in regard to what counts as success, CSP, and Content-Type header checking.
-				</p>
-				<p class="note">
-					Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for <a>@import</a> rules and other (fonts, etc) loads.
-				</p>
-				<p class="note">
-					Note: The rules regarding loading mentioned above are currently not specified rigorously anywhere.
-				</p>
+		<p class="note">
+			Note: We will use the [=fetch group=] of |sheet|'s [=constructor document=]'s [=relevant settings object=] for loads such as fonts.
+		</p>
 		6. Return |promise|.
 	</dd>
 
@@ -178,7 +169,7 @@ Note that we're explicitly monkeypatching CSSOM. We are working on [merging this
     	1. Let |sheet| be this {{/CSSStyleSheet}} object.
 		2. If |sheet|'s [=constructed flag=] is not set, or |sheet|'s [=disallow modification flag=] is set, throw a "{{NotAllowedError}}" {{DOMException}}.
 		3. Let |rules| be the result of running [=parse a list of rules=] from |text|. If |rules| is not a list of rules (i.e. an error occurred during parsing), set |rules| to an empty list.
-		4. If |rules| contains one or more <a>@import</a> rules, throw a "{{NotAllowedError}}" {{DOMException}}.
+		4. [=list/For each=] |rule| of |rules|, if |rule| is an <a>@import</a>, [=list/remove=] it from |rules|.
 		5. Set |sheet|'s [=CSS rules=] to |rules|.
 	</dd>
 
